@@ -25,7 +25,7 @@ Actualizado: 2026-07-28.
 - En oscuro el primario global es `#4090FE`, con hover más oscuro; la muestra Secondary de la documentación usa texto `background` para mantener contraste.
 - Assets locales: avatar y ocho logos del carrusel (Yaydoo, PorCobrar, VendorPlace, Supervisor AI, Leracom AI, Oyster, Buyer y Senda Monarca). Oyster usa una variante legible en claro; Senda usa el SVG original proporcionado por el usuario. Las imágenes de proyectos siguen siendo remotas.
 - El logo de Oyster fue reemplazado por el SVG público “Oyster by Yaydoo” de la biblioteca de medios de Yaydoo; el servidor de desarrollo queda disponible en `http://127.0.0.1:3000/`.
-- La preparación para el primer repositorio Git incluye un `.gitignore` que excluye dependencias, builds, cobertura, logs y archivos `.env` salvo `.env.example`; `contexto/README.md` indexa la memoria versionada sin duplicarla.
+- El proyecto está publicado como repositorio público en `https://github.com/AndurEsn/Andur-portafolio`; usa `main`, un autor con correo GitHub noreply y un `.gitignore` que excluye dependencias, builds, cobertura, logs y archivos `.env` salvo `.env.example`. `contexto/README.md` indexa la memoria versionada sin duplicarla.
 
 ## Próximo trabajo recomendado
 
