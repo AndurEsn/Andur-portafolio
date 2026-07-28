@@ -1,0 +1,6 @@
+{
+  "name": "PD Portfolio",
+  "description": "Interactive Product Designer Portfolio with dynamic light/dark mode, interactive tour, project filter, skeleton states, and error 404 view.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
