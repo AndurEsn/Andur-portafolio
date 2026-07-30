@@ -25,29 +25,19 @@ const NPS_STORAGE_KEY = 'portfolio-nps-feedback-v1';
 interface ToastState {
   message: string;
   variant: ToastVariant;
+  title?: string;
 }
 
 interface LandingRevealProps {
   animation: EntranceAnimation;
+  scrollDirection: 'up' | 'down' | 'idle';
   children: React.ReactNode;
 }
 
-function LandingReveal({ animation, children }: LandingRevealProps) {
+function LandingReveal({ animation, scrollDirection, children }: LandingRevealProps) {
   const shouldReduceMotion = useReducedMotion();
   const revealRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(revealRef, { amount: 0.18 });
-  const [isReadyToReveal, setIsReadyToReveal] = useState(false);
-
-  useEffect(() => {
-    if (shouldReduceMotion || !isInView) {
-      setIsReadyToReveal(false);
-      return;
-    }
-
-    setIsReadyToReveal(false);
-    const timer = window.setTimeout(() => setIsReadyToReveal(true), 50);
-    return () => window.clearTimeout(timer);
-  }, [animation, isInView, shouldReduceMotion]);
 
   const hidden = shouldReduceMotion
     ? { opacity: 1, y: 0, scale: 1 }
@@ -57,16 +47,17 @@ function LandingReveal({ animation, children }: LandingRevealProps) {
         ? { opacity: 0, y: 0, scale: 0.94 }
         : { opacity: 0, y: 0, scale: 1 };
   const visible = { opacity: 1, y: 0, scale: 1 };
-  const shouldShow = shouldReduceMotion || (isInView && isReadyToReveal);
+  const shouldAnimate = !shouldReduceMotion && isInView && scrollDirection === 'down';
+  const shouldStayVisible = shouldReduceMotion || scrollDirection !== 'down' || isInView;
 
   return (
     <motion.div
       ref={revealRef}
       variants={{ hidden, visible }}
-      initial="hidden"
-      animate={shouldShow ? 'visible' : 'hidden'}
-      transition={shouldShow
-        ? { delay: shouldReduceMotion ? 0 : 0.2, duration: shouldReduceMotion ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }
+      initial={scrollDirection === 'down' && !shouldReduceMotion ? 'hidden' : false}
+      animate={shouldStayVisible ? 'visible' : 'hidden'}
+      transition={shouldAnimate
+        ? { delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
         : { duration: 0 }}
     >
       {children}
@@ -98,14 +89,14 @@ const defaultHeroContent: Record<Language, HeroContent> = {
   es: {
     avatar: avatarPath,
     name: 'Andur',
-    role: 'Product Designer & Engineer Design',
+    role: 'Product Designer',
     title: TRANSLATIONS.es.heroTitle,
     subtitle: TRANSLATIONS.es.heroDesc,
   },
   en: {
     avatar: avatarPath,
     name: 'Andur',
-    role: 'Product Designer & Engineer Design',
+    role: 'Product Designer',
     title: TRANSLATIONS.en.heroTitle,
     subtitle: TRANSLATIONS.en.heroDesc,
   },
@@ -116,6 +107,7 @@ export default function App() {
   const [appState, setAppState] = useState<AppState>('normal');
   const [language, setLanguage] = useState<Language>('es');
   const [entranceAnimation, setEntranceAnimation] = useState<EntranceAnimation>('move');
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | 'idle'>('idle');
   
   const [isTourActive, setIsTourActive] = useState(false);
   const [currentTourStep, setCurrentTourStep] = useState(0);
@@ -128,6 +120,28 @@ export default function App() {
   const t = TRANSLATIONS[language];
   const heroContent = defaultHeroContent[language];
   const metrics = METRICS(language);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let frame = 0;
+
+    const updateScrollDirection = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY !== lastScrollY) {
+          setScrollDirection(currentScrollY > lastScrollY ? 'down' : 'up');
+          lastScrollY = currentScrollY;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateScrollDirection, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', updateScrollDirection);
+    };
+  }, []);
 
   // Sync theme class to HTML root element
   useEffect(() => {
@@ -153,8 +167,8 @@ export default function App() {
   }, [npsFeedback]);
 
   // Handle toast notifications helper
-  const triggerToast = (message: string, variant: ToastVariant = 'default') => {
-    setToast({ message, variant });
+  const triggerToast = (message: string, variant: ToastVariant = 'default', title?: string) => {
+    setToast({ message, variant, title });
     const id = setTimeout(() => {
       setToast((current) => current?.message === message ? null : current);
     }, 4000);
@@ -335,33 +349,31 @@ export default function App() {
               className="space-y-4"
             >
               {/* Hero */}
-              <LandingReveal animation={entranceAnimation}>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}>
                 <Hero 
-                  onStartTour={handleStartTour}
                   onViewProjects={scrollToProjects}
-                  isTourActive={isTourActive} 
                   language={language} 
                   content={heroContent}
                 />
               </LandingReveal>
 
               {/* Collaborating brands */}
-              <LandingReveal animation={entranceAnimation}><LogoCarousel language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><LogoCarousel language={language} /></LandingReveal>
 
               {/* Metrics stack */}
-              <LandingReveal animation={entranceAnimation}><Metrics language={language} metrics={metrics} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Metrics language={language} metrics={metrics} /></LandingReveal>
 
               {/* Career Roadmap */}
-              <LandingReveal animation={entranceAnimation}><Roadmap language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Roadmap language={language} /></LandingReveal>
 
               {/* Portfolio section with filters & modal */}
-              <LandingReveal animation={entranceAnimation}><Portfolio language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Portfolio language={language} /></LandingReveal>
 
               {/* Contact section */}
-              <LandingReveal animation={entranceAnimation}><Contact onShowToast={triggerToast} language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Contact onShowToast={triggerToast} language={language} /></LandingReveal>
 
               {/* Accordion FAQ */}
-              <LandingReveal animation={entranceAnimation}><FAQ language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><FAQ language={language} /></LandingReveal>
             </motion.div>
           )}
         </AnimatePresence>
@@ -471,13 +483,13 @@ export default function App() {
               <p className={`text-[10px] font-black uppercase tracking-widest leading-none mb-0.5 ${
                 toast.variant === 'error' ? 'text-error' : toast.variant === 'success' ? 'text-success' : 'text-primary'
               }`}>
-                {toast.variant === 'error'
+                {toast.title ?? (toast.variant === 'error'
                   ? (language === 'es' ? 'Error' : 'Error')
                   : toast.variant === 'info'
                     ? (language === 'es' ? 'Carga' : 'Loading')
                     : toast.variant === 'success'
                       ? (language === 'es' ? 'Acción completada' : 'Action completed')
-                    : t.toastToastLabel}
+                    : t.toastToastLabel)}
               </p>
               <p className="text-xs font-bold tracking-tight">
                 {toast.message}

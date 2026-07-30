@@ -1,4 +1,5 @@
 import { Project, Metric, FAQItem, TourStep, RoadmapItem } from './types';
+import cvFile from './assets/documents/andur-cv-2026.pdf';
 
 export const TRANSLATIONS = {
   es: {
@@ -28,13 +29,12 @@ export const TRANSLATIONS = {
     errorDesc: 'Lo sentimos, no pudimos encontrar el recurso que estabas buscando. Es posible que haya sido movido o eliminado de nuestro sistema.',
     errorBtn: 'Volver al inicio',
     errorToast: 'Oops, algo salió mal',
-    heroEyebrow: 'Andur · Product Designer & Engineer Design',
-    heroTitle: 'Diseño de productos que impactan negocios',
-    heroDesc: 'Especializado en fintech y plataformas SaaS complejas. Ayudo a equipos de tecnología a simplificar flujos, retener usuarios y escalar su impacto comercial mediante interfaces intuitivas de clase mundial.',
-    heroBtn: 'Iniciar tour interactivo',
+    heroTitle: '¡Hola! Soy Andur',
+    heroDesc: 'Product Designer con 7+ años de experiencia en productos SaaS, fintech e IA. Combino UX/UI, estrategia de producto y Design Engineering para transformar problemas complejos en soluciones funcionales.',
+    heroBtn: 'Descargar CV',
     heroProjectsBtn: 'Ver proyectos',
-    metricsTitle: 'Métricas de Impacto',
-    metricsLabel: 'Impacto profesional comprobado',
+    metricsTitle: 'Métricas',
+    metricsLabel: '7 años de experiencia reflejados en resultados.',
     portfolioTitle: 'Proyectos Destacados',
     portfolioDesc: 'Una selección exclusiva de productos de software diseñados para maximizar métricas comerciales y simplificar la experiencia de usuario.',
     portfolioAll: 'Todos',
@@ -63,6 +63,9 @@ export const TRANSLATIONS = {
     whatsappReasonPrompt: 'Selecciona el motivo del contacto:',
     faqTitle: 'Preguntas frecuentes',
     faqDesc: 'Respuestas rápidas a las consultas más comunes sobre mi flujo de trabajo.',
+    faqCategoryDesign: 'Diseño y construcción',
+    faqCategoryCollaboration: 'Colaboración',
+    faqCategoryProfile: 'Perfil y recursos',
     npsStep1Title: '¿Qué te ha parecido la página?',
     npsStep1Desc: 'Evalúa del 1 al 5 qué tanto te ha gustado la interacción y el diseño (1 = Horrible, 5 = Impresionante).',
     npsStep2Title: '¡Gracias por calificar!',
@@ -99,7 +102,8 @@ export const TRANSLATIONS = {
     toastLoadingDisabled: 'Modo de carga desactivado correctamente.',
     toastErrorDisabled: 'Modo de error 404 desactivado correctamente.',
     toastTourStart: '¡Tour de Onboarding iniciado!',
-    toastTourComplete: '¡Tour completado con éxito!',
+    toastTourCompleteTitle: 'Product Tour concluido exitosamente',
+    toastTourComplete: 'Recorrido finalizado.',
     toastToastLabel: 'Notificación',
     footerCopyright: '© 2026 Portafolio. Creado con IA y precisión por Andur.',
     roadmapTitle: 'Trayectoria Profesional',
@@ -133,13 +137,12 @@ export const TRANSLATIONS = {
     errorDesc: 'Sorry, we could not find the resource you were looking for. It might have been moved or removed from our system.',
     errorBtn: 'Back to home',
     errorToast: 'Oops, something went wrong',
-    heroEyebrow: 'Andur · Product Designer & Engineer Design',
-    heroTitle: 'Designing products that drive business impact',
-    heroDesc: 'Specialized in fintech and complex SaaS platforms. I help tech teams simplify user flows, increase retention, and scale commercial impact through world-class intuitive interfaces.',
-    heroBtn: 'Start interactive tour',
+    heroTitle: "Hi! I'm Andur",
+    heroDesc: 'Product Designer with 7+ years of experience in SaaS, fintech, and AI products. I combine UX/UI, product strategy, and Design Engineering to turn complex problems into functional solutions.',
+    heroBtn: 'Download CV',
     heroProjectsBtn: 'View projects',
-    metricsTitle: 'Impact Metrics',
-    metricsLabel: 'Proven professional impact',
+    metricsTitle: 'Metrics',
+    metricsLabel: '7 years of experience reflected in results.',
     portfolioTitle: 'Featured Projects',
     portfolioDesc: 'An exclusive selection of software products designed to maximize business metrics and simplify user experience.',
     portfolioAll: 'All',
@@ -168,6 +171,9 @@ export const TRANSLATIONS = {
     whatsappReasonPrompt: 'Choose the reason for contacting:',
     faqTitle: 'Frequently Asked Questions',
     faqDesc: 'Quick answers to the most common queries about my workflow.',
+    faqCategoryDesign: 'Design and build',
+    faqCategoryCollaboration: 'Collaboration',
+    faqCategoryProfile: 'Profile and resources',
     npsStep1Title: 'How do you like the page?',
     npsStep1Desc: 'Rate from 1 to 5 how much you like the interaction and design (1 = Horrible, 5 = Awesome).',
     npsStep2Title: 'Thank you for rating!',
@@ -204,7 +210,8 @@ export const TRANSLATIONS = {
     toastLoadingDisabled: 'Loading mode deactivated successfully.',
     toastErrorDisabled: 'Error 404 mode deactivated successfully.',
     toastTourStart: 'Onboarding Tour started!',
-    toastTourComplete: 'Tour completed successfully!',
+    toastTourCompleteTitle: 'Product Tour completed successfully',
+    toastTourComplete: 'Tour complete.',
     toastToastLabel: 'Notification',
     footerCopyright: '© 2026 Portfolio. Built with AI and precision by Andur.',
     roadmapTitle: 'Professional Roadmap',
@@ -218,9 +225,9 @@ export const TRANSLATIONS = {
 };
 
 export const METRICS = (lang: 'es' | 'en'): Metric[] => [
-  { value: '8+', label: lang === 'es' ? 'años de experiencia' : 'years of experience', icon: 'award' },
-  { value: '45+', label: lang === 'es' ? 'proyectos completados' : 'completed projects', icon: 'briefcase' },
-  { value: '20+', label: lang === 'es' ? 'clientes globales' : 'global clients', icon: 'globe' }
+  { value: '11+', label: lang === 'es' ? 'proyectos desarrollados' : 'projects developed', icon: 'projects' },
+  { value: '74+', label: lang === 'es' ? 'flujos y módulos diseñados' : 'flows and modules designed', icon: 'flows' },
+  { value: '14,000', label: lang === 'es' ? 'horas diseñando' : 'hours designing', icon: 'hours' }
 ];
 
 export const ROADMAP = (lang: 'es' | 'en'): RoadmapItem[] => [
@@ -353,22 +360,135 @@ export const PROJECTS = (lang: 'es' | 'en'): Project[] => [
 
 export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
   {
-    question: lang === 'es' ? '¿Cuál es tu proceso de diseño?' : 'What is your design process?',
-    answer: lang === 'es' 
-      ? 'Mi proceso comienza con Discovery y Research para entender el problema real. Luego pasamos a ideación, prototipado rápido, y pruebas con usuarios antes de finalizar con UI de alta fidelidad y handoff.'
-      : 'My process starts with Discovery and Research to understand the real problem. Then we proceed to ideation, rapid prototyping, and user testing before finalizing with high-fidelity UI and developer handoff.'
-  },
-  {
-    question: lang === 'es' ? '¿Trabajas como freelance o tiempo completo?' : 'Do you work as freelance or full-time?',
+    category: 'design',
+    question: lang === 'es' ? '¿Qué tipo de productos diseñas?' : 'What types of products do you design?',
     answer: lang === 'es'
-      ? 'Actualmente acepto proyectos freelance seleccionados que se alineen con mis áreas de expertise en fintech y B2B SaaS.'
-      : 'Currently, I accept select freelance projects that align with my expertise in fintech and B2B SaaS.'
+      ? 'Diseño productos digitales, plataformas SaaS, experiencias basadas en inteligencia artificial y sitios web funcionales. Mi experiencia se concentra en fintech, productos B2B, automatización y procesos operativos complejos.'
+      : 'I design digital products, SaaS platforms, AI-powered experiences, and functional websites. My experience is focused on fintech, B2B products, automation, and complex operational processes.'
   },
   {
+    category: 'design',
+    question: lang === 'es' ? '¿Cuál es tu proceso de diseño?' : 'What is your design process?',
+    answer: lang === 'es'
+      ? 'Inicio entendiendo el problema, los objetivos del negocio, las necesidades de los usuarios y las restricciones del proyecto. Después defino requerimientos, arquitectura de información, flujos, interacciones y la base visual del producto.\n\nGenero una primera versión funcional mediante herramientas de diseño e inteligencia artificial, la valido con usuarios y stakeholders, y la itero antes de ampliar su alcance. Cuando el proyecto lo requiere, lo llevo a un entorno local para mejorar componentes, documentación y consistencia.'
+      : 'I start by understanding the problem, business goals, user needs, and project constraints. Then I define requirements, information architecture, flows, interactions, and the product’s visual foundation.\n\nI create a first functional version using design and AI tools, validate it with users and stakeholders, and iterate before expanding its scope. When needed, I bring the project into a local environment to improve components, documentation, and consistency.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿Qué significa que trabajas con un proceso AI-first?' : 'What does it mean that you work with an AI-first process?',
+    answer: lang === 'es'
+      ? 'Significa que integro inteligencia artificial desde las primeras etapas para acelerar la investigación, exploración de interfaces, documentación, prototipado e implementación.\n\nLa IA no sustituye las decisiones de diseño. Yo defino el contexto, los objetivos, las reglas, la arquitectura, los criterios de calidad y las iteraciones necesarias para mantener coherencia entre el problema y la solución.'
+      : 'It means I integrate artificial intelligence from the earliest stages to accelerate research, interface exploration, documentation, prototyping, and implementation.\n\nAI does not replace design decisions. I define the context, goals, rules, architecture, quality criteria, and iterations needed to keep the problem and solution coherent.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿Cómo utilizas la inteligencia artificial de forma responsable?' : 'How do you use artificial intelligence responsibly?',
+    answer: lang === 'es'
+      ? 'No considero el primer resultado generado como una solución final. Reviso su coherencia, usabilidad, accesibilidad, contenido, estados, componentes y relación con los objetivos del producto.\n\nTambién documento las decisiones importantes y valido los resultados antes de implementarlos. La IA acelera la ejecución, pero las decisiones de producto y diseño permanecen bajo supervisión humana.'
+      : 'I do not treat the first generated result as a final solution. I review its coherence, usability, accessibility, content, states, components, and relationship to product goals.\n\nI also document important decisions and validate outcomes before implementation. AI accelerates execution, but product and design decisions remain under human supervision.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿También desarrollas los productos que diseñas?' : 'Do you also develop the products you design?',
+    answer: lang === 'es'
+      ? 'Puedo convertir diseños en prototipos funcionales y sitios web desplegables mediante desarrollo asistido por inteligencia artificial.\n\nPuedo modificar de forma directa la arquitectura de información, UX/UI, contenido, componentes visuales, HTML y CSS. Para cambios más complejos de código, implementación o despliegue utilizo asistencia de IA mientras continúo desarrollando mis capacidades de Design Engineering.'
+      : 'I can turn designs into functional prototypes and deployable websites through AI-assisted development.\n\nI can directly modify information architecture, UX/UI, content, visual components, HTML, and CSS. For more complex code, implementation, or deployment work, I use AI assistance while continuing to grow my Design Engineering skills.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿Trabajas con front-end, APIs o bases de datos?' : 'Do you work with front-end, APIs, or databases?',
+    answer: lang === 'es'
+      ? 'Actualmente mi experiencia se concentra en front-end, prototipos funcionales y sitios web. Puedo trabajar directamente con HTML y CSS, revisar la estructura del proyecto y ajustar componentes visuales.\n\nEstoy ampliando mis conocimientos sobre APIs y bases de datos mediante proyectos prácticos y desarrollo asistido por inteligencia artificial.'
+      : 'My current experience focuses on front-end work, functional prototypes, and websites. I can work directly with HTML and CSS, review a project’s structure, and adjust visual components.\n\nI am expanding my knowledge of APIs and databases through practical projects and AI-assisted development.'
+  },
+  {
+    category: 'design',
     question: lang === 'es' ? '¿Qué herramientas utilizas?' : 'What tools do you use?',
     answer: lang === 'es'
-      ? 'Principalmente Figma para diseño y prototipado, complementado con herramientas de research como Maze o Hotjar, y plataformas de gestión como Jira o Linear.'
-      : 'Primarily Figma for design and prototyping, complemented by research tools like Maze or Hotjar, and management platforms like Jira or Linear.'
+      ? 'Para diseño y prototipado utilizo Figma, Google Stitch, Google AI Studio y Lovable.\n\nPara Design Engineering trabajo con Codex, Cursor, GitHub y Vercel.\n\nTambién utilizo ChatGPT, Claude, Gemini, Retell AI, Maze, Useberry, Hotjar, Jira, Productboard, Miro y Slack, según las necesidades del proyecto.'
+      : 'For design and prototyping, I use Figma, Google Stitch, Google AI Studio, and Lovable.\n\nFor Design Engineering, I work with Codex, Cursor, GitHub, and Vercel.\n\nI also use ChatGPT, Claude, Gemini, Retell AI, Maze, Useberry, Hotjar, Jira, Productboard, Miro, and Slack according to each project’s needs.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿Cuáles son tus principales habilidades?' : 'What are your main skills?',
+    answer: lang === 'es'
+      ? 'Mis principales habilidades incluyen Product Design end-to-end, Product Discovery, UX Research, UX/UI Design, arquitectura de información, Interaction Design, Design Systems, Conversational UX, prototipado funcional, definición de MVP, priorización de producto y gestión de stakeholders.'
+      : 'My main skills include end-to-end Product Design, Product Discovery, UX Research, UX/UI Design, information architecture, Interaction Design, Design Systems, Conversational UX, functional prototyping, MVP definition, product prioritization, and stakeholder management.'
+  },
+  {
+    category: 'collaboration',
+    question: lang === 'es' ? '¿Puedes realizar investigación y pruebas con usuarios?' : 'Can you conduct research and user testing?',
+    answer: lang === 'es'
+      ? 'Sí. Puedo planear y realizar entrevistas, encuestas, pruebas de usabilidad y análisis de comportamiento sin depender de otro perfil de investigación.\n\nTambién puedo sintetizar los hallazgos, detectar patrones, definir oportunidades y convertir los resultados en mejoras concretas para el producto.'
+      : 'Yes. I can plan and conduct interviews, surveys, usability tests, and behavioral analysis without depending on another research role.\n\nI can also synthesize findings, identify patterns, define opportunities, and turn results into concrete product improvements.'
+  },
+  {
+    category: 'collaboration',
+    question: lang === 'es' ? '¿Cómo trabajas con Product Managers y equipos de desarrollo?' : 'How do you work with Product Managers and development teams?',
+    answer: lang === 'es'
+      ? 'Trabajo con Product Managers para definir el problema, alcance, prioridades, métricas, dependencias y criterios de éxito.\n\nCon los equipos de desarrollo reviso viabilidad, estados, reglas de negocio, componentes y restricciones técnicas. Busco que las decisiones queden documentadas y que el equipo entienda qué se diseñó y por qué.'
+      : 'I work with Product Managers to define the problem, scope, priorities, metrics, dependencies, and success criteria.\n\nWith development teams, I review feasibility, states, business rules, components, and technical constraints. I aim to keep decisions documented so the team understands what was designed and why.'
+  },
+  {
+    category: 'collaboration',
+    question: lang === 'es' ? '¿Tienes experiencia trabajando directamente con clientes?' : 'Do you have experience working directly with clients?',
+    answer: lang === 'es'
+      ? 'Sí. He liderado sesiones de discovery, levantamiento de requerimientos, validación y seguimiento con clientes de servicios financieros, cobranza, prospección y reclutamiento.\n\nEsta experiencia me permitió traducir procesos operativos en arquitecturas de información, reglas, excepciones, flujos digitales y experiencias conversacionales.'
+      : 'Yes. I have led discovery sessions, requirements gathering, validation, and follow-up with clients in financial services, collections, prospecting, and recruitment.\n\nThis experience has allowed me to translate operational processes into information architectures, rules, exceptions, digital flows, and conversational experiences.'
+  },
+  {
+    category: 'collaboration',
+    question: lang === 'es' ? '¿Tienes experiencia trabajando con equipos internacionales?' : 'Do you have experience working with international teams?',
+    answer: lang === 'es'
+      ? 'Sí. He colaborado con equipos distribuidos y personas ubicadas en México, Colombia, Chile y España.\n\nMi nivel de inglés es B2 y puedo participar en documentación, reuniones y colaboración profesional en inglés.'
+      : 'Yes. I have collaborated with distributed teams and people based in Mexico, Colombia, Chile, and Spain.\n\nMy English level is B2, and I can participate in documentation, meetings, and professional collaboration in English.'
+  },
+  {
+    category: 'profile',
+    question: lang === 'es' ? '¿En qué idiomas están disponibles tu portafolio y tus repositorios?' : 'In which languages are your portfolio and repositories available?',
+    answer: lang === 'es'
+      ? 'Actualmente el contenido principal está disponible en español. Un portafolio puede ofrecer una versión completa en inglés, y los repositorios pueden incluir documentación bilingüe mediante archivos README separados o secciones en ambos idiomas.\n\nLa interfaz del producto, la documentación y los casos de estudio pueden traducirse sin necesidad de duplicar todo el código del proyecto.'
+      : 'The main content is currently available in Spanish. A portfolio can offer a full English version, and repositories can include bilingual documentation through separate README files or sections in both languages.\n\nThe product interface, documentation, and case studies can be translated without duplicating the entire project codebase.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿Qué experiencia tienes con Design Systems?' : 'What experience do you have with Design Systems?',
+    answer: lang === 'es'
+      ? 'Construí el Design System Grill mediante Atomic Design, homologando la base visual y funcional de más de seis productos.\n\nTambién trabajo con componentes reutilizables, patrones de interacción, documentación y criterios de calidad para mantener consistencia mientras un producto evoluciona.'
+      : 'I built the Grill Design System using Atomic Design, standardizing the visual and functional foundation of more than six products.\n\nI also work with reusable components, interaction patterns, documentation, and quality criteria to maintain consistency as a product evolves.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿En qué etapas de un producto puedes participar?' : 'At which stages of a product can you contribute?',
+    answer: lang === 'es'
+      ? 'Puedo participar desde la definición inicial hasta la publicación de una versión funcional:\n\n- Product Discovery y entendimiento del problema.\n- Investigación y validación con usuarios.\n- Arquitectura de información y flujos.\n- UX/UI y prototipado.\n- Definición de componentes y Design Systems.\n- Validación e iteración.\n- Documentación del producto.\n- Desarrollo front-end asistido por IA.\n- Control de versiones y despliegue web.'
+      : 'I can contribute from the initial definition through publishing a functional version:\n\n- Product Discovery and problem understanding.\n- Research and user validation.\n- Information architecture and flows.\n- UX/UI and prototyping.\n- Component and Design System definition.\n- Validation and iteration.\n- Product documentation.\n- AI-assisted front-end development.\n- Version control and web deployment.'
+  },
+  {
+    category: 'design',
+    question: lang === 'es' ? '¿Trabajas con un enfoque mobile-first?' : 'Do you work with a mobile-first approach?',
+    answer: lang === 'es'
+      ? 'Sí. Cuando el contexto del producto lo requiere, comienzo por la experiencia en pantallas pequeñas y después adapto la solución a tablet y escritorio.\n\nEste enfoque ayuda a priorizar contenido, jerarquía, navegación y acciones antes de ampliar la interfaz.'
+      : 'Yes. When the product context requires it, I start with the experience on small screens and then adapt the solution for tablet and desktop.\n\nThis approach helps prioritize content, hierarchy, navigation, and actions before expanding the interface.'
+  },
+  {
+    category: 'collaboration',
+    question: lang === 'es' ? '¿Aceptas proyectos independientes?' : 'Do you accept independent projects?',
+    answer: lang === 'es'
+      ? 'Mi enfoque principal son las oportunidades laborales dentro de equipos de producto. Evalúo proyectos independientes únicamente cuando se relacionan con el diseño y desarrollo de sitios web.\n\nLa disponibilidad depende de mis compromisos activos y del alcance de cada proyecto.'
+      : 'My main focus is career opportunities within product teams. I evaluate independent projects only when they relate to website design and development.\n\nAvailability depends on my active commitments and the scope of each project.'
+  },
+  {
+    category: 'profile',
+    question: lang === 'es' ? '¿Dónde puedo consultar o descargar tu CV?' : 'Where can I view or download your CV?',
+    answer: lang === 'es'
+      ? 'Puedes consultar mi experiencia, habilidades y principales resultados directamente en este portafolio.'
+      : 'You can review my experience, skills, and key results directly in this portfolio.',
+    link: {
+      label: lang === 'es' ? 'Descarga mi CV aquí' : 'Download my CV here',
+      href: cvFile,
+      download: 'Andur-CV-2026.pdf'
+    }
   }
 ];
 

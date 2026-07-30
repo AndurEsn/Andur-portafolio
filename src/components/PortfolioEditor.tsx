@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { Award, BarChart3, Briefcase, Globe, ImagePlus, Plus, Save, Sparkles, Trash2, UserRound } from 'lucide-react';
+import { Award, BarChart3, Briefcase, Clock3, FolderKanban, Globe, ImagePlus, Plus, Save, Sparkles, Trash2, UserRound, Workflow } from 'lucide-react';
 import { HeroContent, Language, Metric, MetricIcon } from '../types';
 
 type EditableSection = 'hero' | 'metrics' | null;
@@ -13,6 +13,9 @@ interface PortfolioEditorProps {
 }
 
 const iconOptions: { value: MetricIcon; label: string }[] = [
+  { value: 'projects', label: 'Proyectos' },
+  { value: 'flows', label: 'Flujos' },
+  { value: 'hours', label: 'Horas' },
   { value: 'award', label: 'Reconocimiento' },
   { value: 'briefcase', label: 'Portafolio' },
   { value: 'globe', label: 'Global' },
@@ -20,6 +23,9 @@ const iconOptions: { value: MetricIcon; label: string }[] = [
 ];
 
 function MetricIconPreview({ icon }: { icon: MetricIcon }) {
+  if (icon === 'projects') return <FolderKanban className="w-4 h-4" />;
+  if (icon === 'flows') return <Workflow className="w-4 h-4" />;
+  if (icon === 'hours') return <Clock3 className="w-4 h-4" />;
   if (icon === 'briefcase') return <Briefcase className="w-4 h-4" />;
   if (icon === 'globe') return <Globe className="w-4 h-4" />;
   if (icon === 'sparkles') return <Sparkles className="w-4 h-4" />;

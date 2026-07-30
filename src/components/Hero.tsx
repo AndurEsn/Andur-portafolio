@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Compass, ZoomIn, ZoomOut } from 'lucide-react';
+import { Download, ZoomIn, ZoomOut } from 'lucide-react';
 import { HeroContent, Language } from '../types';
 import { TRANSLATIONS } from '../data';
 import useBodyScrollLock from '../hooks/useBodyScrollLock';
 import ModalCloseButton from './ModalCloseButton';
+import cvFile from '../assets/documents/andur-cv-2026.pdf';
 
 interface HeroProps {
-  onStartTour: () => void;
   onViewProjects: () => void;
-  isTourActive: boolean;
   language: Language;
   content: HeroContent;
 }
 
-export default function Hero({ onStartTour, onViewProjects, isTourActive, language, content }: HeroProps) {
+export default function Hero({ onViewProjects, language, content }: HeroProps) {
   const t = TRANSLATIONS[language];
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
   const [zoom, setZoom] = useState(1);
@@ -52,11 +51,6 @@ export default function Hero({ onStartTour, onViewProjects, isTourActive, langua
         />
         </button>
 
-        {/* Designer Name (Eyebrow text) */}
-        <span className="mb-3 text-xs font-black uppercase tracking-widest text-primary sm:text-sm">
-          {content.name} · {content.role}
-        </span>
-
         {/* Headline */}
         <h1 id="tour-title-hero" className="mb-6 max-w-3xl text-3xl font-black leading-tight tracking-tight text-on-surface sm:text-5xl sm:leading-none lg:text-6xl">
           {content.title}
@@ -68,19 +62,19 @@ export default function Hero({ onStartTour, onViewProjects, isTourActive, langua
         </p>
 
         <div className="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
-          <button 
-            id="hero-tour-btn"
-            onClick={onStartTour}
-            disabled={isTourActive}
-            className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-primary-hover hover:shadow-primary/20 active:scale-95 disabled:opacity-50 sm:w-auto cursor-pointer"
+          <a
+            id="hero-download-cv"
+            href={cvFile}
+            download="Andur-CV-2026.pdf"
+            className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-primary-hover hover:shadow-primary/20 active:scale-95 sm:min-w-[180px] sm:w-auto cursor-pointer"
           >
-            <Compass className="h-5 w-5 animate-pulse" />
+            <Download className="h-5 w-5" strokeWidth={1.75} />
             {t.heroBtn}
-          </button>
+          </a>
           <button
             type="button"
             onClick={onViewProjects}
-            className="flex h-14 w-full items-center justify-center rounded-2xl border border-border bg-surface-lowest px-8 text-base font-bold text-on-surface transition-all duration-200 hover:bg-surface-high active:scale-95 sm:w-auto cursor-pointer"
+            className="flex h-14 w-full items-center justify-center rounded-2xl border border-border bg-surface-lowest px-8 text-base font-bold text-on-surface transition-all duration-200 hover:bg-surface-high active:scale-95 sm:min-w-[180px] sm:w-auto cursor-pointer"
           >
             {t.heroProjectsBtn}
           </button>

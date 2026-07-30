@@ -1,7 +1,7 @@
 import React from 'react';
 import { TRANSLATIONS } from '../data';
 import { Language, Metric } from '../types';
-import { Award, BriefcaseBusiness, Globe2 } from 'lucide-react';
+import { Award, BriefcaseBusiness, Clock3, FolderKanban, Globe2, Sparkles, Workflow } from 'lucide-react';
 
 interface MetricsProps {
   language: Language;
@@ -11,7 +11,19 @@ interface MetricsProps {
 export default function Metrics({ language, metrics }: MetricsProps) {
   const t = TRANSLATIONS[language];
   const MetricIcon = ({ icon }: { icon: Metric['icon'] }) => {
-    const Icon = icon === 'award' ? Award : icon === 'briefcase' ? BriefcaseBusiness : Globe2;
+    const Icon = icon === 'projects'
+      ? FolderKanban
+      : icon === 'flows'
+        ? Workflow
+        : icon === 'hours'
+          ? Clock3
+          : icon === 'award'
+            ? Award
+            : icon === 'briefcase'
+              ? BriefcaseBusiness
+              : icon === 'globe'
+                ? Globe2
+                : Sparkles;
     return <Icon className="h-5 w-5 text-primary" aria-hidden="true" />;
   };
 

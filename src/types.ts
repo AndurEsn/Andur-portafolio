@@ -14,7 +14,7 @@ export interface Project {
   company?: string;
 }
 
-export type MetricIcon = 'award' | 'briefcase' | 'globe' | 'sparkles';
+export type MetricIcon = 'award' | 'briefcase' | 'globe' | 'sparkles' | 'projects' | 'flows' | 'hours';
 
 export interface Metric {
   value: string;
@@ -31,8 +31,14 @@ export interface HeroContent {
 }
 
 export interface FAQItem {
+  category: 'design' | 'collaboration' | 'profile';
   question: string;
   answer: string;
+  link?: {
+    label: string;
+    href: string;
+    download?: string;
+  };
 }
 
 export interface RoadmapItem {

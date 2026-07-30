@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { TOUR_STEPS } from '../data';
+import { TOUR_STEPS, TRANSLATIONS } from '../data';
 import { ArrowRight, Check, X } from 'lucide-react';
 import { Language, ToastVariant } from '../types';
 
@@ -8,7 +8,7 @@ interface TourOverlayProps {
   setCurrentStep: (step: number) => void;
   isActive: boolean;
   onClose: () => void;
-  onShowToast: (msg: string, variant?: ToastVariant) => void;
+  onShowToast: (msg: string, variant?: ToastVariant, title?: string) => void;
   language: Language;
 }
 
@@ -35,29 +35,25 @@ export default function TourOverlay({
 
   const steps = useMemo(() => TOUR_STEPS(language), [language]);
   const step = steps[currentStep];
+  const t = TRANSLATIONS[language];
 
   const getActiveElements = () => {
-    if (!step) return { target: null, section: null, focus: null };
+    if (!step) return { target: null, section: null };
     const target = document.getElementById(step.targetId);
     const section = target?.closest('section') ?? null;
-    const focus = target?.parentElement ?? target;
-    return { target, section, focus };
+    return { target, section };
   };
 
-  const getSpotlightCoords = (focus: HTMLElement, section: HTMLElement | null): SpotlightCoords => {
+  const getSpotlightCoords = (section: HTMLElement): SpotlightCoords => {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const focusRect = focus.getBoundingClientRect();
-    const sectionRect = section?.getBoundingClientRect();
-    const focusIsVisible = focusRect.bottom > SPOTLIGHT_MARGIN && focusRect.top < viewportHeight - SPOTLIGHT_MARGIN;
-    const sourceRect = focusIsVisible || !sectionRect
-      ? focusRect
-      : {
-          top: Math.max(SPOTLIGHT_MARGIN, sectionRect.top),
-          left: Math.max(SPOTLIGHT_MARGIN, sectionRect.left),
-          right: Math.min(viewportWidth - SPOTLIGHT_MARGIN, sectionRect.right),
-          bottom: Math.min(viewportHeight - SPOTLIGHT_MARGIN, sectionRect.bottom),
-        };
+    const sectionRect = section.getBoundingClientRect();
+    const sourceRect = {
+      top: Math.max(SPOTLIGHT_MARGIN, sectionRect.top),
+      left: Math.max(SPOTLIGHT_MARGIN, sectionRect.left),
+      right: Math.min(viewportWidth - SPOTLIGHT_MARGIN, sectionRect.right),
+      bottom: Math.min(viewportHeight - SPOTLIGHT_MARGIN, sectionRect.bottom),
+    };
 
     const left = Math.max(SPOTLIGHT_MARGIN, sourceRect.left - SPOTLIGHT_MARGIN);
     const top = Math.max(SPOTLIGHT_MARGIN, sourceRect.top - SPOTLIGHT_MARGIN);
@@ -75,20 +71,19 @@ export default function TourOverlay({
   useLayoutEffect(() => {
     if (!isActive || !step) return;
 
-    const { section, focus } = getActiveElements();
-    if (!focus) return;
+    const { section } = getActiveElements();
+    if (!section) return;
 
     if (section) {
       const headerOffset = window.innerWidth >= 640 ? 112 : 72;
       const sectionTop = section.getBoundingClientRect().top + window.scrollY - headerOffset;
       window.scrollTo({ top: Math.max(0, sectionTop), behavior: 'auto' });
     }
-    const updateCoords = () => setHighlightCoords(getSpotlightCoords(focus, section));
+    const updateCoords = () => setHighlightCoords(getSpotlightCoords(section));
     updateCoords();
 
     const resizeObserver = new ResizeObserver(updateCoords);
-    resizeObserver.observe(focus);
-    if (section) resizeObserver.observe(section);
+    resizeObserver.observe(section);
 
     let updateFrame = 0;
     const scheduleUpdate = () => {
@@ -221,7 +216,7 @@ export default function TourOverlay({
     }
 
     onClose();
-    onShowToast(language === 'es' ? '¡El recorrido ha concluido correctamente!' : 'The tour has concluded successfully!', 'success');
+    onShowToast(t.toastTourComplete, 'success', t.toastTourCompleteTitle);
   };
 
   return (
