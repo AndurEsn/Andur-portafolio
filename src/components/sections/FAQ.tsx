@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FAQS, TRANSLATIONS } from '../data';
+import { FAQS, TRANSLATIONS } from '../../content/data';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { FAQItem, Language } from '../types';
+import { FAQItem, Language } from '../../types';
 
 interface FAQProps {
   language: Language;

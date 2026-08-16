@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Mail, MessageCircle, Send } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Language, ToastVariant } from '../types';
-import { TRANSLATIONS } from '../data';
-import useBodyScrollLock from '../hooks/useBodyScrollLock';
-import ModalCloseButton, { modalPrimaryCloseButtonClass } from './ModalCloseButton';
+import { Language, ToastVariant } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import ModalCloseButton, { modalPrimaryCloseButtonClass } from '../ui/ModalCloseButton';
 
 interface ContactProps { onShowToast: (message: string, variant?: ToastVariant) => void; language: Language; }
 type ContactModal = 'email' | 'whatsapp' | null;

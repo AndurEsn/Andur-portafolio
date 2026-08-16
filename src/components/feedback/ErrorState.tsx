@@ -1,7 +1,7 @@
 import React from 'react';
 import { AlertOctagon, ArrowLeft } from 'lucide-react';
-import { Language } from '../types';
-import { TRANSLATIONS } from '../data';
+import { Language } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
 
 interface ErrorStateProps {
   onRecover: () => void;

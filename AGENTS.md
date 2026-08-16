@@ -22,21 +22,24 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 
 ## Mapa mínimo del código
 
-- `src/App.tsx`: estado global cliente y composición de la página.
-- `src/data.ts`: copy ES/EN, métricas, trayectoria, proyectos, FAQ y tour.
-- `src/types.ts`: contratos de dominio y estados de UI.
-- `src/components/`: secciones y overlays.
-- `src/index.css`: tokens de tema y utilidades globales.
-- `src/assets/`: avatar y logotipos locales.
-- `vite.config.ts`: Vite, React, Tailwind y alias `@`.
+- `src/app/App.tsx`: estado global cliente y composición de la página.
+- `src/app/main.tsx`: entrypoint de la SPA.
+- `src/content/data.ts`: copy ES/EN, métricas, trayectoria, proyectos, FAQ y tour.
+- `src/types/index.ts`: contratos de dominio y estados de UI.
+- `src/components/`: secciones, overlays, layout, feedback, efectos y UI.
+- `src/config/`: versión SemVer y releases visibles en Laboratorio.
+- `src/styles/index.css`: tokens de tema y utilidades globales.
+- `src/assets/`: avatar, logos y documentos locales.
+- `vite.config.ts`: Vite, React, Tailwind y alias `@` → `src/`.
 - `dist/`: salida generada; nunca editar manualmente.
+- `CHANGELOG.md`: historial de versiones; mantener alineado con `src/config/releases.ts`.
 
 ## Reglas duras e invariantes
 
 - Mantener paridad funcional y de contenido entre `es` y `en`.
-- Mantener soporte de temas `light` y `dark`; usar tokens semánticos de `src/index.css`, no colores arbitrarios salvo colores de marca justificados.
+- Mantener soporte de temas `light` y `dark`; usar tokens semánticos de `src/styles/index.css`, no colores arbitrarios salvo colores de marca justificados.
 - Mantener los tres estados `normal | loading | error` y cancelar el tour al abandonar `normal`.
-- El contenido compartido pertenece en `src/data.ts`; los contratos, en `src/types.ts`; evitar copy duplicado en componentes cuando sea reutilizable.
+- El contenido compartido pertenece en `src/content/data.ts`; los contratos, en `src/types/`; evitar copy duplicado en componentes cuando sea reutilizable.
 - No introducir backend, persistencia remota ni afirmar que el contacto envía datos sin una decisión explícita y credenciales/configuración aprobadas.
 - No exponer secretos. Variables reales van en `.env.local`, nunca en archivos versionables.
 - Mantener accesibilidad básica: HTML semántico, teclado, nombres accesibles, foco visible y respeto por `prefers-reduced-motion`.
@@ -46,7 +49,7 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 
 ## Routing de tareas y skills
 
-- Cambios de copy, proyectos, métricas, FAQ o trayectoria: leer `state/current.md`, después `skills/workflows.md` → “Contenido e i18n”; editar principalmente `src/data.ts`.
+- Cambios de copy, proyectos, métricas, FAQ o trayectoria: leer `state/current.md`, después `skills/workflows.md` → “Contenido e i18n”; editar principalmente `src/content/data.ts`.
 - Cambios visuales, responsive, tema, animación o accesibilidad: leer `decisions/design.md` y `skills/workflows.md` → “UI”.
 - Cambios de estado, overlays o persistencia: leer `decisions/architecture.md` y `gotchas/known-issues.md`.
 - Bugs: buscar primero en `gotchas/known-issues.md`; reproducir, hacer el cambio mínimo y ejecutar la validación proporcional.

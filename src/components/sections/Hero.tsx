@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Download, ZoomIn, ZoomOut } from 'lucide-react';
-import { HeroContent, Language } from '../types';
-import { TRANSLATIONS } from '../data';
-import useBodyScrollLock from '../hooks/useBodyScrollLock';
-import ModalCloseButton from './ModalCloseButton';
-import cvFile from '../assets/documents/andur-cv-2026.pdf';
+import { HeroContent, Language } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import ModalCloseButton from '../ui/ModalCloseButton';
+import cvFile from '../../assets/documents/andur-cv-2026.pdf';
 
 interface HeroProps {
   onViewProjects: () => void;

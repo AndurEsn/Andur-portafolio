@@ -1,7 +1,7 @@
 import React from 'react';
-import { ROADMAP, TRANSLATIONS } from '../data';
+import { ROADMAP, TRANSLATIONS } from '../../content/data';
 import { Briefcase, Calendar, Laptop, Sparkles } from 'lucide-react';
-import { Language } from '../types';
+import { Language } from '../../types';
 
 interface RoadmapProps {
   language: Language;

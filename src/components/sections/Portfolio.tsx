@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { PROJECTS, TRANSLATIONS } from '../data';
-import { Project, ProjectCategory, Language } from '../types';
+import { PROJECTS, TRANSLATIONS } from '../../content/data';
+import { Project, ProjectCategory, Language } from '../../types';
 import { ExternalLink, Calendar, Shield, Cpu, Sparkles } from 'lucide-react';
-import useBodyScrollLock from '../hooks/useBodyScrollLock';
-import ModalCloseButton, { modalPrimaryCloseButtonClass } from './ModalCloseButton';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import ModalCloseButton, { modalPrimaryCloseButtonClass } from '../ui/ModalCloseButton';
 
 interface PortfolioProps {
   language: Language;

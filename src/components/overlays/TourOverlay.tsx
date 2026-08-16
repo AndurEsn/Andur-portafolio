@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { TOUR_STEPS, TRANSLATIONS } from '../data';
+import { TOUR_STEPS, TRANSLATIONS } from '../../content/data';
 import { ArrowRight, Check, X } from 'lucide-react';
-import { Language, ToastVariant } from '../types';
+import { Language, ToastVariant } from '../../types';
 
 interface TourOverlayProps {
   currentStep: number;

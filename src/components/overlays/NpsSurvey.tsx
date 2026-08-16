@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronLeft, Send } from 'lucide-react';
-import { Language, NpsFeedback } from '../types';
-import { TRANSLATIONS } from '../data';
-import useBodyScrollLock from '../hooks/useBodyScrollLock';
-import ModalCloseButton from './ModalCloseButton';
+import { Language, NpsFeedback } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import ModalCloseButton from '../ui/ModalCloseButton';
 
 interface NpsSurveyProps {
   isOpen: boolean;

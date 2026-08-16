@@ -1,5 +1,5 @@
-import { Project, Metric, FAQItem, TourStep, RoadmapItem } from './types';
-import cvFile from './assets/documents/andur-cv-2026.pdf';
+import { Project, Metric, FAQItem, TourStep, RoadmapItem } from '../types';
+import cvFile from '../assets/documents/andur-cv-2026.pdf';
 
 export const TRANSLATIONS = {
   es: {
@@ -18,6 +18,8 @@ export const TRANSLATIONS = {
     labError: 'Simular Error 404',
     labNps: 'Activar Encuesta NPS',
     labDesignSystem: 'Documentación Design System',
+    labVersion: 'Versión',
+    labChangelog: 'Historial de cambios',
     labAnimation: 'Animaciones de entrada',
     labAnimationHelpLabel: 'Cómo funcionan las animaciones de entrada',
     labAnimationHelp: 'Cambia la forma en que se presenta el contenido del sitio web mediante diferentes estilos de animación.',
@@ -126,6 +128,8 @@ export const TRANSLATIONS = {
     labError: 'Simulate Error 404',
     labNps: 'Trigger NPS Survey',
     labDesignSystem: 'Design System Docs',
+    labVersion: 'Version',
+    labChangelog: 'Release history',
     labAnimation: 'Entrance animations',
     labAnimationHelpLabel: 'How entrance animations work',
     labAnimationHelp: 'Change how the website content is presented by using different animation styles.',

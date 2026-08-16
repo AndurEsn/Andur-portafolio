@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Award, BarChart3, Briefcase, Clock3, FolderKanban, Globe, ImagePlus, Plus, Save, Sparkles, Trash2, UserRound, Workflow } from 'lucide-react';
-import { HeroContent, Language, Metric, MetricIcon } from '../types';
+import { HeroContent, Language, Metric, MetricIcon } from '../../types';
 
 type EditableSection = 'hero' | 'metrics' | null;
 

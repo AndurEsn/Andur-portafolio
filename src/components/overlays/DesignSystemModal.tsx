@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { AlertTriangle, CheckCircle, ChevronDown, ChevronUp, Info } from 'lucide-react';
-import { Language, Theme } from '../types';
-import { TRANSLATIONS } from '../data';
-import useBodyScrollLock from '../hooks/useBodyScrollLock';
-import ModalCloseButton, { modalPrimaryCloseButtonClass } from './ModalCloseButton';
-import InfoTooltip from './InfoTooltip';
+import { Language, Theme } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
+import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import ModalCloseButton, { modalPrimaryCloseButtonClass } from '../ui/ModalCloseButton';
+import InfoTooltip from '../ui/InfoTooltip';
 
 interface DesignSystemModalProps {
   isOpen: boolean;

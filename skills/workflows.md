@@ -9,8 +9,8 @@
 
 ## Contenido e i18n
 
-1. Editar `src/data.ts` para proyectos, métricas, roadmap, FAQ, tour y traducciones.
-2. Si cambia la forma de datos, modificar primero `src/types.ts`.
+1. Editar `src/content/data.ts` para proyectos, métricas, roadmap, FAQ, tour y traducciones.
+2. Si cambia la forma de datos, modificar primero `src/types/index.ts`.
 3. Añadir ES y EN en el mismo cambio; buscar la clave para detectar usos y duplicados.
 4. Revisar longitud en móvil, acentos, cifras, fechas, enlaces y claims.
 5. Ejecutar `npm run lint` y `npm run build`.

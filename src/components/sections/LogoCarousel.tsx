@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
-import yaydooLogo from '../assets/logos/yaydoo.svg';
-import porCobrarLogo from '../assets/logos/porcobrar.png';
-import vendorPlaceLogo from '../assets/logos/vendorplace.png';
-import supervisorLogo from '../assets/logos/supervisor-ai.png';
-import leracomLogo from '../assets/logos/leracom-ai.png';
-import oysterLogo from '../assets/logos/oyster-light.svg';
-import buyerLogo from '../assets/logos/buyer.svg';
-import sendaMonarcaLogo from '../assets/logos/senda-monarca.svg';
-import { Language } from '../types';
+import yaydooLogo from '../../assets/logos/yaydoo.svg';
+import porCobrarLogo from '../../assets/logos/porcobrar.png';
+import vendorPlaceLogo from '../../assets/logos/vendorplace.png';
+import supervisorLogo from '../../assets/logos/supervisor-ai.png';
+import leracomLogo from '../../assets/logos/leracom-ai.png';
+import oysterLogo from '../../assets/logos/oyster-light.svg';
+import buyerLogo from '../../assets/logos/buyer.svg';
+import sendaMonarcaLogo from '../../assets/logos/senda-monarca.svg';
+import { Language } from '../../types';
 
 const logos = [
   { name: 'Yaydoo', src: yaydooLogo },

@@ -1,6 +1,6 @@
 import React from 'react';
-import { TRANSLATIONS } from '../data';
-import { Language, Metric } from '../types';
+import { TRANSLATIONS } from '../../content/data';
+import { Language, Metric } from '../../types';
 import { Award, BriefcaseBusiness, Clock3, FolderKanban, Globe2, Sparkles, Workflow } from 'lucide-react';
 
 interface MetricsProps {

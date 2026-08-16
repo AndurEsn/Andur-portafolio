@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, Compass, AlertCircle, RefreshCw, FlaskConical, Layers, Star } from 'lucide-react';
-import { Theme, AppState, EntranceAnimation, Language } from '../types';
-import { TRANSLATIONS } from '../data';
-import InfoTooltip from './InfoTooltip';
+import { Sun, Moon, Compass, AlertCircle, RefreshCw, FlaskConical, Layers, Star, Tag } from 'lucide-react';
+import { Theme, AppState, EntranceAnimation, Language } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
+import { APP_VERSION } from '../../config/version';
+import { RELEASES } from '../../config/releases';
+import InfoTooltip from '../ui/InfoTooltip';
 
 interface HeaderProps {
   theme: Theme;
@@ -121,7 +123,7 @@ export default function Header({
     { value: 'fade', label: 'Fade In' },
     { value: 'scale', label: 'Scale In' },
   ];
-  const dropdownPanelClass = 'absolute right-0 mt-2 w-64 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
+  const dropdownPanelClass = 'absolute right-0 mt-2 w-72 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out] max-h-[min(80vh,640px)] overflow-y-auto';
   const languageDropdownPanelClass = 'absolute right-0 mt-2 w-32 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
   const dropdownItemClass = 'w-full h-10 px-3 rounded-xl text-xs font-bold text-left text-on-surface-variant hover:bg-surface-low hover:text-on-surface transition-all flex items-center gap-2';
 
@@ -299,6 +301,32 @@ export default function Header({
                   <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
                   <span>{t.labNps}</span>
                 </button>
+
+                <div className="border-t border-border/60 px-2.5 pt-3 pb-1 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-[10px] font-black tracking-wide text-on-surface-variant">{t.labVersion}</p>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
+                      <Tag className="h-3 w-3" aria-hidden="true" />
+                      v{APP_VERSION}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-black tracking-wide text-on-surface-variant mb-1.5">{t.labChangelog}</p>
+                    <ul className="space-y-2">
+                      {RELEASES.map((release) => (
+                        <li key={release.version} className="rounded-xl border border-border/60 bg-surface-low/60 p-2">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[10px] font-black text-primary">v{release.version}</span>
+                            <span className="text-[9px] text-muted">{release.date}</span>
+                          </div>
+                          <p className="mt-1 text-[10px] leading-snug text-on-surface-variant">
+                            {release.summary[language]}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             )}
           </div>

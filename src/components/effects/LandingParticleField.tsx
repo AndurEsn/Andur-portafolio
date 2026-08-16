@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Theme } from '../types';
+import { Theme } from '../../types';
 
 interface LandingParticleFieldProps {
   theme: Theme;
