@@ -3,7 +3,6 @@ import { Sun, Moon, Compass, AlertCircle, RefreshCw, FlaskConical, Layers, Star,
 import { Theme, AppState, EntranceAnimation, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import { APP_VERSION } from '../../config/version';
-import { RELEASES } from '../../config/releases';
 import InfoTooltip from '../ui/InfoTooltip';
 
 interface HeaderProps {
@@ -123,7 +122,7 @@ export default function Header({
     { value: 'fade', label: 'Fade In' },
     { value: 'scale', label: 'Scale In' },
   ];
-  const dropdownPanelClass = 'absolute right-0 mt-2 w-72 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out] max-h-[min(80vh,640px)] overflow-y-auto';
+  const dropdownPanelClass = 'absolute right-0 mt-2 w-64 overflow-visible bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
   const languageDropdownPanelClass = 'absolute right-0 mt-2 w-32 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
   const dropdownItemClass = 'w-full h-10 px-3 rounded-xl text-xs font-bold text-left text-on-surface-variant hover:bg-surface-low hover:text-on-surface transition-all flex items-center gap-2';
 
@@ -255,7 +254,7 @@ export default function Header({
                 <div className="border-t border-border/60 px-2.5 pb-1 pt-3">
                   <div className="mb-2 flex items-center gap-1">
                     <p className="text-[10px] font-black tracking-wide text-on-surface-variant">{t.labAnimation}</p>
-                    <InfoTooltip label={t.labAnimationHelpLabel}>{t.labAnimationHelp}</InfoTooltip>
+                    <InfoTooltip label={t.labAnimationHelpLabel} placement="top">{t.labAnimationHelp}</InfoTooltip>
                   </div>
                   <div className="grid grid-cols-3 gap-1" role="group" aria-label={t.labAnimation}>
                     {animationOptions.map((option) => (
@@ -302,29 +301,19 @@ export default function Header({
                   <span>{t.labNps}</span>
                 </button>
 
-                <div className="border-t border-border/60 px-2.5 pt-3 pb-1 space-y-2">
+                <div className="border-t border-border/60 px-2.5 pt-3 pb-1">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-[10px] font-black tracking-wide text-on-surface-variant">{t.labVersion}</p>
-                    <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary">
+                    <a
+                      href="https://github.com/AndurEsn/Andur-portafolio/releases"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary hover:bg-primary/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      aria-label={`${t.labVersion} v${APP_VERSION}. ${t.labVersionLink}`}
+                    >
                       <Tag className="h-3 w-3" aria-hidden="true" />
                       v{APP_VERSION}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black tracking-wide text-on-surface-variant mb-1.5">{t.labChangelog}</p>
-                    <ul className="space-y-2">
-                      {RELEASES.map((release) => (
-                        <li key={release.version} className="rounded-xl border border-border/60 bg-surface-low/60 p-2">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] font-black text-primary">v{release.version}</span>
-                            <span className="text-[9px] text-muted">{release.date}</span>
-                          </div>
-                          <p className="mt-1 text-[10px] leading-snug text-on-surface-variant">
-                            {release.summary[language]}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
+                    </a>
                   </div>
                 </div>
               </div>

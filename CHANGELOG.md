@@ -18,7 +18,7 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 - FAQ ampliado a 18 preguntas con chips de categoría y descarga de CV.
 - PDF local `andur-cv-2026.pdf` enlazado desde Hero y FAQ.
 - Métricas actualizadas y copy de perfil revisado.
-- Versionado SemVer visible en Laboratorio con historial de cambios.
+- Versionado SemVer visible en Laboratorio (enlace a GitHub Releases).
 - Reorganización de `src/` por dominio (app, sections, overlays, content, config).
 
 ### Changed

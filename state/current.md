@@ -8,7 +8,7 @@ Actualizado: 2026-08-15.
 - `npm run lint`: pasa.
 - `npm run build`: pasa.
 - Dev server: `http://127.0.0.1:3000/` con `host: 127.0.0.1` (corrige fallo de `--host=0.0.0.0`).
-- Versionado SemVer activo: **`1.1.0`** en `package.json`, visible en menú Laboratorio con historial (`CHANGELOG.md`, `src/config/releases.ts`).
+- Versionado SemVer activo: **`1.1.0`** en `package.json`, visible en Laboratorio; el historial vive en GitHub Releases y `CHANGELOG.md`.
 - Tag **`v1.0.0`** congela la publicación original en GitHub; **`v1.1.0`** incluye FAQ/CV/métricas y reorganización.
 - Estructura `src/` reorganizada: `app/`, `components/{layout,sections,overlays,feedback,effects,ui}/`, `content/`, `config/`, `types/`, `styles/`, `hooks/`, `assets/`.
 - Demo Day descartado del working tree local.

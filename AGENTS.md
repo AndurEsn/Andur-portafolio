@@ -27,12 +27,12 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 - `src/content/data.ts`: copy ES/EN, métricas, trayectoria, proyectos, FAQ y tour.
 - `src/types/index.ts`: contratos de dominio y estados de UI.
 - `src/components/`: secciones, overlays, layout, feedback, efectos y UI.
-- `src/config/`: versión SemVer y releases visibles en Laboratorio.
+- `src/config/`: versión SemVer visible en Laboratorio.
 - `src/styles/index.css`: tokens de tema y utilidades globales.
 - `src/assets/`: avatar, logos y documentos locales.
 - `vite.config.ts`: Vite, React, Tailwind y alias `@` → `src/`.
 - `dist/`: salida generada; nunca editar manualmente.
-- `CHANGELOG.md`: historial de versiones; mantener alineado con `src/config/releases.ts`.
+- `CHANGELOG.md`: historial de versiones; publicar el detalle en GitHub Releases.
 
 ## Reglas duras e invariantes
 

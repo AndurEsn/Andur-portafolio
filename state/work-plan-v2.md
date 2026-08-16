@@ -19,8 +19,8 @@ Simplificar el producto eliminando funciones de demostración y convertir estado
 - [ ] Eliminar encuesta NPS (`NpsSurvey`, storage, copy, ADR-004).
 - [ ] Eliminar tour interactivo (`TourOverlay`, botón, pasos en `data.ts`).
 - [ ] Eliminar referencias demo-day si reaparecen.
-- [ ] Reducir Laboratorio a animaciones + Design System + versión/changelog.
-- [ ] Actualizar `CHANGELOG.md`, `releases.ts`, memoria y ADRs.
+- [ ] Reducir Laboratorio a animaciones + Design System + versión.
+- [ ] Actualizar `CHANGELOG.md`, memoria y ADRs.
 
 ### Fase 2 — Comportamiento real
 
@@ -49,4 +49,3 @@ Simplificar el producto eliminando funciones de demostración y convertir estado
 
 - `decisions/versioning.md`
 - `CHANGELOG.md`
-- `src/config/releases.ts`
