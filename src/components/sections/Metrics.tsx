@@ -2,6 +2,7 @@ import React from 'react';
 import { TRANSLATIONS } from '../../content/data';
 import { Language, Metric } from '../../types';
 import { Award, BriefcaseBusiness, Clock3, FolderKanban, Globe2, Sparkles, Workflow } from 'lucide-react';
+import BrandGlyph from '../ui/BrandGlyph';
 
 interface MetricsProps {
   language: Language;
@@ -24,13 +25,13 @@ export default function Metrics({ language, metrics }: MetricsProps) {
               : icon === 'globe'
                 ? Globe2
                 : Sparkles;
-    return <Icon className="h-5 w-5 text-primary" aria-hidden="true" />;
+    return <BrandGlyph icon={Icon} />;
   };
 
   return (
     <section 
       id="tour-step-metrics"
-      className="px-4 py-8 sm:py-12 max-w-7xl mx-auto w-full transition-all duration-300"
+      className="px-4 py-section max-w-7xl mx-auto w-full transition-all duration-300"
     >
       <div className="flex flex-col items-center text-center mb-10">
         <h2 id="tour-title-metrics" className="text-2xl sm:text-4xl font-black text-on-surface tracking-tight mb-3">
@@ -47,7 +48,7 @@ export default function Metrics({ language, metrics }: MetricsProps) {
             className="group flex flex-col justify-between rounded-2xl border border-border bg-card-bg p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-lg sm:p-8"
           >
             <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-              <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 shadow-sm transition-transform duration-300 group-hover:scale-110">
+              <div className="mb-5 transition-transform duration-300 group-hover:scale-110">
                 <MetricIcon icon={metric.icon} />
               </div>
               <span className="text-4xl sm:text-5xl font-black text-primary tracking-tight mb-2">

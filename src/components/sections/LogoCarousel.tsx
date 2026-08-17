@@ -8,6 +8,7 @@ import oysterLogo from '../../assets/logos/oyster-light.svg';
 import buyerLogo from '../../assets/logos/buyer.svg';
 import sendaMonarcaLogo from '../../assets/logos/senda-monarca.svg';
 import { Language } from '../../types';
+import { TRANSLATIONS } from '../../content/data';
 
 const logos = [
   { name: 'Yaydoo', src: yaydooLogo },
@@ -51,6 +52,7 @@ function LogoGroup({ duplicate = false, onImageError }: LogoGroupProps) {
 }
 
 export default function LogoCarousel({ language }: LogoCarouselProps) {
+  const t = TRANSLATIONS[language];
   const marqueeRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
@@ -168,13 +170,7 @@ export default function LogoCarousel({ language }: LogoCarouselProps) {
   };
 
   return (
-    <section
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-      aria-labelledby="trusted-brands-title"
-    >
-      <h2 id="trusted-brands-title" className="sr-only">
-        {language === 'es' ? 'Marcas con las que he colaborado' : 'Brands I have worked with'}
-      </h2>
+    <section className="mx-auto w-full max-w-7xl px-4 pb-section pt-8" aria-label={t.brandsTitle}>
       <div
         ref={marqueeRef}
         className={`logo-marquee overflow-hidden rounded-2xl border border-border bg-surface-lowest py-2 cursor-grab ${dragRef.current.active ? 'cursor-grabbing' : ''}`}

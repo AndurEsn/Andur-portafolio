@@ -1,49 +1,41 @@
 # Plan de trabajo v2 — Simplificación y comportamiento real
 
-Actualizado: 2026-08-15. Estado: activo.
+Actualizado: 2026-08-17. Estado: listo para revisión local (sin push).
 
 ## Contexto
 
-- Baseline publicado congelado en tag **`v1.0.0`** (`b906f1b`).
-- Rama de trabajo integrada: **`main`** con **`v1.1.0`** (FAQ, métricas, CV, reorganización, SemVer).
-- Demo Day descartado del working tree; no debe reintroducirse.
+- Baseline publicado: **`v1.0.0`**.
+- Última release en `main`: **`v1.1.0`**.
+- Trabajo actual en `feat/v2-simplification`.
 
 ## Objetivo de v2.0.0
 
-Simplificar el producto eliminando funciones de demostración y convertir estados simulados en comportamiento real de producción.
+Simplificar el producto y convertir estados simulados en comportamiento real.
 
 ## Fases
 
 ### Fase 1 — Limpieza (breaking → MAJOR)
 
-- [ ] Eliminar encuesta NPS (`NpsSurvey`, storage, copy, ADR-004).
-- [ ] Eliminar tour interactivo (`TourOverlay`, botón, pasos en `data.ts`).
-- [ ] Eliminar referencias demo-day si reaparecen.
-- [ ] Reducir Laboratorio a animaciones + Design System + versión.
-- [ ] Actualizar `CHANGELOG.md`, memoria y ADRs.
+- [x] Eliminar encuesta NPS.
+- [x] Eliminar tour interactivo.
+- [x] Eliminar referencias demo-day.
+- [x] Reducir Laboratorio a animaciones + Design System + versión.
+- [x] Actualizar `CHANGELOG.md`, memoria y ADRs.
 
 ### Fase 2 — Comportamiento real
 
-- [ ] **404 real:** rutas válidas solo `/`; cualquier otra pathname → `ErrorState`.
-- [ ] **Carga inicial:** montar con `SkeletonLoader`; esperar carga real; si termina antes de 1 s, mantener skeleton hasta completar 1 s; si tarda más, mantener hasta que cargue.
-- [ ] Respetar `prefers-reduced-motion` (acortar o omitir delay artificial).
-- [ ] Quitar toggles de simulación de carga/error del Laboratorio.
+- [x] **404 real:** rutas válidas solo `/`.
+- [x] **Carga inicial:** splash 2 s y luego fondo de puntos con ola de 1 s.
+- [x] Respetar `prefers-reduced-motion`.
+- [x] Quitar toggles de simulación de carga/error.
 
 ### Fase 3 — Contenido y lanzamiento
 
-- [ ] Verificar FAQ pendiente y copy profesional restante.
-- [ ] Configurar `VITE_CONTACT_EMAIL` y WhatsApp real.
-- [ ] `npm run lint && npm run build`.
+- [x] Contacto real: LinkedIn y `andur-design@outlook.com` (sin WhatsApp).
+- [x] CV de agosto 2026 como descarga del sitio.
+- [ ] Revisar y aprobar en local.
 - [ ] QA: ES/EN, light/dark, 375/768/1920, teclado, `/` y `/ruta-invalida`.
-- [ ] Tag **`v2.0.0`**, release en GitHub, deploy.
-
-## Criterios SemVer para esta línea
-
-| Versión | Cuándo |
-|---------|--------|
-| PATCH | Correcciones sin cambio de alcance |
-| MINOR | Features compatibles |
-| MAJOR | Eliminación de NPS/tour/simulaciones (v2.0.0) |
+- [ ] Tag **`v2.0.0`**, release en GitHub, deploy (solo con aprobación).
 
 ## Referencias
 

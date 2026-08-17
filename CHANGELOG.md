@@ -4,12 +4,25 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 
 ## [Unreleased]
 
-### Planeado
+### Added
 
-- Eliminar encuesta NPS, tour interactivo y ruta demo-day.
-- 404 real para rutas inválidas.
-- Carga inicial con `SkeletonLoader` (máximo 1 s si la carga es rápida).
-- Configurar contacto real (correo y WhatsApp).
+- 404 real para rutas distintas de `/`.
+- Splash de bienvenida (2 s) y carga con fondo de puntos e indicador central (1 s).
+
+### Changed
+
+- Contacto: LinkedIn y `mailto:andur-design@outlook.com`.
+- CV descargable: `andur-cv-2026-ago.pdf` (`Andur-CV-2026-Ago.pdf`).
+- En inglés, la sección y el tab de Preguntas Frecuentes se llaman `FAQ's`.
+- Tema inicial según el sistema, override manual persistido; el splash respeta claro y oscuro.
+- Íconos de marca más claros en oscuro.
+- Animaciones de entrada al hacer scroll, sin exigir dirección hacia abajo.
+
+### Removed
+
+- Encuesta NPS, tour interactivo y simulaciones de carga/404 en Laboratorio.
+- Formulario de contacto, WhatsApp y dependencias no usadas (`@google/genai`, Express).
+- Muestra de Input en el Design System.
 
 ## [1.1.0] - 2026-07-30
 

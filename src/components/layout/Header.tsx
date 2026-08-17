@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, Compass, AlertCircle, RefreshCw, FlaskConical, Layers, Star, Tag } from 'lucide-react';
+import { Sun, Moon, FlaskConical, Layers, Tag } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Theme, AppState, EntranceAnimation, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import { APP_VERSION } from '../../config/version';
@@ -9,30 +10,47 @@ interface HeaderProps {
   theme: Theme;
   setTheme: (theme: Theme) => void;
   appState: AppState;
-  setAppState: (state: AppState) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
-  onStartTour: () => void;
-  isTourActive: boolean;
   onOpenDesignSystem: () => void;
-  onOpenNps: () => void;
   entranceAnimation: EntranceAnimation;
   setEntranceAnimation: (animation: EntranceAnimation) => void;
   avatarSrc: string;
   onNavigateToHero: () => void;
 }
 
+function LabAnimationPreview({ type, active }: { type: EntranceAnimation; active: boolean }) {
+  const shouldReduceMotion = useReducedMotion();
+  const shapeClass = `block h-8 w-8 rounded-lg ${active ? 'bg-white/90' : 'bg-primary'}`;
+
+  if (shouldReduceMotion) {
+    return <span className={shapeClass} aria-hidden="true" />;
+  }
+
+  const animate =
+    type === 'move'
+      ? { y: [8, 0, 0, 8], opacity: [0.25, 1, 1, 0.25] }
+      : type === 'fade'
+        ? { opacity: [0.15, 1, 1, 0.15] }
+        : { scale: [0.55, 1, 1, 0.55], opacity: [0.35, 1, 1, 0.35] };
+
+  return (
+    <motion.span
+      className={shapeClass}
+      aria-hidden="true"
+      animate={animate}
+      transition={{ duration: 1.7, repeat: Infinity, ease: 'easeInOut', times: [0, 0.35, 0.7, 1] }}
+    />
+  );
+}
+
 export default function Header({
   theme,
   setTheme,
   appState,
-  setAppState,
   language,
   setLanguage,
-  onStartTour,
-  isTourActive,
   onOpenDesignSystem,
-  onOpenNps,
   entranceAnimation,
   setEntranceAnimation,
   avatarSrc,
@@ -115,16 +133,16 @@ export default function Header({
     { id: 'roadmap-section', label: language === 'es' ? 'Trayectoria' : 'Roadmap' },
     { id: 'tour-step-projects', label: language === 'es' ? 'Proyectos' : 'Projects' },
     { id: 'contact-section', label: language === 'es' ? 'Contacto' : 'Contact' },
-    { id: 'faq-section', label: language === 'es' ? 'FAQ' : 'FAQ' },
+    { id: 'faq-section', label: t.navFaq },
   ];
   const animationOptions: { value: EntranceAnimation; label: string }[] = [
     { value: 'move', label: 'Move In' },
     { value: 'fade', label: 'Fade In' },
     { value: 'scale', label: 'Scale In' },
   ];
-  const dropdownPanelClass = 'absolute right-0 mt-2 w-64 overflow-visible bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
+  const dropdownPanelClass = 'absolute right-0 mt-2 w-[22rem] overflow-visible bg-surface-lowest border border-border rounded-2xl p-3 shadow-2xl z-50 flex flex-col gap-2 animate-[fadeIn_0.2s_ease-out]';
   const languageDropdownPanelClass = 'absolute right-0 mt-2 w-32 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
-  const dropdownItemClass = 'w-full h-10 px-3 rounded-xl text-xs font-bold text-left text-on-surface-variant hover:bg-surface-low hover:text-on-surface transition-all flex items-center gap-2';
+  const dropdownItemClass = 'w-full h-10 px-3 rounded-xl text-xs font-bold text-left text-on-surface-variant hover:bg-surface-low hover:text-on-surface transition-all flex items-center gap-2 cursor-pointer';
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -141,8 +159,8 @@ export default function Header({
 
   return (
     <>
-      <header className={`fixed left-0 right-0 h-16 bg-surface-lowest border-b border-border z-40 transition-all duration-300 ${appState !== 'normal' ? 'top-10' : 'top-0'} ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-      <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <header className={`fixed left-0 right-0 top-0 z-40 h-16 border-b border-border bg-surface-lowest transition-all duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand & Avatar */}
         <button type="button" onClick={handleBrandClick} className="relative z-10 flex h-10 items-center gap-2 rounded-xl px-2 text-on-surface-variant transition-colors duration-200 hover:bg-surface-container hover:text-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-3 cursor-pointer" id="header-brand" aria-label="Portafolio">
@@ -210,105 +228,57 @@ export default function Header({
 
             {isLabOpen && (
               <div className={dropdownPanelClass}>
-                <div className="px-2.5 py-1.5 border-b border-border/60 pb-2 mb-1 shrink-0">
-                  <h4 className="text-xs font-black text-primary tracking-wide">{t.labTitle}</h4>
-                  <p className="text-[10px] text-muted leading-tight mt-0.5">{t.labDescription}</p>
+                <div className="border-b border-border/60 px-2 pb-3">
+                  <h4 className="typo-overlay-heading">{t.labTitle}</h4>
+                  <p className="mt-1 typo-overlay-body">{t.labDescription}</p>
                 </div>
 
-                {/* Simulated Loading Mode */}
-                <button
-                  onClick={() => {
-                    setAppState(appState === 'loading' ? 'normal' : 'loading');
-                    setIsLabOpen(false);
-                  }}
-                  className={`${dropdownItemClass} justify-between ${
-                    appState === 'loading' ? 'bg-primary text-white' : ''
-                  }`}
-                  id="tour-lab-loading"
-                >
-                  <span className="flex items-center gap-2">
-                    <RefreshCw className={`w-3.5 h-3.5 ${appState === 'loading' ? 'animate-spin' : ''}`} />
-                    {t.labLoading}
-                  </span>
-                  {appState === 'loading' && <span className="text-[9px] uppercase font-black tracking-widest">ON</span>}
-                </button>
-
-                {/* Simulated Error 404 Mode */}
-                <button
-                  onClick={() => {
-                    setAppState(appState === 'error' ? 'normal' : 'error');
-                    setIsLabOpen(false);
-                  }}
-                  className={`${dropdownItemClass} justify-between ${
-                    appState === 'error' ? 'bg-error-container text-on-error-container' : ''
-                  }`}
-                  id="tour-lab-error"
-                >
-                  <span className="flex items-center gap-2">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    {t.labError}
-                  </span>
-                  {appState === 'error' && <span className="text-[9px] uppercase font-black tracking-widest">ON</span>}
-                </button>
-
-                <div className="border-t border-border/60 px-2.5 pb-1 pt-3">
+                <div className="border-b border-border/60 px-2 py-3">
                   <div className="mb-2 flex items-center gap-1">
-                    <p className="text-[10px] font-black tracking-wide text-on-surface-variant">{t.labAnimation}</p>
+                    <p className="typo-overlay-heading">{t.labAnimation}</p>
                     <InfoTooltip label={t.labAnimationHelpLabel} placement="top">{t.labAnimationHelp}</InfoTooltip>
                   </div>
-                  <div className="grid grid-cols-3 gap-1" role="group" aria-label={t.labAnimation}>
+                  <div className="grid grid-cols-3 gap-2" role="group" aria-label={t.labAnimation}>
                     {animationOptions.map((option) => (
                       <button
                         key={option.value}
                         type="button"
                         onClick={() => setEntranceAnimation(option.value)}
                         aria-pressed={entranceAnimation === option.value}
-                        className={`h-9 rounded-lg px-1 text-[9px] font-bold transition-colors cursor-pointer ${
+                        className={`flex h-[5.75rem] flex-col items-center justify-center gap-1.5 rounded-xl px-1 text-xs font-bold transition-colors cursor-pointer ${
                           entranceAnimation === option.value
                             ? 'bg-primary text-white'
                             : 'bg-surface-low text-on-surface-variant hover:bg-surface-high hover:text-on-surface'
                         }`}
                       >
+                        <LabAnimationPreview type={option.value} active={entranceAnimation === option.value} />
                         {option.label}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <span className="h-px bg-border/60 my-1 block"></span>
+                <div className="border-b border-border/60 py-2">
+                  <button
+                    onClick={() => {
+                      onOpenDesignSystem();
+                      setIsLabOpen(false);
+                    }}
+                    className={dropdownItemClass}
+                  >
+                    <Layers className="w-3.5 h-3.5 text-primary" />
+                    <span className="typo-overlay-heading">{t.labDesignSystem}</span>
+                  </button>
+                </div>
 
-                {/* Design System Documentation Modal Option */}
-                <button
-                  onClick={() => {
-                    onOpenDesignSystem();
-                    setIsLabOpen(false);
-                  }}
-                  className={dropdownItemClass}
-                >
-                  <Layers className="w-3.5 h-3.5 text-primary" />
-                  <span>{t.labDesignSystem}</span>
-                </button>
-
-                {/* Manual NPS registration always starts a new blank response. */}
-                <button
-                  onClick={() => {
-                    onOpenNps();
-                    setIsLabOpen(false);
-                  }}
-                  className={dropdownItemClass}
-                >
-                  <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
-                  <span>{t.labNps}</span>
-                </button>
-
-                <div className="border-t border-border/60 px-2.5 pt-3 pb-1">
+                <div className="px-2 pt-3 pb-1">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="text-[10px] font-black tracking-wide text-on-surface-variant">{t.labVersion}</p>
+                    <p className="typo-overlay-heading">{t.labVersion}</p>
                     <a
                       href="https://github.com/AndurEsn/Andur-portafolio/releases"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-black text-primary hover:bg-primary/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-black text-primary hover:bg-primary/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       aria-label={`${t.labVersion} v${APP_VERSION}. ${t.labVersionLink}`}
                     >
                       <Tag className="h-3 w-3" aria-hidden="true" />
@@ -336,29 +306,13 @@ export default function Header({
               <Sun className="h-[18px] w-[18px] text-primary" strokeWidth={1.75} />
             )}
           </button>
-
-          {/* 4. PRODUCT TOUR COMPACT ON MOBILE */}
-          <button
-            onClick={onStartTour}
-            disabled={isTourActive || appState !== 'normal'}
-            className={`flex items-center justify-center gap-2 h-10 rounded-xl font-bold transition-all active:scale-95 duration-150 cursor-pointer ${
-              isTourActive
-                ? 'bg-primary/50 text-white/80 cursor-not-allowed px-3'
-                : 'bg-primary text-white hover:bg-primary-hover shadow-sm hover:shadow-md px-3 sm:px-4'
-            }`}
-          >
-            <Compass className="w-4 h-4 animate-pulse" />
-            <span className="hidden sm:inline text-xs sm:text-sm">{t.startTour}</span>
-            <span className="inline sm:hidden text-xs">{t.tour}</span>
-          </button>
-
         </div>
       </div>
     </header>
 
     {/* 5. FLOATING SECTION TABS - Visible on tablet/desktop, hidden on mobile */}
     {appState === 'normal' && <div 
-      className={`fixed left-0 right-0 h-12 bg-surface-lowest/90 backdrop-blur-md border-b border-border z-30 transition-all duration-300 hidden sm:flex items-center justify-center ${
+      className={`fixed left-0 right-0 z-30 hidden h-12 items-center justify-center border-b border-border bg-surface-lowest/90 backdrop-blur-md transition-all duration-300 sm:flex ${
         isVisible ? 'top-16' : 'top-0'
       }`}
     >

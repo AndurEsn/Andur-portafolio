@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Header from '../components/layout/Header';
 import Hero from '../components/sections/Hero';
 import Metrics from '../components/sections/Metrics';
@@ -6,21 +6,22 @@ import Roadmap from '../components/sections/Roadmap';
 import Portfolio from '../components/sections/Portfolio';
 import Contact from '../components/sections/Contact';
 import FAQ from '../components/sections/FAQ';
-import SkeletonLoader from '../components/feedback/SkeletonLoader';
 import ErrorState from '../components/feedback/ErrorState';
-import TourOverlay from '../components/overlays/TourOverlay';
-import NpsSurvey from '../components/overlays/NpsSurvey';
 import DesignSystemModal from '../components/overlays/DesignSystemModal';
 import LogoCarousel from '../components/sections/LogoCarousel';
 import LandingParticleField from '../components/effects/LandingParticleField';
+import SplashScreen from '../components/effects/SplashScreen';
+import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
 import andurProfile from '../assets/images/andur-profile.jpg';
-import { Theme, AppState, EntranceAnimation, HeroContent, Language, NpsFeedback, ToastVariant } from '../types';
+import { Theme, AppState, EntranceAnimation, HeroContent, Language, ToastVariant } from '../types';
 import { AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { METRICS, TRANSLATIONS } from '../content/data';
+import { goHome, isHomePath } from '../config/routes';
+import { applyThemeClass, getSystemTheme, persistTheme, readStoredTheme, resolveTheme } from '../config/theme';
 
 const avatarPath = andurProfile;
-const NPS_STORAGE_KEY = 'portfolio-nps-feedback-v1';
+const INITIAL_LOADING_MS = 1000;
 
 interface ToastState {
   message: string;
@@ -30,14 +31,13 @@ interface ToastState {
 
 interface LandingRevealProps {
   animation: EntranceAnimation;
-  scrollDirection: 'up' | 'down' | 'idle';
   children: React.ReactNode;
 }
 
-function LandingReveal({ animation, scrollDirection, children }: LandingRevealProps) {
+function LandingReveal({ animation, children }: LandingRevealProps) {
   const shouldReduceMotion = useReducedMotion();
   const revealRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(revealRef, { amount: 0.18 });
+  const isInView = useInView(revealRef, { amount: 0.2, once: true, margin: '0px 0px -12% 0px' });
 
   const hidden = shouldReduceMotion
     ? { opacity: 1, y: 0, scale: 1 }
@@ -47,42 +47,19 @@ function LandingReveal({ animation, scrollDirection, children }: LandingRevealPr
         ? { opacity: 0, y: 0, scale: 0.94 }
         : { opacity: 0, y: 0, scale: 1 };
   const visible = { opacity: 1, y: 0, scale: 1 };
-  const shouldAnimate = !shouldReduceMotion && isInView && scrollDirection === 'down';
-  const shouldStayVisible = shouldReduceMotion || scrollDirection !== 'down' || isInView;
 
   return (
     <motion.div
       ref={revealRef}
-      variants={{ hidden, visible }}
-      initial={scrollDirection === 'down' && !shouldReduceMotion ? 'hidden' : false}
-      animate={shouldStayVisible ? 'visible' : 'hidden'}
-      transition={shouldAnimate
-        ? { delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-        : { duration: 0 }}
+      initial={shouldReduceMotion ? visible : hidden}
+      animate={shouldReduceMotion || isInView ? visible : hidden}
+      transition={shouldReduceMotion
+        ? { duration: 0 }
+        : { delay: 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
-}
-
-function readStoredNpsFeedback(): NpsFeedback | null {
-  try {
-    const storedValue = window.localStorage.getItem(NPS_STORAGE_KEY);
-    if (!storedValue) return null;
-
-    const parsed = JSON.parse(storedValue) as Partial<NpsFeedback>;
-    const hasValidStatus = parsed.status === 'dismissed' || parsed.status === 'submitted';
-    const hasValidRating = parsed.rating === null || (
-      typeof parsed.rating === 'number' &&
-      parsed.rating >= 1 &&
-      parsed.rating <= 5
-    );
-
-    if (!hasValidStatus || !hasValidRating || typeof parsed.comment !== 'string') return null;
-    return parsed as NpsFeedback;
-  } catch {
-    return null;
-  }
 }
 
 const defaultHeroContent: Record<Language, HeroContent> = {
@@ -103,17 +80,14 @@ const defaultHeroContent: Record<Language, HeroContent> = {
 };
 
 export default function App() {
-  const [theme, setTheme] = useState<Theme>('light');
-  const [appState, setAppState] = useState<AppState>('normal');
+  const [theme, setTheme] = useState<Theme>(() => {
+    const initial = resolveTheme();
+    applyThemeClass(initial);
+    return initial;
+  });
+  const [appState, setAppState] = useState<AppState>(() => (isHomePath() ? 'splash' : 'error'));
   const [language, setLanguage] = useState<Language>('es');
   const [entranceAnimation, setEntranceAnimation] = useState<EntranceAnimation>('move');
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | 'idle'>('idle');
-  
-  const [isTourActive, setIsTourActive] = useState(false);
-  const [currentTourStep, setCurrentTourStep] = useState(0);
-  
-  const [isNpsOpen, setIsNpsOpen] = useState(false);
-  const [npsFeedback, setNpsFeedback] = useState<NpsFeedback | null>(readStoredNpsFeedback);
   const [isDesignSystemOpen, setIsDesignSystemOpen] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
 
@@ -122,49 +96,41 @@ export default function App() {
   const metrics = METRICS(language);
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let frame = 0;
-
-    const updateScrollDirection = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY !== lastScrollY) {
-          setScrollDirection(currentScrollY > lastScrollY ? 'down' : 'up');
-          lastScrollY = currentScrollY;
-        }
-      });
-    };
-
-    window.addEventListener('scroll', updateScrollDirection, { passive: true });
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', updateScrollDirection);
-    };
-  }, []);
-
-  // Sync theme class to HTML root element
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      root.style.backgroundColor = '#10131a';
-    } else {
-      root.classList.remove('dark');
-      root.style.backgroundColor = '#F7F9FF';
-    }
+    applyThemeClass(theme);
   }, [theme]);
 
-  // Show the survey once, after one minute, while no local decision exists.
   useEffect(() => {
-    if (npsFeedback) return;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const syncWithSystem = () => {
+      if (readStoredTheme()) return;
+      setTheme(getSystemTheme());
+    };
 
-    const timer = setTimeout(() => {
-      setIsNpsOpen(true);
-    }, 60000);
+    media.addEventListener('change', syncWithSystem);
+    return () => media.removeEventListener('change', syncWithSystem);
+  }, []);
 
-    return () => clearTimeout(timer);
-  }, [npsFeedback]);
+  useEffect(() => {
+    const syncRoute = () => {
+      setAppState(isHomePath() ? 'normal' : 'error');
+    };
+
+    window.addEventListener('popstate', syncRoute);
+    return () => window.removeEventListener('popstate', syncRoute);
+  }, []);
+
+  useEffect(() => {
+    if (appState !== 'loading') return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const minMs = prefersReducedMotion ? 0 : INITIAL_LOADING_MS;
+    const timer = window.setTimeout(() => setAppState('normal'), minMs);
+    return () => window.clearTimeout(timer);
+  }, [appState]);
+
+  const handleSplashComplete = useCallback(() => {
+    setAppState('loading');
+  }, []);
 
   // Handle toast notifications helper
   const triggerToast = (message: string, variant: ToastVariant = 'default', title?: string) => {
@@ -175,70 +141,17 @@ export default function App() {
     return () => clearTimeout(id);
   };
 
-  const persistNpsFeedback = (feedback: NpsFeedback) => {
-    setNpsFeedback(feedback);
-    try {
-      window.localStorage.setItem(NPS_STORAGE_KEY, JSON.stringify(feedback));
-    } catch {
-      // The in-memory state still prevents another prompt during this visit.
-    }
-  };
-
-  const handleCloseNps = () => {
-    if (!npsFeedback) {
-      persistNpsFeedback({ status: 'dismissed', rating: null, comment: '' });
-    }
-    setIsNpsOpen(false);
-  };
-
-  const handleSubmitNps = (feedback: NpsFeedback) => {
-    persistNpsFeedback(feedback);
-    setIsNpsOpen(false);
-  };
-
-  const handleStartTour = () => {
-    if (appState !== 'normal') {
-      triggerToast(language === 'es' ? 'Cambia al modo Normal para iniciar el tour.' : 'Switch to Normal mode to start the tour.');
-      return;
-    }
-    setIsTourActive(true);
-    setCurrentTourStep(0);
-  };
-
-  const handleCloseTour = () => {
-    setIsTourActive(false);
-  };
-
   const scrollToProjects = () => {
     document.getElementById('tour-step-projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const handleAppStateChange = (newState: AppState) => {
-    const previousState = appState;
-    setAppState(newState);
-    setIsTourActive(false);
-
-    if (newState === 'normal' && previousState === 'loading') {
-      triggerToast(t.toastLoadingDisabled, 'success');
-      return;
-    }
-
-    if (newState === 'normal' && previousState === 'error') {
-      triggerToast(t.toastErrorDisabled, 'success');
-      return;
-    }
-
-    triggerToast(
-      newState === 'normal'
-        ? t.toastNormal
-        : newState === 'loading'
-          ? t.toastLoading
-          : t.toastError,
-      newState === 'loading' ? 'info' : newState === 'error' ? 'error' : 'default'
-    );
+  const recoverHome = () => {
+    goHome();
+    setAppState('normal');
   };
 
   const navigateToHero = () => {
+    recoverHome();
     const scrollToHeroWhenReady = () => {
       const deadline = window.performance.now() + 1000;
       const attemptScroll = () => {
@@ -251,76 +164,55 @@ export default function App() {
       };
       window.requestAnimationFrame(attemptScroll);
     };
-
-    if (appState !== 'normal') handleAppStateChange('normal');
     scrollToHeroWhenReady();
   };
 
   return (
     <div className="relative isolate min-h-screen bg-background pb-12 font-sans text-on-surface antialiased transition-colors duration-300">
+      <BrandGlyphDefs />
       
-      {/* 1. FIXED HEADER */}
+      {appState === 'splash' && (
+        <SplashScreen language={language} onComplete={handleSplashComplete} />
+      )}
+
+      {appState !== 'splash' && (
       <Header
         theme={theme}
         setTheme={(newTheme) => {
+          persistTheme(newTheme);
           setTheme(newTheme);
           triggerToast(newTheme === 'dark' ? t.toastThemeDark : t.toastThemeLight, 'success');
         }}
         appState={appState}
-        setAppState={handleAppStateChange}
         language={language}
         setLanguage={(lang) => {
           setLanguage(lang);
           triggerToast(TRANSLATIONS[lang].toastLanguageChanged);
         }}
-        onStartTour={handleStartTour}
-        isTourActive={isTourActive}
         onOpenDesignSystem={() => setIsDesignSystemOpen(true)}
-        onOpenNps={() => setIsNpsOpen(true)}
         entranceAnimation={entranceAnimation}
         setEntranceAnimation={setEntranceAnimation}
         avatarSrc={heroContent.avatar}
         onNavigateToHero={navigateToHero}
       />
+      )}
 
-      {appState === 'normal' && <LandingParticleField theme={theme} />}
+      {appState !== 'error' && appState !== 'splash' && (
+        <LandingParticleField theme={theme} waveActive={appState === 'loading'} />
+      )}
 
-      {/* 1.5 ACTIVE SIMULATION BANNER */}
-      {appState !== 'normal' && (
-        <div className="fixed top-0 left-0 right-0 h-10 bg-amber-500 dark:bg-amber-600 text-white font-bold text-xs sm:text-sm flex items-center justify-between px-4 z-[100] shadow-md">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping shrink-0" />
-            <span className="truncate">
-              {appState === 'loading' ? t.bannerLoadingActive : t.bannerErrorActive}
-            </span>
+      {appState === 'loading' && (
+        <div className="fixed inset-0 z-20 flex items-center justify-center px-6" role="status" aria-live="polite">
+          <div className="flex flex-col items-center gap-3 text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" aria-hidden="true" />
+            <p className="text-sm font-bold tracking-tight text-on-surface sm:text-base">{t.loadingLabel}</p>
           </div>
-          <button
-            onClick={() => {
-              setAppState('normal');
-              triggerToast(language === 'es' ? 'Regresaste a modo normal' : 'Returned to normal mode');
-            }}
-            className="px-3 py-1 bg-white hover:bg-white/90 text-amber-600 dark:text-amber-700 rounded-lg active:scale-95 transition-all text-[11px] uppercase font-black tracking-wider cursor-pointer shadow-sm shrink-0"
-          >
-            {t.bannerDeactivateBtn}
-          </button>
         </div>
       )}
 
       {/* 2. MAIN LAYOUT SECTIONS */}
-      <div className={`relative z-10 transition-all duration-300 ${appState !== 'normal' ? 'pt-[104px]' : 'pt-16'}`}>
+      <div className="relative z-10 pt-chrome">
         <AnimatePresence mode="wait">
-          {appState === 'loading' && (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <SkeletonLoader language={language} />
-            </motion.div>
-          )}
-
           {appState === 'error' && (
             <motion.div
               key="error"
@@ -331,10 +223,7 @@ export default function App() {
             >
               <ErrorState 
                 language={language}
-                onRecover={() => {
-                  setAppState('normal');
-                  triggerToast(language === 'es' ? '¡Regresaste a la página de inicio!' : 'Welcome back to the homepage!');
-                }} 
+                onRecover={recoverHome} 
               />
             </motion.div>
           )}
@@ -346,41 +235,39 @@ export default function App() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="space-y-4"
             >
               {/* Hero */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}>
+              <LandingReveal animation={entranceAnimation}>
                 <Hero 
                   onViewProjects={scrollToProjects}
                   language={language} 
                   content={heroContent}
                 />
+                <LogoCarousel language={language} />
               </LandingReveal>
 
-              {/* Collaborating brands */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><LogoCarousel language={language} /></LandingReveal>
-
               {/* Metrics stack */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Metrics language={language} metrics={metrics} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation}><Metrics language={language} metrics={metrics} /></LandingReveal>
 
               {/* Career Roadmap */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Roadmap language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation}><Roadmap language={language} /></LandingReveal>
 
               {/* Portfolio section with filters & modal */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Portfolio language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation}><Portfolio language={language} /></LandingReveal>
 
               {/* Contact section */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><Contact onShowToast={triggerToast} language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation}><Contact language={language} /></LandingReveal>
 
               {/* Accordion FAQ */}
-              <LandingReveal animation={entranceAnimation} scrollDirection={scrollDirection}><FAQ language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation}><FAQ language={language} /></LandingReveal>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
       {/* 3. FOOTER */}
-      <footer className="relative z-10 mx-auto mt-16 max-w-7xl border-t border-border px-4 pt-8 sm:px-6 lg:px-8">
+      {appState === 'normal' && (
+      <footer className="relative z-10 mx-auto max-w-7xl border-t border-border px-4 pt-8 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 pb-8">
           <div className="flex flex-col items-center md:items-start gap-1">
             <p className="text-xs text-muted text-center md:text-left">
@@ -410,18 +297,9 @@ export default function App() {
           </nav>
         </div>
       </footer>
+      )}
 
-      {/* 4. PRODUCT TOUR POPUP OVERLAY */}
-      <TourOverlay
-        currentStep={currentTourStep}
-        setCurrentStep={setCurrentTourStep}
-        isActive={isTourActive}
-        onClose={handleCloseTour}
-        onShowToast={triggerToast}
-        language={language}
-      />
-
-      {/* 5. DYNAMIC DESIGN SYSTEM DOCUMENTATION MODAL */}
+      {/* 4. DYNAMIC DESIGN SYSTEM DOCUMENTATION MODAL */}
       <AnimatePresence>
         {isDesignSystemOpen && (
           <DesignSystemModal
@@ -435,16 +313,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 6. FLOATING NPS SURVEY POPUP */}
-      <NpsSurvey
-        isOpen={isNpsOpen}
-        onClose={handleCloseNps}
-        onSubmit={handleSubmitNps}
-        language={language}
-        onShowToast={triggerToast}
-      />
-
-      {/* 7. FLOATING TOAST NOTIFICATION */}
+      {/* 5. FLOATING TOAST NOTIFICATION */}
       <AnimatePresence>
         {toast && (
           <motion.div

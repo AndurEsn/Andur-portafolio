@@ -3,6 +3,7 @@ import { Theme } from '../../types';
 
 interface LandingParticleFieldProps {
   theme: Theme;
+  waveActive?: boolean;
 }
 
 interface Particle {
@@ -13,7 +14,9 @@ interface Particle {
   renderScale: number;
 }
 
-export default function LandingParticleField({ theme }: LandingParticleFieldProps) {
+const WAVE_MS = 1000;
+
+export default function LandingParticleField({ theme, waveActive = false }: LandingParticleFieldProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -24,27 +27,47 @@ export default function LandingParticleField({ theme }: LandingParticleFieldProp
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const isInteractive = hasFinePointer && !reduceMotion;
+    const shouldWave = waveActive && !reduceMotion;
     const particles: Particle[] = [];
     const pointer = { x: 0, y: 0, active: false };
     let width = 0;
     let height = 0;
     let animationFrame = 0;
+    const waveStartedAt = shouldWave ? performance.now() : 0;
 
-    const draw = () => {
+    const draw = (now: number) => {
       context.clearRect(0, 0, width, height);
       const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#4C63F6';
       const influenceRadius = Math.min(150, Math.max(105, width * 0.16));
+      const waveProgress = shouldWave ? Math.min(1, (now - waveStartedAt) / WAVE_MS) : 1;
+      const waveY = waveProgress * height;
+      const waveBand = Math.max(72, height * 0.12);
 
       particles.forEach((particle) => {
-        const deltaX = particle.x - pointer.x;
-        const deltaY = particle.y - pointer.y;
-        const distance = Math.hypot(deltaX, deltaY) || 1;
-        const proximity = pointer.active ? Math.max(0, 1 - distance / influenceRadius) : 0;
-        const displacement = proximity * 9;
-        const targetX = particle.x + (deltaX / distance) * displacement;
-        const targetY = particle.y + (deltaY / distance) * displacement;
-        const targetScale = 1 + proximity * 1.3;
+        let proximity = 0;
+        let targetX = particle.x;
+        let targetY = particle.y;
 
+        if (pointer.active) {
+          const deltaX = particle.x - pointer.x;
+          const deltaY = particle.y - pointer.y;
+          const distance = Math.hypot(deltaX, deltaY) || 1;
+          const pointerProximity = Math.max(0, 1 - distance / influenceRadius);
+          proximity = pointerProximity;
+          targetX = particle.x + (deltaX / distance) * pointerProximity * 9;
+          targetY = particle.y + (deltaY / distance) * pointerProximity * 9;
+        }
+
+        if (shouldWave && waveProgress < 1) {
+          const waveProximity = Math.max(0, 1 - Math.abs(particle.y - waveY) / waveBand);
+          if (waveProximity > proximity) {
+            proximity = waveProximity;
+            targetX = particle.x;
+            targetY = particle.y + Math.sign(particle.y - waveY || 1) * waveProximity * 9;
+          }
+        }
+
+        const targetScale = 1 + proximity * 1.3;
         particle.renderX += (targetX - particle.renderX) * 0.16;
         particle.renderY += (targetY - particle.renderY) * 0.16;
         particle.renderScale += (targetScale - particle.renderScale) * 0.16;
@@ -59,8 +82,8 @@ export default function LandingParticleField({ theme }: LandingParticleFieldProp
       context.globalAlpha = 1;
     };
 
-    const animate = () => {
-      draw();
+    const animate = (now: number) => {
+      draw(now);
       animationFrame = window.requestAnimationFrame(animate);
     };
 
@@ -83,7 +106,7 @@ export default function LandingParticleField({ theme }: LandingParticleFieldProp
 
       pointer.x = width / 2;
       pointer.y = height / 2;
-      draw();
+      draw(performance.now());
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -109,6 +132,9 @@ export default function LandingParticleField({ theme }: LandingParticleFieldProp
       window.addEventListener('pointermove', handlePointerMove, { passive: true });
       window.addEventListener('blur', handlePointerLeave);
       document.documentElement.addEventListener('mouseleave', handlePointerLeave);
+    }
+
+    if (isInteractive || shouldWave) {
       animationFrame = window.requestAnimationFrame(animate);
     }
 
@@ -119,7 +145,7 @@ export default function LandingParticleField({ theme }: LandingParticleFieldProp
       window.removeEventListener('blur', handlePointerLeave);
       document.documentElement.removeEventListener('mouseleave', handlePointerLeave);
     };
-  }, [theme]);
+  }, [theme, waveActive]);
 
   return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-0 h-dvh w-screen" aria-hidden="true" />;
 }

@@ -47,7 +47,7 @@ export default function InfoTooltip({ label, children, placement = 'bottom', ali
         aria-label={label}
         aria-describedby={isOpen ? tooltipId : undefined}
         aria-expanded={isOpen}
-        className="flex h-5 w-5 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-high hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+        className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-primary transition-colors hover:bg-primary/10 hover:text-primary-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       >
         <Info className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
       </button>

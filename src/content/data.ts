@@ -1,22 +1,18 @@
-import { Project, Metric, FAQItem, TourStep, RoadmapItem } from '../types';
-import cvFile from '../assets/documents/andur-cv-2026.pdf';
+import { Project, Metric, FAQItem, RoadmapItem } from '../types';
+import { CONTACT_GITHUB } from '../config/contact';
+import { CV_DOWNLOAD_NAME, CV_HREF } from '../config/cv';
 
 export const TRANSLATIONS = {
   es: {
     brandName: '',
     navProjects: 'Proyectos',
     navAbout: 'Sobre mí',
-    navFaq: 'FAQ',
+    navFaq: 'Preguntas Frecuentes',
     navContact: 'Contacto',
     navMetrics: 'Métricas',
     navRoadmap: 'Trayectoria',
-    startTour: 'Iniciar tour',
-    tour: 'Tour',
     labTitle: 'Laboratorio',
-    labDescription: 'Prueba estados técnicos y de diseño.',
-    labLoading: 'Simular Carga',
-    labError: 'Simular Error 404',
-    labNps: 'Activar Encuesta NPS',
+    labDescription: 'Prueba animaciones y consulta el Design System.',
     labDesignSystem: 'Documentación Design System',
     labVersion: 'Versión',
     labVersionLink: 'Ver historial en GitHub',
@@ -25,7 +21,10 @@ export const TRANSLATIONS = {
     labAnimationHelp: 'Cambia la forma en que se presenta el contenido del sitio web mediante diferentes estilos de animación.',
     evalPage: 'Evaluar Página',
     langSelect: 'Idioma',
-    loadingLabel: 'Cargando portafolio...',
+    loadingLabel: 'Cargando el contenido de la página...',
+    splashLine: 'Bienvenido a mi portafolio',
+    splashYear: '2026',
+    splashHint: 'Haz clic o desplázate para continuar',
     errorHeading: '404',
     errorTitle: 'Página no encontrada',
     errorDesc: 'Lo sentimos, no pudimos encontrar el recurso que estabas buscando. Es posible que haya sido movido o eliminado de nuestro sistema.',
@@ -47,48 +46,31 @@ export const TRANSLATIONS = {
     modalSummary: 'Resumen del Proyecto',
     modalTools: 'Herramientas & Habilidades',
     modalClose: 'Cerrar',
-    contactTitle: 'Trabajemos juntos',
-    contactDesc: 'Cuéntame cómo puedo ayudarte y me pondré en contacto contigo.',
-    contactNameLabel: 'Nombre',
-    contactNamePlaceholder: 'Tu nombre',
-    contactPhoneLabel: 'Número de teléfono',
-    contactPhonePlaceholder: '+52 55 1234 5678',
-    contactSubjectLabel: 'Asunto',
-    contactSubjectPlaceholder: '¿En qué te puedo ayudar?',
-    contactDescriptionLabel: 'Descripción',
-    contactDescriptionPlaceholder: 'Cuéntame brevemente sobre tu proyecto o idea...',
-    contactBtn: 'Enviar propuesta',
-    contactSending: 'Enviando...',
-    contactOr: 'o',
-    contactWhatsapp: 'Contactar vía WhatsApp',
-    whatsappNamePrompt: '¿Cómo te llamas?',
-    whatsappReasonPrompt: 'Selecciona el motivo del contacto:',
-    faqTitle: 'Preguntas frecuentes',
+    contactTitle: 'Contacto',
+    contactDesc: 'Si tienes alguna pregunta, comentario o feedback, puedes contactarme directamente en mi LinkedIn o escribirme a andur-design@outlook.com',
+    contactLinkedin: 'Abrir LinkedIn',
+    contactEmailCta: 'Enviar correo',
+    faqTitle: 'Preguntas Frecuentes',
     faqDesc: 'Respuestas rápidas a las consultas más comunes sobre mi flujo de trabajo.',
-    faqCategoryDesign: 'Diseño y construcción',
+    faqCategoryDesign: 'Diseño y Construcción',
     faqCategoryCollaboration: 'Colaboración',
-    faqCategoryProfile: 'Perfil y recursos',
-    npsStep1Title: '¿Qué te ha parecido la página?',
-    npsStep1Desc: 'Evalúa del 1 al 5 qué tanto te ha gustado la interacción y el diseño (1 = Horrible, 5 = Impresionante).',
-    npsStep2Title: '¡Gracias por calificar!',
-    npsStep2Desc: '¿Tienes algún comentario o sugerencia para mejorar la experiencia? Tu feedback es invaluable.',
-    npsCommentPlaceholder: 'Escribe tu comentario aquí...',
-    npsSkip: 'Omitir',
-    npsSend: 'Enviar Feedback',
-    npsComplete: '¡Gracias por tu valioso feedback!',
+    faqCategoryProfile: 'Perfil y Recursos',
     dsModalTitle: 'Documentación del Design System',
     dsModalSubtitle: 'Tokens de diseño y componentes dinámicos para Light mode y Dark mode.',
     dsPaletteTitle: 'Paleta de Colores',
     dsPaletteDesc: 'Colores base utilizados según el tema activo para mantener armonía visual.',
     dsTypographyTitle: 'Tipografía (Inter)',
-    dsTypographyDesc: 'Escala de fuentes altamente legible optimizada para pantallas digitales.',
+    dsTypographyDesc: 'Escala de página y la tipografía de overlays: títulos y cuerpo de modales, Laboratorio y documentación.',
     dsShapesTitle: 'Formas & Bordes',
     dsShapesDesc: 'Radios de redondeo estándar aplicados de forma consistente.',
+    dsIconsTitle: 'Iconos',
+    dsIconsDesc: 'Iconografía lineal de Lucide, en un recuadro redondeado con borde. El trazo usa el degradado azul a violeta del sistema; en oscuro el recuadro y el trazo son más claros para conservar contraste.',
+    dsBreakpointsTitle: 'Breakpoints',
+    dsBreakpointsDesc: 'Los cuatro breakpoints de Tailwind que usa el sitio: default, sm, md y lg.',
     dsComponentsTitle: 'Muestra de Componentes',
     dsComponentsDesc: 'Interactúa con los bloques elementales del sistema.',
     dsBtnPrimary: 'Botón Primario',
     dsBtnSecondary: 'Botón Secundario',
-    dsInputPlaceholder: 'Campo de texto',
     dsBadge: 'Categoría',
     dsAccordion: 'Acordeón Expandible',
     dsAccordionText: 'Este es el estilo de acordeón interactivo usado para responder dudas frecuentes.',
@@ -98,35 +80,20 @@ export const TRANSLATIONS = {
     toastThemeLight: 'Modo claro activado',
     toastThemeDark: 'Modo oscuro activado',
     toastLanguageChanged: 'Idioma cambiado correctamente',
-    toastNormal: 'Vista normal cargada',
-    toastLoading: 'Modo cargando activado',
-    toastError: 'Página de error cargada',
-    toastLoadingDisabled: 'Modo de carga desactivado correctamente.',
-    toastErrorDisabled: 'Modo de error 404 desactivado correctamente.',
-    toastTourStart: '¡Tour de Onboarding iniciado!',
-    toastTourCompleteTitle: 'Product Tour concluido exitosamente',
-    toastTourComplete: 'Recorrido finalizado.',
     toastToastLabel: 'Notificación',
     footerCopyright: '© 2026 Portafolio. Creado con IA y precisión por Andur.',
+    brandsTitle: 'Proyectos en los que he participado',
     roadmapTitle: 'Trayectoria Profesional',
     roadmapDesc: 'Mi camino como diseñador de producto, colaborando con empresas líderes y resolviendo problemas complejos.',
-    bannerLoadingActive: 'Modo "Simular Carga" activo.',
-    bannerErrorActive: 'Modo "Simular Error 404" activo.',
-    bannerDeactivateBtn: 'Desactivar',
   },
   en: {
     brandName: '',
     navProjects: 'Projects',
     navAbout: 'About me',
-    navFaq: 'FAQ',
+    navFaq: 'FAQ\'s',
     navContact: 'Contact',
-    startTour: 'Start tour',
-    tour: 'Tour',
     labTitle: 'Laboratory',
-    labDescription: 'Test technical and design states.',
-    labLoading: 'Simulate Loading',
-    labError: 'Simulate Error 404',
-    labNps: 'Trigger NPS Survey',
+    labDescription: 'Try animations and open the Design System.',
     labDesignSystem: 'Design System Docs',
     labVersion: 'Version',
     labVersionLink: 'View history on GitHub',
@@ -135,7 +102,10 @@ export const TRANSLATIONS = {
     labAnimationHelp: 'Change how the website content is presented by using different animation styles.',
     evalPage: 'Evaluate Page',
     langSelect: 'Language',
-    loadingLabel: 'Loading portfolio...',
+    loadingLabel: 'Loading the page content...',
+    splashLine: 'Welcome to my portfolio',
+    splashYear: '2026',
+    splashHint: 'Click or scroll to continue',
     errorHeading: '404',
     errorTitle: 'Page not found',
     errorDesc: 'Sorry, we could not find the resource you were looking for. It might have been moved or removed from our system.',
@@ -157,48 +127,31 @@ export const TRANSLATIONS = {
     modalSummary: 'Project Summary',
     modalTools: 'Tools & Skills',
     modalClose: 'Close',
-    contactTitle: 'Let’s work together',
-    contactDesc: 'Tell me how I can help and I will get back to you shortly.',
-    contactNameLabel: 'Name',
-    contactNamePlaceholder: 'Your name',
-    contactPhoneLabel: 'Phone number',
-    contactPhonePlaceholder: '+1 555 123 4567',
-    contactSubjectLabel: 'Subject',
-    contactSubjectPlaceholder: 'How can I help?',
-    contactDescriptionLabel: 'Description',
-    contactDescriptionPlaceholder: 'Tell me briefly about your project or idea...',
-    contactBtn: 'Send proposal',
-    contactSending: 'Sending...',
-    contactOr: 'or',
-    contactWhatsapp: 'Contact via WhatsApp',
-    whatsappNamePrompt: 'What is your name?',
-    whatsappReasonPrompt: 'Choose the reason for contacting:',
-    faqTitle: 'Frequently Asked Questions',
+    contactTitle: 'Contact',
+    contactDesc: 'If you have any questions, comments or feedback, you can contact me directly at my LinkedIn or write to me at andur-design@outlook.com',
+    contactLinkedin: 'Open LinkedIn',
+    contactEmailCta: 'Send email',
+    faqTitle: 'FAQ\'s',
     faqDesc: 'Quick answers to the most common queries about my workflow.',
-    faqCategoryDesign: 'Design and build',
+    faqCategoryDesign: 'Design and Build',
     faqCategoryCollaboration: 'Collaboration',
-    faqCategoryProfile: 'Profile and resources',
-    npsStep1Title: 'How do you like the page?',
-    npsStep1Desc: 'Rate from 1 to 5 how much you like the interaction and design (1 = Horrible, 5 = Awesome).',
-    npsStep2Title: 'Thank you for rating!',
-    npsStep2Desc: 'Do you have any comments or suggestions to improve the experience? Your feedback is priceless.',
-    npsCommentPlaceholder: 'Write your comments here...',
-    npsSkip: 'Skip',
-    npsSend: 'Send Feedback',
-    npsComplete: 'Thank you for your valuable feedback!',
+    faqCategoryProfile: 'Profile and Resources',
     dsModalTitle: 'Design System Documentation',
     dsModalSubtitle: 'Design tokens and dynamic components for Light mode and Dark mode.',
     dsPaletteTitle: 'Color Palette',
     dsPaletteDesc: 'Base colors used depending on the active theme to maintain visual harmony.',
     dsTypographyTitle: 'Typography (Inter)',
-    dsTypographyDesc: 'Highly legible type scale optimized for digital screens.',
+    dsTypographyDesc: 'Page scale plus overlay type: titles and body for modals, Laboratory, and documentation.',
     dsShapesTitle: 'Shapes & Borders',
     dsShapesDesc: 'Standard corner radius applied consistently across elements.',
+    dsIconsTitle: 'Icons',
+    dsIconsDesc: 'Linear Lucide icons in a rounded bordered square. The stroke uses the system blue-to-violet gradient; in dark mode the well and stroke are lighter to keep contrast.',
+    dsBreakpointsTitle: 'Breakpoints',
+    dsBreakpointsDesc: 'The four Tailwind breakpoints used on this site: default, sm, md, and lg.',
     dsComponentsTitle: 'Components Showcase',
     dsComponentsDesc: 'Interact with the elemental blocks of the system.',
     dsBtnPrimary: 'Primary Button',
     dsBtnSecondary: 'Secondary Button',
-    dsInputPlaceholder: 'Text input field',
     dsBadge: 'Category',
     dsTooltipTitle: 'Tooltip',
     dsTooltipDesc: 'A short hint that appears on hover, keyboard focus, or when the icon is tapped.',
@@ -208,35 +161,53 @@ export const TRANSLATIONS = {
     toastThemeLight: 'Light mode active',
     toastThemeDark: 'Dark mode active',
     toastLanguageChanged: 'Language changed successfully',
-    toastNormal: 'Normal view loaded',
-    toastLoading: 'Loading mode activated',
-    toastError: 'Error page loaded',
-    toastLoadingDisabled: 'Loading mode deactivated successfully.',
-    toastErrorDisabled: 'Error 404 mode deactivated successfully.',
-    toastTourStart: 'Onboarding Tour started!',
-    toastTourCompleteTitle: 'Product Tour completed successfully',
-    toastTourComplete: 'Tour complete.',
     toastToastLabel: 'Notification',
     footerCopyright: '© 2026 Portfolio. Built with AI and precision by Andur.',
+    brandsTitle: 'Projects I have participated in',
     roadmapTitle: 'Professional Roadmap',
     roadmapDesc: 'My journey as a product designer, collaborating with leading companies and solving complex problems.',
-    bannerLoadingActive: 'Mode "Simulate Loading" active.',
-    bannerErrorActive: 'Mode "Simulate Error 404" active.',
-    bannerDeactivateBtn: 'Deactivate',
     navMetrics: 'Metrics',
     navRoadmap: 'Roadmap',
   }
 };
 
 export const METRICS = (lang: 'es' | 'en'): Metric[] => [
-  { value: '11+', label: lang === 'es' ? 'proyectos desarrollados' : 'projects developed', icon: 'projects' },
+  { value: '11+', label: lang === 'es' ? 'proyectos en los que he participado' : 'projects I have participated in', icon: 'projects' },
   { value: '74+', label: lang === 'es' ? 'flujos y módulos diseñados' : 'flows and modules designed', icon: 'flows' },
-  { value: '14,000', label: lang === 'es' ? 'horas diseñando' : 'hours designing', icon: 'hours' }
+  { value: '14,000+', label: lang === 'es' ? 'horas diseñando' : 'hours designing', icon: 'hours' }
+];
+
+export const DESIGN_BREAKPOINTS = (lang: 'es' | 'en') => [
+  {
+    id: 'default',
+    title: lang === 'es' ? 'Móvil' : 'Mobile',
+    value: 'default · < 640px',
+    icon: 'phone' as const,
+  },
+  {
+    id: 'sm',
+    title: lang === 'es' ? 'Tablet pequeña' : 'Small tablet',
+    value: 'sm · ≥ 640px',
+    icon: 'tablet' as const,
+  },
+  {
+    id: 'md',
+    title: lang === 'es' ? 'Tablet' : 'Tablet',
+    value: 'md · ≥ 768px',
+    icon: 'tablet' as const,
+  },
+  {
+    id: 'lg',
+    title: lang === 'es' ? 'Escritorio' : 'Desktop',
+    value: 'lg · ≥ 1024px',
+    icon: 'laptop' as const,
+  },
 ];
 
 export const ROADMAP = (lang: 'es' | 'en'): RoadmapItem[] => [
   {
-    years: lang === 'es' ? '2019 a 2024' : '2019 to 2024',
+    years: lang === 'es' ? 'Mar. 2019 – Ene. 2025' : 'Mar 2019 – Jan 2025',
+    tenure: lang === 'es' ? '5 años y 11 meses' : '5 years and 11 months',
     company: 'Yaydoo',
     role: 'UX/UI Designer',
     description: lang === 'es'
@@ -245,8 +216,9 @@ export const ROADMAP = (lang: 'es' | 'en'): RoadmapItem[] => [
     highlight: lang === 'es' ? 'Rediseño de flujos financieros clave' : 'Redesign of key financial flows'
   },
   {
-    years: '2023 - 2026',
-    company: 'Leracom',
+    years: lang === 'es' ? 'Jun. 2023 – Ene. 2026' : 'Jun 2023 – Jan 2026',
+    tenure: lang === 'es' ? '2 años y 8 meses' : '2 years and 8 months',
+    company: 'Leracom AI',
     role: 'Product Designer',
     description: lang === 'es'
       ? 'Liderazgo en estrategia de diseño de plataformas empresariales complejas y maduración de sistemas de diseño multi-marca.'
@@ -254,7 +226,8 @@ export const ROADMAP = (lang: 'es' | 'en'): RoadmapItem[] => [
     highlight: lang === 'es' ? 'Maduración de Sistemas de Diseño' : 'Design System Maturity'
   },
   {
-    years: lang === 'es' ? '2026 - Presente' : '2026 - Present',
+    years: lang === 'es' ? 'Ene. 2026 – Presente' : 'Jan 2026 – Present',
+    tenure: lang === 'es' ? '8 meses' : '8 months',
     company: 'Freelance',
     role: 'Product Designer',
     description: lang === 'es'
@@ -365,17 +338,17 @@ export const PROJECTS = (lang: 'es' | 'en'): Project[] => [
 export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
   {
     category: 'design',
-    question: lang === 'es' ? '¿Qué tipo de productos diseñas?' : 'What types of products do you design?',
+    question: lang === 'es' ? '¿Qué tipo de productos diseño?' : 'What types of products do you design?',
     answer: lang === 'es'
-      ? 'Diseño productos digitales, plataformas SaaS, experiencias basadas en inteligencia artificial y sitios web funcionales. Mi experiencia se concentra en fintech, productos B2B, automatización y procesos operativos complejos.'
-      : 'I design digital products, SaaS platforms, AI-powered experiences, and functional websites. My experience is focused on fintech, B2B products, automation, and complex operational processes.'
+      ? 'Diseño productos digitales, plataformas SaaS, landing pages y sitios web.'
+      : 'I design digital products, SaaS platforms, landing pages, and websites.'
   },
   {
     category: 'design',
     question: lang === 'es' ? '¿Cuál es tu proceso de diseño?' : 'What is your design process?',
     answer: lang === 'es'
-      ? 'Inicio entendiendo el problema, los objetivos del negocio, las necesidades de los usuarios y las restricciones del proyecto. Después defino requerimientos, arquitectura de información, flujos, interacciones y la base visual del producto.\n\nGenero una primera versión funcional mediante herramientas de diseño e inteligencia artificial, la valido con usuarios y stakeholders, y la itero antes de ampliar su alcance. Cuando el proyecto lo requiere, lo llevo a un entorno local para mejorar componentes, documentación y consistencia.'
-      : 'I start by understanding the problem, business goals, user needs, and project constraints. Then I define requirements, information architecture, flows, interactions, and the product’s visual foundation.\n\nI create a first functional version using design and AI tools, validate it with users and stakeholders, and iterate before expanding its scope. When needed, I bring the project into a local environment to improve components, documentation, and consistency.'
+      ? 'Trabajo en cuatro etapas.\n\nDiscovery. Entiendo el problema, los objetivos del negocio, las necesidades de las personas usuarias y las restricciones del proyecto.\n\nDefinición. Ordeno esa información en requerimientos, arquitectura de información, flujos y criterios de éxito.\n\nDiseño. Exploro la interfaz, prototipo y valido con usuarios y stakeholders antes de ampliar el alcance.\n\nConstrucción. Si el proyecto requiere Design Engineering, acompaño la implementación para cuidar componentes, documentación y consistencia.'
+      : 'I work in four stages.\n\nDiscovery. I understand the problem, business goals, user needs, and project constraints.\n\nDefinition. I turn that understanding into requirements, information architecture, flows, and success criteria.\n\nDesign. I explore the interface, prototype, and validate with users and stakeholders before expanding the scope.\n\nBuild. If the project needs Design Engineering, I support implementation to keep components, documentation, and consistency in good shape.'
   },
   {
     category: 'design',
@@ -388,22 +361,15 @@ export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
     category: 'design',
     question: lang === 'es' ? '¿Cómo utilizas la inteligencia artificial de forma responsable?' : 'How do you use artificial intelligence responsibly?',
     answer: lang === 'es'
-      ? 'No considero el primer resultado generado como una solución final. Reviso su coherencia, usabilidad, accesibilidad, contenido, estados, componentes y relación con los objetivos del producto.\n\nTambién documento las decisiones importantes y valido los resultados antes de implementarlos. La IA acelera la ejecución, pero las decisiones de producto y diseño permanecen bajo supervisión humana.'
-      : 'I do not treat the first generated result as a final solution. I review its coherence, usability, accessibility, content, states, components, and relationship to product goals.\n\nI also document important decisions and validate outcomes before implementation. AI accelerates execution, but product and design decisions remain under human supervision.'
+      ? 'Hay tareas que sí se pueden delegar a la IA, como explorar alternativas, documentar o generar una primera versión. Otras necesitan criterio experto: producto, usabilidad, accesibilidad y calidad.\n\nNo todas las decisiones las debe tomar la IA. Cada resultado se revisa y hay supervisión constante antes de implementarlo.'
+      : 'Some tasks can be delegated to AI, such as exploring alternatives, documenting, or generating a first version. Others need expert judgment: product decisions, usability, accessibility, and quality.\n\nNot every decision should be made by AI. Each result is reviewed, and there is constant supervision before it is implemented.'
   },
   {
     category: 'design',
     question: lang === 'es' ? '¿También desarrollas los productos que diseñas?' : 'Do you also develop the products you design?',
     answer: lang === 'es'
-      ? 'Puedo convertir diseños en prototipos funcionales y sitios web desplegables mediante desarrollo asistido por inteligencia artificial.\n\nPuedo modificar de forma directa la arquitectura de información, UX/UI, contenido, componentes visuales, HTML y CSS. Para cambios más complejos de código, implementación o despliegue utilizo asistencia de IA mientras continúo desarrollando mis capacidades de Design Engineering.'
-      : 'I can turn designs into functional prototypes and deployable websites through AI-assisted development.\n\nI can directly modify information architecture, UX/UI, content, visual components, HTML, and CSS. For more complex code, implementation, or deployment work, I use AI assistance while continuing to grow my Design Engineering skills.'
-  },
-  {
-    category: 'design',
-    question: lang === 'es' ? '¿Trabajas con front-end, APIs o bases de datos?' : 'Do you work with front-end, APIs, or databases?',
-    answer: lang === 'es'
-      ? 'Actualmente mi experiencia se concentra en front-end, prototipos funcionales y sitios web. Puedo trabajar directamente con HTML y CSS, revisar la estructura del proyecto y ajustar componentes visuales.\n\nEstoy ampliando mis conocimientos sobre APIs y bases de datos mediante proyectos prácticos y desarrollo asistido por inteligencia artificial.'
-      : 'My current experience focuses on front-end work, functional prototypes, and websites. I can work directly with HTML and CSS, review a project’s structure, and adjust visual components.\n\nI am expanding my knowledge of APIs and databases through practical projects and AI-assisted development.'
+      ? 'Este portafolio se construyó con inteligencia artificial. En proyectos nuevos o sencillos puedo llevar un producto hasta desarrollo con ese mismo enfoque.\n\nTodavía no he trabajado en un equipo AI-first junto a un desarrollador para temas más específicos como inicios de sesión, backend o seguridad. Prefiero seguir desarrollando esas habilidades o colaborar con un desarrollador para cubrirlos.'
+      : 'This portfolio was built with artificial intelligence. On new or simple projects I can take a product through to development with that same approach.\n\nI have not yet worked on an AI-first team alongside a developer for more specific topics such as sign-in, backend, or security. I prefer to keep building those skills or partner with a developer to cover them.'
   },
   {
     category: 'design',
@@ -444,29 +410,34 @@ export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
     category: 'collaboration',
     question: lang === 'es' ? '¿Tienes experiencia trabajando con equipos internacionales?' : 'Do you have experience working with international teams?',
     answer: lang === 'es'
-      ? 'Sí. He colaborado con equipos distribuidos y personas ubicadas en México, Colombia, Chile y España.\n\nMi nivel de inglés es B2 y puedo participar en documentación, reuniones y colaboración profesional en inglés.'
-      : 'Yes. I have collaborated with distributed teams and people based in Mexico, Colombia, Chile, and Spain.\n\nMy English level is B2, and I can participate in documentation, meetings, and professional collaboration in English.'
+      ? 'Sí. He colaborado con equipos distribuidos y personas ubicadas en México, Colombia, Chile y Estados Unidos.'
+      : 'Yes. I have collaborated with distributed teams and people based in Mexico, Colombia, Chile, and the United States.'
   },
   {
     category: 'profile',
-    question: lang === 'es' ? '¿En qué idiomas están disponibles tu portafolio y tus repositorios?' : 'In which languages are your portfolio and repositories available?',
+    question: lang === 'es' ? '¿En dónde puedo ver tus repositorios?' : 'Where can I see your repositories?',
     answer: lang === 'es'
-      ? 'Actualmente el contenido principal está disponible en español. Un portafolio puede ofrecer una versión completa en inglés, y los repositorios pueden incluir documentación bilingüe mediante archivos README separados o secciones en ambos idiomas.\n\nLa interfaz del producto, la documentación y los casos de estudio pueden traducirse sin necesidad de duplicar todo el código del proyecto.'
-      : 'The main content is currently available in Spanish. A portfolio can offer a full English version, and repositories can include bilingual documentation through separate README files or sections in both languages.\n\nThe product interface, documentation, and case studies can be translated without duplicating the entire project codebase.'
+      ? 'Puedes consultar mis repositorios públicos en GitHub.'
+      : 'You can browse my public repositories on GitHub.',
+    link: {
+      label: lang === 'es' ? 'Ir a mi GitHub' : 'Go to my GitHub',
+      href: CONTACT_GITHUB,
+      external: true
+    }
   },
   {
     category: 'design',
     question: lang === 'es' ? '¿Qué experiencia tienes con Design Systems?' : 'What experience do you have with Design Systems?',
     answer: lang === 'es'
-      ? 'Construí el Design System Grill mediante Atomic Design, homologando la base visual y funcional de más de seis productos.\n\nTambién trabajo con componentes reutilizables, patrones de interacción, documentación y criterios de calidad para mantener consistencia mientras un producto evoluciona.'
-      : 'I built the Grill Design System using Atomic Design, standardizing the visual and functional foundation of more than six products.\n\nI also work with reusable components, interaction patterns, documentation, and quality criteria to maintain consistency as a product evolves.'
+      ? 'Construí el Design System Grill en Yaydoo, mediante la metodología de Atomic Design, homologando la base visual y funcional de más de seis productos.'
+      : 'I built the Grill Design System at Yaydoo using Atomic Design, standardizing the visual and functional foundation of more than six products.'
   },
   {
     category: 'design',
     question: lang === 'es' ? '¿En qué etapas de un producto puedes participar?' : 'At which stages of a product can you contribute?',
     answer: lang === 'es'
-      ? 'Puedo participar desde la definición inicial hasta la publicación de una versión funcional:\n\n- Product Discovery y entendimiento del problema.\n- Investigación y validación con usuarios.\n- Arquitectura de información y flujos.\n- UX/UI y prototipado.\n- Definición de componentes y Design Systems.\n- Validación e iteración.\n- Documentación del producto.\n- Desarrollo front-end asistido por IA.\n- Control de versiones y despliegue web.'
-      : 'I can contribute from the initial definition through publishing a functional version:\n\n- Product Discovery and problem understanding.\n- Research and user validation.\n- Information architecture and flows.\n- UX/UI and prototyping.\n- Component and Design System definition.\n- Validation and iteration.\n- Product documentation.\n- AI-assisted front-end development.\n- Version control and web deployment.'
+      ? 'Puedo participar desde la definición inicial hasta la publicación de una versión funcional:\n\n- Product Discovery y entendimiento del problema.\n- Investigación y validación con usuarios.\n- Arquitectura de información y flujos.\n- UX/UI y prototipado.\n- Definición de componentes y Design Systems.\n- Validación e iteración.\n- Documentación del producto.'
+      : 'I can contribute from the initial definition through publishing a functional version:\n\n- Product Discovery and problem understanding.\n- Research and user validation.\n- Information architecture and flows.\n- UX/UI and prototyping.\n- Component and Design System definition.\n- Validation and iteration.\n- Product documentation.'
   },
   {
     category: 'design',
@@ -479,44 +450,19 @@ export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
     category: 'collaboration',
     question: lang === 'es' ? '¿Aceptas proyectos independientes?' : 'Do you accept independent projects?',
     answer: lang === 'es'
-      ? 'Mi enfoque principal son las oportunidades laborales dentro de equipos de producto. Evalúo proyectos independientes únicamente cuando se relacionan con el diseño y desarrollo de sitios web.\n\nLa disponibilidad depende de mis compromisos activos y del alcance de cada proyecto.'
-      : 'My main focus is career opportunities within product teams. I evaluate independent projects only when they relate to website design and development.\n\nAvailability depends on my active commitments and the scope of each project.'
+      ? 'La disponibilidad depende de mi compromiso laboral activo y del alcance de cada proyecto.'
+      : 'Availability depends on my active work commitment and the scope of each project.'
   },
   {
     category: 'profile',
     question: lang === 'es' ? '¿Dónde puedo consultar o descargar tu CV?' : 'Where can I view or download your CV?',
     answer: lang === 'es'
-      ? 'Puedes consultar mi experiencia, habilidades y principales resultados directamente en este portafolio.'
-      : 'You can review my experience, skills, and key results directly in this portfolio.',
+      ? 'Puedes descargar y consultar mi experiencia, habilidades y principales resultados en el siguiente botón:'
+      : 'You can download and review my experience, skills, and key results with the following button:',
     link: {
-      label: lang === 'es' ? 'Descarga mi CV aquí' : 'Download my CV here',
-      href: cvFile,
-      download: 'Andur-CV-2026.pdf'
+      label: lang === 'es' ? 'Descargar CV' : 'Download CV',
+      href: CV_HREF,
+      download: CV_DOWNLOAD_NAME
     }
-  }
-];
-
-// The Onboarding Tour with 3 steps: Presentation, Projects, and Career Roadmap.
-export const TOUR_STEPS = (lang: 'es' | 'en'): TourStep[] => [
-  {
-    targetId: 'tour-title-hero',
-    title: lang === 'es' ? '1. Presentación' : '1. Introduction',
-    text: lang === 'es' 
-      ? 'Te presento mi portafolio profesional de diseño de productos. Aquí encontrarás una selección meticulosa de mis proyectos más representativos, métricas clave, trayectoria y FAQs.'
-      : 'Welcome to my professional product design portfolio. Here you will find a meticulous selection of my most representative projects, key metrics, roadmap, and FAQs.'
-  },
-  {
-    targetId: 'tour-title-projects',
-    title: lang === 'es' ? '2. Portafolio de Proyectos' : '2. Project Portfolio',
-    text: lang === 'es'
-      ? 'Explora mi trabajo filtrado por categoría o compañía. Cada tarjeta cuenta con detalles interactivos sobre el impacto de diseño, rol desempeñado, duración y herramientas utilizadas.'
-      : 'Explore my work filtered by category or company. Each card contains interactive details about design impact, role, duration, and tools used.'
-  },
-  {
-    targetId: 'tour-title-roadmap',
-    title: lang === 'es' ? '3. Mi Trayectoria' : '3. Career Roadmap',
-    text: lang === 'es'
-      ? 'Una vista tipo Gantt interactiva que detalla mis etapas en Yaydoo, Leracom y como Consultor Independiente, mostrando mi evolución en liderazgo, UX y diseño de productos.'
-      : 'An interactive Gantt-style timeline detailing my stages at Yaydoo, Leracom, and as an Independent Consultant, showcasing my evolution in leadership, UX, and product design.'
   }
 ];

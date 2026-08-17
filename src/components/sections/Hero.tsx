@@ -5,7 +5,7 @@ import { HeroContent, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
 import ModalCloseButton from '../ui/ModalCloseButton';
-import cvFile from '../../assets/documents/andur-cv-2026.pdf';
+import { CV_DOWNLOAD_NAME, CV_HREF } from '../../config/cv';
 
 interface HeroProps {
   onViewProjects: () => void;
@@ -35,7 +35,7 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
   return (
     <section 
       id="tour-step-hero"
-      className="relative isolate w-full overflow-hidden py-16 transition-all duration-300 sm:py-24"
+      className="relative isolate w-full overflow-hidden pt-section pb-8 transition-all duration-300"
     >
       <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center">
         <button
@@ -64,9 +64,9 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
         <div className="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row">
           <a
             id="hero-download-cv"
-            href={cvFile}
-            download="Andur-CV-2026.pdf"
-            className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-primary-hover hover:shadow-primary/20 active:scale-95 sm:min-w-[180px] sm:w-auto cursor-pointer"
+            href={CV_HREF}
+            download={CV_DOWNLOAD_NAME}
+            className="flex h-14 w-full min-w-[240px] items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-primary-hover hover:shadow-primary/20 active:scale-95 sm:w-[240px] cursor-pointer"
           >
             <Download className="h-5 w-5" strokeWidth={1.75} />
             {t.heroBtn}
@@ -74,7 +74,7 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
           <button
             type="button"
             onClick={onViewProjects}
-            className="flex h-14 w-full items-center justify-center rounded-2xl border border-border bg-surface-lowest px-8 text-base font-bold text-on-surface transition-all duration-200 hover:bg-surface-high active:scale-95 sm:min-w-[180px] sm:w-auto cursor-pointer"
+            className="flex h-14 w-full min-w-[240px] items-center justify-center rounded-2xl border border-border bg-surface-lowest px-8 text-base font-bold text-on-surface transition-all duration-200 hover:bg-surface-high active:scale-95 sm:w-[240px] cursor-pointer"
           >
             {t.heroProjectsBtn}
           </button>

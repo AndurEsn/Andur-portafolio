@@ -4,7 +4,7 @@ import { PROJECTS, TRANSLATIONS } from '../../content/data';
 import { Project, ProjectCategory, Language } from '../../types';
 import { ExternalLink, Calendar, Shield, Cpu, Sparkles } from 'lucide-react';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
-import ModalCloseButton, { modalPrimaryCloseButtonClass } from '../ui/ModalCloseButton';
+import ModalCloseButton from '../ui/ModalCloseButton';
 
 interface PortfolioProps {
   language: Language;
@@ -49,7 +49,7 @@ export default function Portfolio({ language }: PortfolioProps) {
   return (
     <section 
       id="tour-step-projects"
-      className="px-4 py-12 max-w-7xl mx-auto w-full transition-all duration-300"
+      className="px-4 py-section max-w-7xl mx-auto w-full transition-all duration-300"
     >
       {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-10">
@@ -81,9 +81,18 @@ export default function Portfolio({ language }: PortfolioProps) {
       {/* Projects Single-Column/Grid List */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
         {filteredProjects.map((project) => (
-          <article 
+          <article
             key={project.id}
-            className="flex flex-col bg-surface-lowest rounded-2xl overflow-hidden border border-border shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 group"
+            role="button"
+            tabIndex={0}
+            onClick={() => setActiveProject(project)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                setActiveProject(project);
+              }
+            }}
+            className="flex flex-col bg-surface-lowest rounded-2xl overflow-hidden border border-border hover:shadow-xl hover:border-primary/40 transition-all duration-300 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             {/* Project Image Panel */}
             <div className="relative aspect-[16/10] overflow-hidden bg-surface-low">
@@ -115,13 +124,10 @@ export default function Portfolio({ language }: PortfolioProps) {
               </div>
 
               {/* Card Action */}
-              <button
-                onClick={() => setActiveProject(project)}
-                className="w-full h-12 bg-primary-bg/40 text-primary border border-primary/20 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all hover:bg-primary hover:text-white hover:border-transparent active:scale-[0.98] duration-200 cursor-pointer"
-              >
+              <span className="w-full h-12 bg-primary-bg/40 text-primary border border-primary/20 rounded-xl flex items-center justify-center gap-2 text-sm font-bold transition-all group-hover:bg-primary group-hover:text-white group-hover:border-transparent duration-200">
                 {t.viewProject}
                 <ExternalLink className="w-4 h-4" />
-              </button>
+              </span>
             </div>
           </article>
         ))}
@@ -241,16 +247,6 @@ export default function Portfolio({ language }: PortfolioProps) {
                     ))}
                   </div>
                 </div>
-              </div>
-
-              {/* Bottom Sticky Action Panel */}
-              <div className="p-4 bg-surface-low border-t border-border shrink-0 flex gap-3">
-                <button
-                  onClick={() => setActiveProject(null)}
-                  className={modalPrimaryCloseButtonClass}
-                >
-                  {t.modalClose}
-                </button>
               </div>
             </motion.div>
           </div>
