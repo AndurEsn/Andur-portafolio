@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Download, ZoomIn, ZoomOut } from 'lucide-react';
 import { HeroContent, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import useModalDismiss from '../../hooks/useModalDismiss';
 import ModalCloseButton from '../ui/ModalCloseButton';
 import { CV_DOWNLOAD_NAME, CV_HREF } from '../../config/cv';
 
@@ -23,14 +24,7 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
     setIsPhotoOpen(false);
     setZoom(1);
   };
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closePhoto();
-    };
-    if (isPhotoOpen) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPhotoOpen]);
+  const requestClosePhoto = useModalDismiss(isPhotoOpen, closePhoto);
 
   return (
     <section 
@@ -82,14 +76,14 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
 
         <AnimatePresence>
         {isPhotoOpen && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[120] flex items-stretch justify-center sm:items-center sm:p-4">
             <motion.button
               type="button"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={closePhoto}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm cursor-zoom-out"
+              onClick={requestClosePhoto}
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm pointer-events-none cursor-zoom-out sm:pointer-events-auto"
               aria-label={language === 'es' ? 'Cerrar visor de imagen' : 'Close image viewer'}
             />
             <motion.div
@@ -100,7 +94,7 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
               role="dialog"
               aria-modal="true"
               aria-label={language === 'es' ? 'Fotografía de perfil ampliada' : 'Enlarged profile photo'}
-              className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-auto hide-scrollbar rounded-2xl"
+              className="relative z-10 h-dvh w-full max-h-dvh overflow-auto hide-scrollbar rounded-none sm:h-auto sm:max-h-[85vh] sm:max-w-4xl sm:rounded-2xl"
             >
               <img
                 src={content.avatar}
@@ -128,7 +122,7 @@ export default function Hero({ onViewProjects, language, content }: HeroProps) {
                   <ZoomIn className="mx-auto w-4 h-4" />
                 </button>
               </div>
-              <ModalCloseButton onClick={closePhoto} label={language === 'es' ? 'Cerrar visor de imagen' : 'Close image viewer'} />
+              <ModalCloseButton onClick={requestClosePhoto} label={language === 'es' ? 'Cerrar visor de imagen' : 'Close image viewer'} />
             </motion.div>
           </div>
         )}

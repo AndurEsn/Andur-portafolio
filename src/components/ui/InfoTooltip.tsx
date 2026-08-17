@@ -1,4 +1,4 @@
-import { useId, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Info } from 'lucide-react';
 
@@ -9,41 +9,89 @@ interface InfoTooltipProps {
   align?: 'left' | 'right';
 }
 
-const TOOLTIP_WIDTH = 256;
+const TOOLTIP_MAX_WIDTH = 256;
 const VIEWPORT_GAP = 12;
+
+function canHover() {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
 
 export default function InfoTooltip({ label, children, placement = 'bottom', align = 'right' }: InfoTooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
+  const [coords, setCoords] = useState({ top: 0, left: 0, maxWidth: TOOLTIP_MAX_WIDTH });
   const triggerRef = useRef<HTMLSpanElement>(null);
+  const tooltipRef = useRef<HTMLSpanElement>(null);
   const tooltipId = useId();
 
   useLayoutEffect(() => {
     if (!isOpen || !triggerRef.current) return;
 
-    const rect = triggerRef.current.getBoundingClientRect();
-    const maxLeft = window.innerWidth - TOOLTIP_WIDTH - VIEWPORT_GAP;
-    const left = Math.min(
-      Math.max(VIEWPORT_GAP, align === 'right' ? rect.right - TOOLTIP_WIDTH : rect.left),
-      Math.max(VIEWPORT_GAP, maxLeft)
-    );
-    const top = placement === 'top' ? rect.top - VIEWPORT_GAP : rect.bottom + VIEWPORT_GAP;
+    const place = () => {
+      if (!triggerRef.current) return;
+      const rect = triggerRef.current.getBoundingClientRect();
+      const maxWidth = Math.min(TOOLTIP_MAX_WIDTH, window.innerWidth - VIEWPORT_GAP * 2);
+      const tooltipWidth = tooltipRef.current?.offsetWidth || Math.min(rect.width, maxWidth);
+      const preferredLeft = align === 'right' ? rect.right - tooltipWidth : rect.left;
+      const maxLeft = window.innerWidth - tooltipWidth - VIEWPORT_GAP;
+      const left = Math.min(Math.max(VIEWPORT_GAP, preferredLeft), Math.max(VIEWPORT_GAP, maxLeft));
+      const top = placement === 'top' ? rect.top - VIEWPORT_GAP : rect.bottom + VIEWPORT_GAP;
+      setCoords({ top, left, maxWidth });
+    };
 
-    setCoords({ top, left });
-  }, [isOpen, placement, align]);
+    place();
+    if (!tooltipRef.current || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(place);
+    observer.observe(tooltipRef.current);
+    return () => observer.disconnect();
+  }, [isOpen, placement, align, children]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const close = () => setIsOpen(false);
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (triggerRef.current?.contains(target) || tooltipRef.current?.contains(target)) return;
+      close();
+    };
+
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    document.addEventListener('pointerdown', onPointerDown);
+
+    return () => {
+      window.removeEventListener('scroll', close, true);
+      window.removeEventListener('resize', close);
+      document.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [isOpen]);
 
   return (
     <span
       ref={triggerRef}
       className="relative inline-flex"
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onMouseEnter={() => {
+        if (canHover()) setIsOpen(true);
+      }}
+      onMouseLeave={() => {
+        if (canHover()) setIsOpen(false);
+      }}
     >
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
+        onClick={(event) => {
+          if (canHover()) return;
+          event.preventDefault();
+          event.stopPropagation();
+          setIsOpen((open) => !open);
+        }}
+        onFocus={() => {
+          if (canHover()) setIsOpen(true);
+        }}
+        onBlur={() => {
+          if (canHover()) setIsOpen(false);
+        }}
         aria-label={label}
         aria-describedby={isOpen ? tooltipId : undefined}
         aria-expanded={isOpen}
@@ -54,15 +102,16 @@ export default function InfoTooltip({ label, children, placement = 'bottom', ali
       {isOpen &&
         createPortal(
           <span
+            ref={tooltipRef}
             id={tooltipId}
             role="tooltip"
             style={{
               top: coords.top,
               left: coords.left,
-              width: TOOLTIP_WIDTH,
+              maxWidth: coords.maxWidth,
               transform: placement === 'top' ? 'translateY(-100%)' : undefined,
             }}
-            className="pointer-events-none fixed z-[200] rounded-xl border border-border bg-surface-lowest px-3 py-2 text-[11px] font-medium leading-relaxed text-on-surface shadow-xl break-words whitespace-normal"
+            className="fixed z-[200] w-max rounded-xl border border-border bg-surface-lowest px-3 py-2 text-[11px] font-medium leading-relaxed text-on-surface shadow-xl break-words whitespace-normal"
           >
             {children}
           </span>,

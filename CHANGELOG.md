@@ -17,6 +17,9 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 - Tema inicial según el sistema, override manual persistido; el splash respeta claro y oscuro.
 - Íconos de marca más claros en oscuro.
 - Animaciones de entrada al hacer scroll, sin exigir dirección hacia abajo.
+- Menú del Laboratorio y tooltips adaptados al viewport en móvil.
+- Paleta del Design System con el degradado del splash; tipografía Inter con muestras que hacen wrap.
+- Tooltip con ancho al contenido; modales a pantalla completa en móvil (cerrar con icono o atrás).
 
 ### Removed
 

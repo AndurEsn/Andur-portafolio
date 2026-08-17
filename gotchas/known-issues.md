@@ -10,6 +10,7 @@ Actualizado: 2026-08-17.
 | Fuentes | Inter depende de Google Fonts y de red en runtime. | Autoalojar si privacidad, CSP o disponibilidad offline importan. |
 | Editor demo | `PortfolioEditor` existe en overlays pero no está montado. | No reactivarlo sin decisión; el contenido se edita en `src/content/data.ts`. |
 | Reveal al scroll | `LandingReveal` exigía `scrollDirection === 'down'` y `once: true`, así que las secciones aparecían sin animar. | Animar al entrar en vista (`amount` 0.2, `margin` inferior −12%, `once: true`) sin depender de la dirección del scroll. |
+| Modal + historial | En móvil, `history.back()` en el cleanup de `useModalDismiss` cerraba el modal al abrirlo (StrictMode / popstate). | Empujar el estado una vez y no hacer `back` en el cleanup; el atrás del usuario sigue cerrando. |
 | Tooling | Coexisten `package-lock.json` real y `bun.lock` vacío. | Usar npm hasta retirar o poblar intencionalmente el lock alternativo. |
 | AI Studio | El README y la metadata histórica pueden mencionar Gemini. | No añadir una API key ni `@google/genai` sin una función real. |
 | Tests | Solo hay typecheck y build; no existen tests automatizados. | Hacer QA manual explícito y priorizar smoke tests de interacciones críticas. |

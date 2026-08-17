@@ -11,7 +11,7 @@ export const modalPrimaryCloseButtonClass = 'h-12 w-full rounded-2xl bg-primary 
 export default function ModalCloseButton({ onClick, label, placement = 'overlay' }: ModalCloseButtonProps) {
   const positionClass = placement === 'inline'
     ? 'relative shrink-0'
-    : 'absolute right-4 top-4';
+    : 'absolute right-4 top-[max(1rem,env(safe-area-inset-top))] sm:top-4';
 
   return (
     <button

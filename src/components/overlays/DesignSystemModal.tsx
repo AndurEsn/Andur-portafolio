@@ -5,6 +5,7 @@ import BrandGlyph from '../ui/BrandGlyph';
 import { Language, Theme } from '../../types';
 import { DESIGN_BREAKPOINTS, TRANSLATIONS } from '../../content/data';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import useModalDismiss from '../../hooks/useModalDismiss';
 import ModalCloseButton from '../ui/ModalCloseButton';
 import InfoTooltip from '../ui/InfoTooltip';
 
@@ -21,6 +22,7 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
   const [previewTheme, setPreviewTheme] = useState<Theme>(theme);
 
   useBodyScrollLock(isOpen);
+  const requestClose = useModalDismiss(isOpen, onClose);
 
   useEffect(() => {
     if (isOpen) setPreviewTheme(theme);
@@ -49,13 +51,13 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
       ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[80] flex items-stretch justify-center sm:items-center sm:p-4">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={onClose}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={requestClose}
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-none sm:pointer-events-auto"
       />
 
       <motion.div
@@ -66,12 +68,12 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
         role="dialog"
         aria-modal="true"
         aria-labelledby="design-system-title"
-        className={`relative z-10 flex max-h-[85vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-border bg-surface-lowest shadow-2xl ${
+        className={`relative z-10 flex h-dvh w-full max-h-dvh flex-col overflow-hidden rounded-none border-0 bg-surface-lowest shadow-2xl sm:h-auto sm:max-h-[85vh] sm:max-w-3xl sm:rounded-3xl sm:border sm:border-border ${
           isDarkPreview ? 'dark theme-preview-dark' : 'theme-preview-light'
         }`}
       >
         <div className="relative shrink-0 border-b border-border bg-surface-low p-6 pr-16 sm:p-8 sm:pr-20">
-          <ModalCloseButton onClick={onClose} label={t.modalClose} />
+          <ModalCloseButton onClick={requestClose} label={t.modalClose} />
           <h3 id="design-system-title" className="typo-modal-title">
             {t.dsModalTitle}
           </h3>
@@ -113,40 +115,30 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
                 </div>
               ))}
             </div>
+            <div className="splash-bg flex h-24 flex-col justify-between rounded-2xl border border-border p-4 text-on-surface">
+              <span className="text-xs font-bold">{t.dsPaletteSplash}</span>
+              <span className="font-mono text-[10px] text-on-surface-variant">165deg · primary → primary-bg → background</span>
+            </div>
           </section>
 
           <section className="space-y-3">
             <h4 className="typo-overlay-heading">{t.dsTypographyTitle}</h4>
             <p className="typo-overlay-body">{t.dsTypographyDesc}</p>
             <div className="space-y-4 rounded-2xl border border-border bg-surface-low p-5">
-              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
-                <span className="font-mono text-[10px] text-muted">display large</span>
-                <span className="text-3xl font-black tracking-tight text-on-surface">Aa Bb Cc</span>
-              </div>
-              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
-                <span className="font-mono text-[10px] text-muted">heading medium</span>
-                <span className="text-xl font-extrabold text-on-surface">Typography scale</span>
-              </div>
-              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
-                <span className="font-mono text-[10px] text-muted">body standard</span>
-                <span className="max-w-sm text-right text-sm leading-relaxed text-on-surface-variant">Lorem ipsum dolor sit amet.</span>
-              </div>
-              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
-                <span className="font-mono text-[10px] text-muted">modal title</span>
-                <span className="typo-modal-title">Aa Bb Cc</span>
-              </div>
-              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
-                <span className="font-mono text-[10px] text-muted">modal subtitle</span>
-                <span className="typo-modal-subtitle mt-0">Subtitle copy</span>
-              </div>
-              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
-                <span className="font-mono text-[10px] text-muted">overlay heading</span>
-                <span className="typo-overlay-heading">Section title</span>
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono text-[10px] text-muted">overlay body</span>
-                <span className="max-w-sm text-right typo-overlay-body">Lorem ipsum dolor sit amet.</span>
-              </div>
+              {[
+                { token: 'display large', className: 'text-3xl font-black tracking-tight text-on-surface', sample: 'Aa Bb Cc' },
+                { token: 'heading medium', className: 'text-xl font-extrabold text-on-surface', sample: 'Typography scale' },
+                { token: 'body standard', className: 'text-sm leading-relaxed text-on-surface-variant', sample: 'Lorem ipsum dolor sit amet.' },
+                { token: 'modal title', className: 'typo-modal-title', sample: 'Aa Bb Cc' },
+                { token: 'modal subtitle', className: 'typo-modal-subtitle mt-0', sample: 'Subtitle copy' },
+                { token: 'overlay heading', className: 'typo-overlay-heading', sample: 'Section title' },
+                { token: 'overlay body', className: 'typo-overlay-body', sample: 'Lorem ipsum dolor sit amet.' },
+              ].map((row) => (
+                <div key={row.token} className="flex flex-col gap-1 border-b border-border/40 pb-2 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                  <span className="shrink-0 font-mono text-[10px] text-muted">{row.token}</span>
+                  <span className={`min-w-0 break-words sm:text-right ${row.className}`}>{row.sample}</span>
+                </div>
+              ))}
             </div>
           </section>
 
@@ -178,7 +170,6 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
 
           <section className="space-y-3">
             <h4 className="typo-overlay-heading">{t.dsBreakpointsTitle}</h4>
-            <p className="typo-overlay-body">{t.dsBreakpointsDesc}</p>
             <div className="space-y-3">
               {DESIGN_BREAKPOINTS(language).map((breakpoint) => (
                 <div
@@ -284,8 +275,8 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
             <h4 className="typo-overlay-heading">Modal</h4>
             <p className="typo-overlay-body">
               {language === 'es'
-                ? 'Una ventana enfocada: el fondo gris semitransparente queda inmóvil y el cierre va en la esquina superior derecha.'
-                : 'A focused window: the gray semi-transparent backdrop stays still and the close control sits in the top-right corner.'}
+                ? 'En móvil ocupa toda la pantalla. Se cierra con el icono o con atrás. En escritorio también puedes pulsar fuera.'
+                : 'On mobile it fills the screen. Close with the icon or Back. On desktop you can also press outside.'}
             </p>
             <div className="overflow-hidden rounded-2xl border border-border">
               <div className="bg-black/60 p-6 backdrop-blur-sm sm:p-8">
@@ -296,8 +287,8 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
                   </div>
                   <p className="p-4 text-xs leading-relaxed text-on-surface-variant">
                     {language === 'es'
-                      ? 'Contenido desplazable. Cierra con el icono o al pulsar fuera.'
-                      : 'Scrollable content. Close with the icon or by pressing outside.'}
+                      ? 'Contenido desplazable. En móvil cierra con el icono o con atrás.'
+                      : 'Scrollable content. On mobile, close with the icon or Back.'}
                   </p>
                 </div>
               </div>
