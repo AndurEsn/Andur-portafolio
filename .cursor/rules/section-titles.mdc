@@ -1,0 +1,11 @@
+---
+description: Title case for FAQ headings and nav labels that match section titles
+alwaysApply: true
+---
+
+# Títulos de sección y navegación
+
+- Los titulares de Preguntas Frecuentes (sección y chips de categoría) usan mayúscula inicial en cada palabra con significado. En español, `y` puede quedar en minúscula: `Diseño y Construcción`, no `Diseño y construcción`.
+- El ítem de navegación (tabs y footer) usa el mismo nombre que el `h2` de la sección.
+- En español el `h2` y el tab son `Preguntas Frecuentes` (nunca `FAQ`). En inglés ambos son `FAQ's`.
+- Copy en `src/content/data.ts`: mantener `faqTitle` y `navFaq` iguales **dentro de cada idioma**.

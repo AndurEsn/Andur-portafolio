@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FAQS, TRANSLATIONS } from '../../content/data';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Download, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FAQItem, Language } from '../../types';
 
@@ -29,7 +29,7 @@ export default function FAQ({ language }: FAQProps) {
   return (
     <section 
       id="faq-section"
-      className="px-4 py-16 max-w-4xl mx-auto w-full transition-all duration-300"
+      className="mx-auto w-full max-w-3xl px-4 py-section transition-all duration-300"
     >
       <div className="flex flex-col items-center text-center mb-10">
         <h2 id="tour-title-faq" className="text-2xl sm:text-4xl font-black text-on-surface tracking-tight mb-3">
@@ -93,16 +93,25 @@ export default function FAQ({ language }: FAQProps) {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25, ease: 'easeInOut' }}
                   >
-                    <div className="whitespace-pre-line border-t border-border/40 px-6 pb-6 pt-1 text-sm leading-relaxed text-on-surface-variant sm:text-base">
-                      {faq.answer}
+                    <div className="border-t border-border/40 px-6 py-6 text-sm leading-relaxed text-on-surface-variant sm:text-base">
+                      <p className="whitespace-pre-line">{faq.answer}</p>
                       {faq.link && (
-                        <a
-                          href={faq.link.href}
-                          download={faq.link.download}
-                          className="mt-4 block w-fit font-bold text-primary underline-offset-4 transition-colors hover:text-primary-hover hover:underline"
-                        >
-                          {faq.link.label}
-                        </a>
+                        <div className="mt-5">
+                          <a
+                            href={faq.link.href}
+                            download={faq.link.download}
+                            target={faq.link.external ? '_blank' : undefined}
+                            rel={faq.link.external ? 'noopener noreferrer' : undefined}
+                            className="inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-white transition-all hover:bg-primary-hover active:scale-[0.98]"
+                          >
+                            {faq.link.download ? (
+                              <Download className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
+                            ) : (
+                              <Github className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
+                            )}
+                            {faq.link.label}
+                          </a>
+                        </div>
                       )}
                     </div>
                   </motion.div>

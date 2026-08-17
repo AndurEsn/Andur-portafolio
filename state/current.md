@@ -1,31 +1,31 @@
 # Estado actual
 
-Actualizado: 2026-08-15.
+Actualizado: 2026-08-17.
 
 ## Verificado
 
+- Rama local `feat/v2-simplification` (sin push). `main` permanece en **v1.1.0**.
 - SPA React 19 + TypeScript + Vite 6 + Tailwind 4; sin backend activo.
-- `npm run lint`: pasa.
-- `npm run build`: pasa.
-- Dev server: `http://127.0.0.1:3000/` con `host: 127.0.0.1` (corrige fallo de `--host=0.0.0.0`).
-- Versionado SemVer activo: **`1.1.0`** en `package.json`, visible en Laboratorio; el historial vive en GitHub Releases y `CHANGELOG.md`.
-- Tag **`v1.0.0`** congela la publicación original en GitHub; **`v1.1.0`** incluye FAQ/CV/métricas y reorganización.
-- Estructura `src/` reorganizada: `app/`, `components/{layout,sections,overlays,feedback,effects,ui}/`, `content/`, `config/`, `types/`, `styles/`, `hooks/`, `assets/`.
-- Demo Day descartado del working tree local.
+- CV descargable: `src/assets/documents/andur-cv-2026-ago.pdf` (nombre de descarga `Andur-CV-2026-Ago.pdf`), enlazado desde Hero y FAQ vía `src/config/cv.ts`.
+- Contacto: LinkedIn y `andur-design@outlook.com` en `src/config/contact.ts`. Sin formulario ni WhatsApp.
+- Tema: sigue el sistema por defecto; el override manual se guarda en `andur-theme`. El splash usa los mismos tokens.
+- En inglés, sección y tab: `FAQ's`. En español: `Preguntas Frecuentes`.
+- `LandingReveal` anima al entrar en vista (sin exigir scroll hacia abajo) y no oculta al salir.
+- Íconos `BrandGlyph` más claros en oscuro (`icon-well` y degradado).
+- Design System sin muestra de Input.
+- Splash: mínimo 2 s; continúa con clic o scroll.
+- Preview local: `http://127.0.0.1:3000/` y `http://127.0.0.1:3000/ruta-invalida`.
 
-## Próximo trabajo (v2.0.0)
+## Próximo trabajo
 
-Ver plan detallado en [`work-plan-v2.md`](work-plan-v2.md):
-
-1. Eliminar NPS, tour y simulaciones del Laboratorio.
-2. 404 real para rutas inválidas.
-3. Carga inicial con `SkeletonLoader` (máx. 1 s si carga rápida).
-4. Contacto real y QA de lanzamiento.
+1. Revisar visualmente en local y aprobar.
+2. Push y tag `v2.0.0` solo con aprobación explícita.
 
 ## Riesgos / blockers de lanzamiento
 
-- Correo de contacto real no configurado y teléfono de WhatsApp placeholder.
-- No hay suite de tests ni evidencia de QA en navegadores.
+- El hosting debe servir `index.html` para rutas desconocidas (fallback SPA).
+- No hay suite de tests automatizados.
+- Imágenes de proyecto remotas en `googleusercontent.com`.
 
 ## Regla de actualización
 

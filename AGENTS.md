@@ -2,7 +2,7 @@
 
 ## Proyecto
 
-Portafolio interactivo bilingüe (ES/EN) de Andur, Product Designer. Es una SPA cliente construida con React 19, TypeScript, Vite 6, Tailwind CSS 4, Motion y Lucide. Presenta experiencia, métricas, trayectoria, casos de estudio, contacto y FAQ; además incluye tema claro/oscuro, tour, estados simulados, encuesta NPS y editor de demostración.
+Portafolio interactivo bilingüe (ES/EN) de Andur, Product Designer. Es una SPA cliente construida con React 19, TypeScript, Vite 6, Tailwind CSS 4, Motion y Lucide. Presenta experiencia, métricas, trayectoria, casos de estudio, contacto y FAQ; además incluye tema claro/oscuro, Laboratorio, Design System y estados reales de carga y 404.
 
 ## Fuente de verdad y orden de lectura
 
@@ -24,10 +24,10 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 
 - `src/app/App.tsx`: estado global cliente y composición de la página.
 - `src/app/main.tsx`: entrypoint de la SPA.
-- `src/content/data.ts`: copy ES/EN, métricas, trayectoria, proyectos, FAQ y tour.
+- `src/content/data.ts`: copy ES/EN, métricas, trayectoria, proyectos y FAQ.
 - `src/types/index.ts`: contratos de dominio y estados de UI.
 - `src/components/`: secciones, overlays, layout, feedback, efectos y UI.
-- `src/config/`: versión SemVer visible en Laboratorio.
+- `src/config/`: versión SemVer, contacto, GitHub y ruta del CV.
 - `src/styles/index.css`: tokens de tema y utilidades globales.
 - `src/assets/`: avatar, logos y documentos locales.
 - `vite.config.ts`: Vite, React, Tailwind y alias `@` → `src/`.
@@ -37,8 +37,9 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 ## Reglas duras e invariantes
 
 - Mantener paridad funcional y de contenido entre `es` y `en`.
+- Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab de navegación usa el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ's` en inglés.
 - Mantener soporte de temas `light` y `dark`; usar tokens semánticos de `src/styles/index.css`, no colores arbitrarios salvo colores de marca justificados.
-- Mantener los tres estados `normal | loading | error` y cancelar el tour al abandonar `normal`.
+- Mantener los estados `splash | loading | normal | error` (bienvenida, carga, contenido y 404 de ruta).
 - El contenido compartido pertenece en `src/content/data.ts`; los contratos, en `src/types/`; evitar copy duplicado en componentes cuando sea reutilizable.
 - No introducir backend, persistencia remota ni afirmar que el contacto envía datos sin una decisión explícita y credenciales/configuración aprobadas.
 - No exponer secretos. Variables reales van en `.env.local`, nunca en archivos versionables.

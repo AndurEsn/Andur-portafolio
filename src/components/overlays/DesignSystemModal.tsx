@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { AlertTriangle, CheckCircle, ChevronDown, ChevronUp, Info } from 'lucide-react';
+import { AlertTriangle, Briefcase, CheckCircle, ChevronDown, ChevronUp, Clock3, FolderKanban, Info, Laptop, Smartphone, Sparkles, Tablet, Workflow } from 'lucide-react';
+import BrandGlyph from '../ui/BrandGlyph';
 import { Language, Theme } from '../../types';
-import { TRANSLATIONS } from '../../content/data';
+import { DESIGN_BREAKPOINTS, TRANSLATIONS } from '../../content/data';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
-import ModalCloseButton, { modalPrimaryCloseButtonClass } from '../ui/ModalCloseButton';
+import ModalCloseButton from '../ui/ModalCloseButton';
 import InfoTooltip from '../ui/InfoTooltip';
 
 interface DesignSystemModalProps {
@@ -16,7 +17,6 @@ interface DesignSystemModalProps {
 
 export default function DesignSystemModal({ isOpen, onClose, language, theme }: DesignSystemModalProps) {
   const t = TRANSLATIONS[language];
-  const [testInput, setTestInput] = useState('');
   const [demoAccordionOpen, setDemoAccordionOpen] = useState(false);
   const [previewTheme, setPreviewTheme] = useState<Theme>(theme);
 
@@ -29,6 +29,11 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
   if (!isOpen) return null;
 
   const isDarkPreview = previewTheme === 'dark';
+  const breakpointIcons = {
+    laptop: Laptop,
+    tablet: Tablet,
+    phone: Smartphone,
+  } as const;
   const palette = isDarkPreview
     ? [
         { name: 'Primary', value: '#4090FE', className: 'bg-primary text-white border-primary/20' },
@@ -67,18 +72,18 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
       >
         <div className="relative shrink-0 border-b border-border bg-surface-low p-6 pr-16 sm:p-8 sm:pr-20">
           <ModalCloseButton onClick={onClose} label={t.modalClose} />
-          <h3 id="design-system-title" className="text-xl font-black tracking-tight text-on-surface sm:text-2xl">
+          <h3 id="design-system-title" className="typo-modal-title">
             {t.dsModalTitle}
           </h3>
-          <p className="mt-1 text-xs font-medium text-on-surface-variant sm:text-sm">
+          <p className="typo-modal-subtitle">
             {t.dsModalSubtitle}
           </p>
 
-          <div className="mt-5 inline-flex rounded-xl border border-border bg-surface-lowest p-1" aria-label={language === 'es' ? 'Modo de la documentación' : 'Documentation mode'}>
+          <div className="mt-5 inline-flex gap-1.5 rounded-xl border border-border bg-surface-lowest p-1" aria-label={language === 'es' ? 'Modo de la documentación' : 'Documentation mode'}>
             <button
               onClick={() => setPreviewTheme('light')}
               aria-pressed={previewTheme === 'light'}
-              className={`h-8 rounded-lg px-3 text-[11px] font-bold transition-colors ${
+              className={`h-8 cursor-pointer rounded-lg px-3 text-[11px] font-bold transition-colors ${
                 previewTheme === 'light' ? 'bg-primary text-white hover:bg-primary-hover' : 'text-on-surface-variant hover:bg-surface-high'
               }`}
             >
@@ -87,7 +92,7 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
             <button
               onClick={() => setPreviewTheme('dark')}
               aria-pressed={previewTheme === 'dark'}
-              className={`h-8 rounded-lg px-3 text-[11px] font-bold transition-colors ${
+              className={`h-8 cursor-pointer rounded-lg px-3 text-[11px] font-bold transition-colors ${
                 previewTheme === 'dark' ? 'bg-primary text-white hover:bg-primary-hover' : 'text-on-surface-variant hover:bg-surface-high'
               }`}
             >
@@ -98,8 +103,8 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
 
         <div className="hide-scrollbar flex-grow space-y-8 overflow-y-auto p-6 sm:p-8">
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{t.dsPaletteTitle}</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">{t.dsPaletteDesc}</p>
+            <h4 className="typo-overlay-heading">{t.dsPaletteTitle}</h4>
+            <p className="typo-overlay-body">{t.dsPaletteDesc}</p>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {palette.map((color) => (
                 <div key={color.name} className={`flex h-24 flex-col justify-between rounded-2xl border p-4 ${color.className}`}>
@@ -111,8 +116,8 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{t.dsTypographyTitle}</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">{t.dsTypographyDesc}</p>
+            <h4 className="typo-overlay-heading">{t.dsTypographyTitle}</h4>
+            <p className="typo-overlay-body">{t.dsTypographyDesc}</p>
             <div className="space-y-4 rounded-2xl border border-border bg-surface-low p-5">
               <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
                 <span className="font-mono text-[10px] text-muted">display large</span>
@@ -122,16 +127,32 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
                 <span className="font-mono text-[10px] text-muted">heading medium</span>
                 <span className="text-xl font-extrabold text-on-surface">Typography scale</span>
               </div>
-              <div className="flex items-baseline justify-between">
+              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
                 <span className="font-mono text-[10px] text-muted">body standard</span>
                 <span className="max-w-sm text-right text-sm leading-relaxed text-on-surface-variant">Lorem ipsum dolor sit amet.</span>
+              </div>
+              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
+                <span className="font-mono text-[10px] text-muted">modal title</span>
+                <span className="typo-modal-title">Aa Bb Cc</span>
+              </div>
+              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
+                <span className="font-mono text-[10px] text-muted">modal subtitle</span>
+                <span className="typo-modal-subtitle mt-0">Subtitle copy</span>
+              </div>
+              <div className="flex items-baseline justify-between border-b border-border/40 pb-2">
+                <span className="font-mono text-[10px] text-muted">overlay heading</span>
+                <span className="typo-overlay-heading">Section title</span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="font-mono text-[10px] text-muted">overlay body</span>
+                <span className="max-w-sm text-right typo-overlay-body">Lorem ipsum dolor sit amet.</span>
               </div>
             </div>
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{t.dsShapesTitle}</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">{t.dsShapesDesc}</p>
+            <h4 className="typo-overlay-heading">{t.dsShapesTitle}</h4>
+            <p className="typo-overlay-body">{t.dsShapesDesc}</p>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               {['rounded-xl', 'rounded-2xl', 'rounded-3xl'].map((shape) => (
                 <div key={shape} className={`border border-border bg-surface-lowest p-4 text-center ${shape}`}>
@@ -143,34 +164,58 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{t.dsComponentsTitle}</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">{t.dsComponentsDesc}</p>
+            <h4 className="typo-overlay-heading">{t.dsIconsTitle}</h4>
+            <p className="typo-overlay-body">{t.dsIconsDesc}</p>
+            <div className="flex flex-wrap gap-4 rounded-2xl border border-border bg-surface-low p-5">
+              <BrandGlyph icon={FolderKanban} label={language === 'es' ? 'Proyectos' : 'Projects'} />
+              <BrandGlyph icon={Workflow} label={language === 'es' ? 'Flujos' : 'Flows'} />
+              <BrandGlyph icon={Clock3} label={language === 'es' ? 'Horas' : 'Hours'} />
+              <BrandGlyph icon={Briefcase} label="Yaydoo" />
+              <BrandGlyph icon={Laptop} label="Leracom AI" />
+              <BrandGlyph icon={Sparkles} label="Freelance" />
+            </div>
+          </section>
+
+          <section className="space-y-3">
+            <h4 className="typo-overlay-heading">{t.dsBreakpointsTitle}</h4>
+            <p className="typo-overlay-body">{t.dsBreakpointsDesc}</p>
+            <div className="space-y-3">
+              {DESIGN_BREAKPOINTS(language).map((breakpoint) => (
+                <div
+                  key={breakpoint.id}
+                  className="flex items-center gap-4 rounded-2xl border border-border bg-surface-lowest p-4"
+                >
+                  <BrandGlyph
+                    icon={breakpointIcons[breakpoint.icon]}
+                    label={breakpoint.title}
+                  />
+                  <div className="min-w-0">
+                    <p className="typo-overlay-heading">{breakpoint.title}</p>
+                    <p className="typo-overlay-body">{breakpoint.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-3">
+            <h4 className="typo-overlay-heading">{t.dsComponentsTitle}</h4>
+            <p className="typo-overlay-body">{t.dsComponentsDesc}</p>
             <div className="grid grid-cols-1 gap-6 rounded-2xl border border-border bg-surface-low p-6 md:grid-cols-2">
               <div className="space-y-4">
                 <h5 className="text-xs font-black text-on-surface">Buttons</h5>
                 <div className="flex flex-col gap-3">
-                  <button className="flex h-12 items-center justify-center rounded-xl bg-primary px-6 font-bold text-white transition-all hover:bg-primary-hover active:scale-[0.98]">
+                  <button className="flex h-12 cursor-pointer items-center justify-center rounded-xl bg-primary px-6 font-bold text-white transition-all hover:bg-primary-hover active:scale-[0.98]">
                     {t.dsBtnPrimary}
                   </button>
-                  <button className="flex h-12 items-center justify-center rounded-xl border border-border bg-surface-lowest px-6 font-bold text-on-surface transition-all hover:bg-surface-high active:scale-[0.98]">
+                  <button className="flex h-12 cursor-pointer items-center justify-center rounded-xl border border-border bg-surface-lowest px-6 font-bold text-on-surface transition-all hover:bg-surface-high active:scale-[0.98]">
                     {t.dsBtnSecondary}
                   </button>
                 </div>
               </div>
               <div className="space-y-4">
-                <h5 className="text-xs font-black text-on-surface">Inputs and badges</h5>
-                <div className="space-y-1.5">
-                  <input
-                    type="text"
-                    value={testInput}
-                    onChange={(event) => setTestInput(event.target.value)}
-                    placeholder={t.dsInputPlaceholder}
-                    aria-invalid="true"
-                    className="h-12 w-full rounded-xl border border-error bg-error-container/30 px-4 text-xs text-on-surface transition-all placeholder:text-muted focus:border-transparent focus:outline-none focus:ring-2 focus:ring-error"
-                  />
-                  <p className="text-[11px] font-medium text-error">{language === 'es' ? 'Este campo es obligatorio.' : 'This field is required.'}</p>
-                </div>
-                <div className="flex gap-2">
+                <h5 className="text-xs font-black text-on-surface">{language === 'es' ? 'Insignias' : 'Badges'}</h5>
+                <div className="flex flex-wrap gap-2">
                   <span className="rounded-full bg-primary/10 px-3.5 py-1 text-xs font-bold text-primary">{t.dsBadge}</span>
                   <span className="rounded-full border border-border bg-surface-lowest px-3.5 py-1 text-xs font-bold text-on-surface-variant">Figma</span>
                 </div>
@@ -179,8 +224,8 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{language === 'es' ? 'Alertas' : 'Alerts'}</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">
+            <h4 className="typo-overlay-heading">{language === 'es' ? 'Alertas' : 'Alerts'}</h4>
+            <p className="typo-overlay-body">
               {language === 'es' ? 'Mensajes breves para confirmar acciones, informar una carga o señalar un error.' : 'Brief messages that confirm actions, communicate loading, or flag an error.'}
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -200,23 +245,35 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{t.dsAccordion}</h4>
-            <div className="overflow-hidden rounded-2xl border border-border bg-surface-lowest">
+            <h4 className="typo-overlay-heading">{t.dsAccordion}</h4>
+            <div className="overflow-hidden rounded-2xl border border-border bg-card-bg transition-all duration-300">
               <button
                 onClick={() => setDemoAccordionOpen((open) => !open)}
                 aria-expanded={demoAccordionOpen}
-                className="flex w-full items-center justify-between gap-4 p-4 text-left text-xs font-bold text-on-surface transition-colors hover:bg-surface-low"
+                className="group flex w-full cursor-pointer items-center justify-between px-6 py-5 text-left focus:outline-none"
               >
-                <span>{language === 'es' ? '¿Cómo funciona este componente?' : 'How does this component work?'}</span>
-                {demoAccordionOpen ? <ChevronUp className="h-4 w-4 text-primary" /> : <ChevronDown className="h-4 w-4 text-primary" />}
+                <span className="text-sm font-bold text-on-surface transition-colors group-hover:text-primary sm:text-base">
+                  {language === 'es' ? '¿Cómo funciona este componente?' : 'How does this component work?'}
+                </span>
+                <span className="rounded-lg bg-surface p-1 text-muted">
+                  {demoAccordionOpen ? (
+                    <ChevronUp className="h-4 w-4 text-primary" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </span>
               </button>
-              {demoAccordionOpen && <p className="px-4 pb-4 pt-1 text-xs leading-relaxed text-on-surface-variant">{t.dsAccordionText}</p>}
+              {demoAccordionOpen && (
+                <div className="border-t border-border/40 px-6 py-6 text-sm leading-relaxed text-on-surface-variant sm:text-base">
+                  {t.dsAccordionText}
+                </div>
+              )}
             </div>
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">{t.dsTooltipTitle}</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">{t.dsTooltipDesc}</p>
+            <h4 className="typo-overlay-heading">{t.dsTooltipTitle}</h4>
+            <p className="typo-overlay-body">{t.dsTooltipDesc}</p>
             <div className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface-low p-3 text-xs font-bold text-on-surface">
               <span>{t.labAnimation}</span>
               <InfoTooltip label={t.labAnimationHelpLabel} placement="top" align="left">{t.dsTooltipExample}</InfoTooltip>
@@ -224,43 +281,51 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
           </section>
 
           <section className="space-y-3">
-            <h4 className="text-sm font-black text-on-surface">Modal</h4>
-            <p className="text-xs leading-relaxed text-on-surface-variant">
-              {language === 'es' ? 'Una ventana enfocada: el fondo queda inmóvil y solo su contenido puede desplazarse.' : 'A focused window: the page behind stays still and only its content can scroll.'}
+            <h4 className="typo-overlay-heading">Modal</h4>
+            <p className="typo-overlay-body">
+              {language === 'es'
+                ? 'Una ventana enfocada: el fondo gris semitransparente queda inmóvil y el cierre va en la esquina superior derecha.'
+                : 'A focused window: the gray semi-transparent backdrop stays still and the close control sits in the top-right corner.'}
             </p>
-            <div className="rounded-2xl border border-border bg-surface-low p-4 sm:p-6">
-              <div className="mx-auto max-w-sm overflow-hidden rounded-2xl border border-border bg-surface-lowest shadow-lg">
-                <div className="border-b border-border p-4">
-                  <span className="text-xs font-black text-on-surface">{language === 'es' ? 'Título del modal' : 'Modal title'}</span>
-                </div>
-                <p className="p-4 text-xs leading-relaxed text-on-surface-variant">{language === 'es' ? 'Contenido desplazable y acciones claras.' : 'Scrollable content with clear actions.'}</p>
-                <div className="border-t border-border bg-surface-low p-3">
-                  <div className="flex h-9 items-center justify-center rounded-xl bg-primary text-[11px] font-bold text-white">{t.modalClose}</div>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-border bg-surface-low p-4 sm:p-6">
-              <p className="mb-3 text-xs font-black text-on-surface">{language === 'es' ? 'Tour flotante' : 'Floating tour'}</p>
-              <div className="mx-auto max-w-sm rounded-2xl border-2 border-primary/50 bg-surface-lowest p-4 shadow-lg">
-                <div className="flex items-center justify-between border-b border-border/40 pb-2">
-                  <span className="text-[11px] font-black text-primary">{language === 'es' ? 'Recorrido guiado' : 'Guided tour'}</span>
-                  <span className="rounded-md bg-surface-low px-2 py-0.5 text-[10px] font-bold text-muted">1 / 4</span>
-                </div>
-                <p className="py-3 text-xs leading-relaxed text-on-surface-variant">
-                  {language === 'es' ? 'Permanece visible mientras puedes seguir recorriendo la página.' : 'It stays visible while you keep exploring the page.'}
-                </p>
-                <div className="flex justify-end border-t border-border/40 pt-3">
-                  <span className="rounded-lg bg-primary px-3 py-2 text-[10px] font-bold text-white">{language === 'es' ? 'Siguiente' : 'Next'}</span>
+            <div className="overflow-hidden rounded-2xl border border-border">
+              <div className="bg-black/60 p-6 backdrop-blur-sm sm:p-8">
+                <div className="mx-auto max-w-sm overflow-hidden rounded-2xl border border-border bg-surface-lowest shadow-2xl">
+                  <div className="flex items-center justify-between gap-3 border-b border-border bg-surface-low px-4 py-3">
+                    <span className="text-xs font-black text-on-surface">{language === 'es' ? 'Título del modal' : 'Modal title'}</span>
+                    <ModalCloseButton placement="inline" onClick={() => undefined} label={t.modalClose} />
+                  </div>
+                  <p className="p-4 text-xs leading-relaxed text-on-surface-variant">
+                    {language === 'es'
+                      ? 'Contenido desplazable. Cierra con el icono o al pulsar fuera.'
+                      : 'Scrollable content. Close with the icon or by pressing outside.'}
+                  </p>
                 </div>
               </div>
             </div>
           </section>
-        </div>
 
-        <div className="flex shrink-0 gap-3 border-t border-border bg-surface-low p-4">
-          <button onClick={onClose} className={modalPrimaryCloseButtonClass}>
-            {t.modalClose}
-          </button>
+          <section className="space-y-3">
+            <h4 className="typo-overlay-heading">{language === 'es' ? 'Tarjeta de proyecto' : 'Project card'}</h4>
+            <p className="typo-overlay-body">
+              {language === 'es'
+                ? 'Toda la tarjeta es clicable. Abre el detalle sin depender solo del botón.'
+                : 'The whole card is clickable. It opens the detail without relying only on the button.'}
+            </p>
+            <button
+              type="button"
+              className="w-full max-w-sm cursor-pointer overflow-hidden rounded-2xl border border-border bg-surface-lowest text-left transition-all hover:border-primary/40 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <div className="h-24 bg-primary-bg" />
+              <div className="space-y-2 p-4">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-primary">{language === 'es' ? 'Producto' : 'Product'}</span>
+                <p className="typo-overlay-heading">{language === 'es' ? 'Nombre del proyecto' : 'Project name'}</p>
+                <p className="typo-overlay-body">{language === 'es' ? 'Resumen breve del caso de estudio.' : 'Short case study summary.'}</p>
+                <span className="mt-2 flex h-10 items-center justify-center rounded-xl border border-primary/20 bg-primary-bg/40 text-xs font-bold text-primary">
+                  {t.viewProject}
+                </span>
+              </div>
+            </button>
+          </section>
         </div>
       </motion.div>
     </div>

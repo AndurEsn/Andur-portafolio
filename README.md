@@ -8,11 +8,11 @@ Repositorio: [github.com/AndurEsn/Andur-portafolio](https://github.com/AndurEsn/
 
 - Contenido en español e inglés.
 - Temas claro y oscuro.
-- Navegación por secciones, tour guiado y estados `normal`, `loading` y `error`.
+- Navegación por secciones y estados reales `normal`, `loading` y `error`.
 - Filtros y modal de casos de estudio.
 - Métricas, trayectoria tipo Gantt, FAQ y Design System documentado.
-- Encuesta NPS local y laboratorio de animaciones.
-- Flujos de contacto por correo y WhatsApp.
+- Laboratorio de animaciones y Design System documentado.
+- Contacto por LinkedIn y correo (`mailto:`), más descarga de CV.
 - Soporte para teclado, `prefers-reduced-motion` y nombres accesibles.
 
 ## Stack
@@ -34,21 +34,14 @@ Repositorio: [github.com/AndurEsn/Andur-portafolio](https://github.com/AndurEsn/
 git clone https://github.com/AndurEsn/Andur-portafolio.git
 cd Andur-portafolio
 npm install
-cp .env.example .env.local
 npm run dev
 ```
 
-La aplicación se sirve por defecto en [http://localhost:3000](http://localhost:3000).
+La aplicación se sirve por defecto en [http://127.0.0.1:3000](http://127.0.0.1:3000).
 
-## Variables de entorno
+## Configuración
 
-Todas las variables reales deben vivir en `.env.local`, que está excluido por `.gitignore`.
-
-| Variable | Requerida | Descripción |
-| --- | --- | --- |
-| `VITE_CONTACT_EMAIL` | No | Destinatario que usa el formulario de contacto por correo. Si falta, la interfaz muestra un estado de configuración pendiente. |
-
-El archivo [`.env.example`](.env.example) contiene únicamente un valor ficticio para orientar la configuración local.
+No hay variables de entorno requeridas. Correo, LinkedIn y GitHub están en `src/config/contact.ts`; el PDF del CV, en `src/config/cv.ts`. Cualquier secreto futuro debe ir en `.env.local`, nunca en archivos versionables.
 
 ## Scripts disponibles
 
@@ -90,8 +83,7 @@ Consulta [`contexto/README.md`](contexto/README.md) para navegar la documentaci�
 ## Notas de desarrollo
 
 - No hay backend activo ni persistencia remota.
-- El formulario de correo abre un enlace `mailto:`; no envía datos por un servicio propio.
-- El número de WhatsApp del código es un placeholder y debe sustituirse antes de una publicación final.
+- El contacto abre LinkedIn o un enlace `mailto:`; no envía datos por un servicio propio.
 - Algunas imágenes de proyectos todavía se cargan desde URLs externas.
 - No existe aún una suite automatizada de pruebas de interacción; la validación actual combina TypeScript, build y revisión manual.
 
