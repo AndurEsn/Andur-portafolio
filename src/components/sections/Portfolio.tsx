@@ -4,6 +4,7 @@ import { PROJECTS, TRANSLATIONS } from '../../content/data';
 import { Project, ProjectCategory, Language } from '../../types';
 import { ExternalLink, Calendar, Shield, Cpu, Sparkles } from 'lucide-react';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
+import useModalDismiss from '../../hooks/useModalDismiss';
 import ModalCloseButton from '../ui/ModalCloseButton';
 
 interface PortfolioProps {
@@ -16,6 +17,7 @@ export default function Portfolio({ language }: PortfolioProps) {
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   useBodyScrollLock(Boolean(activeProject));
+  const closeProject = useModalDismiss(Boolean(activeProject), () => setActiveProject(null));
 
   // Filter projects based on selected chip (by Category or by Company)
   const filteredProjects = selectedFilter === 'All'
@@ -136,14 +138,14 @@ export default function Portfolio({ language }: PortfolioProps) {
       {/* Project Detail Scrollable Modal */}
       <AnimatePresence>
         {activeProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[80] flex items-stretch justify-center sm:items-center sm:p-4">
             {/* Backdrop Layer */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setActiveProject(null)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={closeProject}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-none sm:pointer-events-auto"
             />
 
             {/* Modal Body: Slide Up Animation */}
@@ -152,7 +154,10 @@ export default function Portfolio({ language }: PortfolioProps) {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: '100%', opacity: 0 }}
               transition={{ type: 'spring', damping: 25, stiffness: 180 }}
-              className="relative w-full max-w-2xl bg-surface-lowest rounded-3xl overflow-hidden shadow-2xl border border-border flex flex-col max-h-[85vh] z-10"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="project-modal-title"
+              className="relative z-10 flex h-dvh w-full max-h-dvh flex-col overflow-hidden rounded-none border-0 bg-surface-lowest shadow-2xl sm:h-auto sm:max-h-[85vh] sm:max-w-2xl sm:rounded-3xl sm:border sm:border-border"
             >
               {/* Image banner inside modal */}
               <div className="relative h-48 sm:h-64 overflow-hidden bg-surface-low shrink-0">
@@ -169,13 +174,13 @@ export default function Portfolio({ language }: PortfolioProps) {
                   <span className="px-3 py-1 bg-primary text-white text-xs font-bold rounded-full uppercase tracking-wider mb-2 inline-block">
                     {activeProject.category}
                   </span>
-                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                  <h3 id="project-modal-title" className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                     {activeProject.title}
                   </h3>
                 </div>
 
                 {/* Close Button */}
-                <ModalCloseButton onClick={() => setActiveProject(null)} label={t.modalClose} />
+                <ModalCloseButton onClick={closeProject} label={t.modalClose} />
               </div>
 
               {/* Scrollable Project Reading Content */}

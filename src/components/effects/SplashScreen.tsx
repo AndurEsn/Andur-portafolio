@@ -85,11 +85,7 @@ export default function SplashScreen({ language, onComplete }: SplashScreenProps
 
   return (
     <div
-      className="fixed inset-0 z-[300] flex cursor-pointer items-center justify-center overflow-hidden px-6"
-      style={{
-        backgroundImage:
-          'linear-gradient(165deg, color-mix(in srgb, var(--primary) 42%, var(--background)) 0%, var(--primary-bg) 46%, var(--background) 100%)',
-      }}
+      className="splash-bg fixed inset-0 z-[300] flex cursor-pointer items-center justify-center overflow-hidden px-6"
       role="dialog"
       aria-label={t.splashLine}
       aria-modal="true"

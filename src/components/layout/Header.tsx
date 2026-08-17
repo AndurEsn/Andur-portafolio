@@ -71,9 +71,11 @@ export default function Header({
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        setIsVisible(false); // Scrolling down
+        setIsVisible(false);
+        setIsLabOpen(false);
+        setIsLangOpen(false);
       } else {
-        setIsVisible(true); // Scrolling up
+        setIsVisible(true);
       }
       lastScrollY.current = currentScrollY;
     };
@@ -104,18 +106,18 @@ export default function Header({
     return () => window.removeEventListener('scroll', handleScrollActive);
   }, []);
 
-  // Close dropdowns on outside click
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (labRef.current && !labRef.current.contains(event.target as Node)) {
+    function handlePointerOutside(event: PointerEvent) {
+      const target = event.target as Node;
+      if (labRef.current && !labRef.current.contains(target)) {
         setIsLabOpen(false);
       }
-      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+      if (langRef.current && !langRef.current.contains(target)) {
         setIsLangOpen(false);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('pointerdown', handlePointerOutside);
+    return () => document.removeEventListener('pointerdown', handlePointerOutside);
   }, []);
 
   const toggleTheme = () => {
@@ -140,8 +142,8 @@ export default function Header({
     { value: 'fade', label: 'Fade In' },
     { value: 'scale', label: 'Scale In' },
   ];
-  const dropdownPanelClass = 'absolute right-0 mt-2 w-[22rem] overflow-visible bg-surface-lowest border border-border rounded-2xl p-3 shadow-2xl z-50 flex flex-col gap-2 animate-[fadeIn_0.2s_ease-out]';
-  const languageDropdownPanelClass = 'absolute right-0 mt-2 w-32 bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
+  const dropdownPanelClass = 'fixed left-3 right-3 top-[calc(var(--header-row)+0.5rem)] z-50 flex max-h-[min(70dvh,calc(100dvh-5.5rem))] w-auto flex-col gap-2 overflow-y-auto rounded-2xl border border-border bg-surface-lowest p-3 shadow-2xl animate-[fadeIn_0.2s_ease-out] sm:absolute sm:left-auto sm:right-0 sm:top-auto sm:mt-2 sm:max-h-[min(70dvh,calc(100dvh-5.5rem))] sm:w-[min(22rem,calc(100vw-1.5rem))]';
+  const languageDropdownPanelClass = 'absolute right-0 mt-2 w-32 max-w-[calc(100vw-1.5rem)] bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
   const dropdownItemClass = 'w-full h-10 px-3 rounded-xl text-xs font-bold text-left text-on-surface-variant hover:bg-surface-low hover:text-on-surface transition-all flex items-center gap-2 cursor-pointer';
 
   const scrollToSection = (id: string) => {
@@ -181,7 +183,10 @@ export default function Header({
           {/* 1. LANGUAGE SELECTOR WITH FLAGS */}
           <div ref={langRef} className="relative">
             <button
-              onClick={() => setIsLangOpen(!isLangOpen)}
+              onClick={() => {
+                setIsLangOpen((open) => !open);
+                setIsLabOpen(false);
+              }}
               className="p-2 h-10 w-10 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center justify-center cursor-pointer active:scale-95"
               title={t.langSelect}
               aria-label={t.langSelect}
@@ -217,7 +222,10 @@ export default function Header({
           {/* 2. LABORATORIO DROPDOWN MENU */}
           <div ref={labRef} className="relative" id="lab-menu-btn">
             <button
-              onClick={() => setIsLabOpen(!isLabOpen)}
+              onClick={() => {
+                setIsLabOpen((open) => !open);
+                setIsLangOpen(false);
+              }}
               className="h-10 px-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 active:scale-95 text-xs font-bold cursor-pointer"
               title={t.labTitle}
               aria-expanded={isLabOpen}
@@ -227,7 +235,7 @@ export default function Header({
             </button>
 
             {isLabOpen && (
-              <div className={dropdownPanelClass}>
+              <div className={dropdownPanelClass} tabIndex={-1}>
                 <div className="border-b border-border/60 px-2 pb-3">
                   <h4 className="typo-overlay-heading">{t.labTitle}</h4>
                   <p className="mt-1 typo-overlay-body">{t.labDescription}</p>
@@ -260,9 +268,10 @@ export default function Header({
 
                 <div className="border-b border-border/60 py-2">
                   <button
-                    onClick={() => {
-                      onOpenDesignSystem();
+                    onClick={(event) => {
+                      event.stopPropagation();
                       setIsLabOpen(false);
+                      onOpenDesignSystem();
                     }}
                     className={dropdownItemClass}
                   >

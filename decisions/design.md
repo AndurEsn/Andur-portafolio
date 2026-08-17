@@ -23,7 +23,7 @@
 - Header fijo de `64px`. Las tabs van pegadas debajo (`top-16`). El espacio de `40px` en móvil y `64px` desde `sm` queda entre ese chrome y el avatar del hero (`pt-section`).
 - Flujo principal: Hero (con logos) → métricas → trayectoria → proyectos → contacto → Preguntas Frecuentes.
 - Los IDs de sección son contratos compartidos por header y footer; renombrarlos exige actualizar ambos.
-- El laboratorio ofrece animaciones de entrada, Design System y el número de versión.
+- El laboratorio ofrece animaciones de entrada, Design System y el número de versión. En móvil el menú se ancla al viewport (`left/right` con margen) para no recortarse.
 - Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab y el footer usan el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ's` en inglés.
 - Los encabezados de sección usan el patrón de Proyectos destacados: sin badge ni icono, `text-2xl sm:text-4xl`, peso negro y capitalización en title case.
 
@@ -34,11 +34,11 @@
 - El avatar del encabezado es informativo; no abre menús ni activa modos de edición.
 - Modales que bloquean contenido deben usar el lock compartido de scroll.
 - La documentación del Design System muestra un tema local que se inicializa desde el tema de la página y no lo modifica.
-- Los modales bloqueantes reutilizan `ModalCloseButton` de 40 px en la esquina superior derecha. El pie con acción primaria solo existe cuando hay una acción distinta de cerrar. Pulsar el fondo cierra el modal.
+- Los modales bloqueantes reutilizan `ModalCloseButton` de 40 px en la esquina superior derecha. En móvil ocupan todo el viewport (`h-dvh`) y se cierran con el icono, Escape o el botón atrás del sistema; el fondo no cierra. Desde `sm` conservan tarjeta centrada y el clic en el fondo sí cierra.
 
 ## Responsive y accesibilidad
 
 - Base móvil; ampliar composición desde `sm` (≥ 640px), `md` (≥ 768px) y `lg` (≥ 1024px). No se usan `xl` ni `2xl`.
-- Conservar controles táctiles cercanos a 44 px, foco visible, `aria-*` cuando el texto visual no basta y navegación por teclado.
+- Conservar controles táctiles cercanos a 44 px, foco visible, `aria-*` cuando el texto visual no basta y navegación por teclado. Los tooltips en táctil se abren y cierran con el ícono, se cierran al hacer scroll y no superan el ancho del viewport.
 - Revisar contraste en ambos temas y no comunicar estado solo con color.
 - Imágenes deben tener `alt`, dimensiones/encuadre estables y fallback cuando sean remotas.
