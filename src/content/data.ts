@@ -1,4 +1,4 @@
-import { Metric, FAQItem } from '../types';
+import { Metric, FAQItem, ApproachStage, ApproachPartner } from '../types';
 import { CONTACT_GITHUB } from '../config/contact';
 import { CV_HREF } from '../config/cv';
 
@@ -11,7 +11,6 @@ export const TRANSLATIONS = {
     navAbout: 'Sobre mí',
     navFaq: 'Preguntas Frecuentes',
     navContact: 'Contacto',
-    navMetrics: 'Métricas',
     navCv: 'CV',
     labTitle: 'Laboratorio',
     labDescription: 'Prueba animaciones y consulta el Design System.',
@@ -26,9 +25,9 @@ export const TRANSLATIONS = {
     loadingLabel: 'Cargando el contenido de la página...',
     splashLine: 'Bienvenidxs, ¡Soy Andur!',
     splashPhrases: [
-      'Soy Product Designer evolucionando hacia Design Engineering.',
-      'Llevo más de 7 años diseñando productos SaaS, fintech e IA.',
-      'Transformo problemas complejos en productos digitales claros.',
+      'Soy Product Designer evolucionando hacia Design Engineering',
+      'Llevo más de 7 años diseñando productos SaaS, fintech e IA',
+      'Transformo problemas complejos en productos digitales claros',
     ],
     splashHint: 'Haz clic o desplázate para continuar',
     errorHeading: '404',
@@ -40,8 +39,7 @@ export const TRANSLATIONS = {
     heroDesc: 'Product Designer con 7+ años de experiencia en productos SaaS, fintech e IA. Combino UX/UI, estrategia de producto y Design Engineering para transformar problemas complejos en soluciones funcionales.',
     metricsTitle: 'Métricas',
     metricsLabel: '7 años de experiencia reflejados en resultados.',
-    portfolioTitle: 'Proyectos Destacados',
-    portfolioDesc: 'Una selección exclusiva de productos de software diseñados para maximizar métricas comerciales y simplificar la experiencia de usuario.',
+    portfolioTitle: 'Proyectos',
     portfolioAll: 'Todos',
     viewProject: 'Ver proyecto',
     modalRole: 'Mi rol',
@@ -87,6 +85,10 @@ export const TRANSLATIONS = {
     toastToastLabel: 'Notificación',
     footerCopyright: '© 2026 Portafolio. Creado con IA y precisión por Andur.',
     brandsTitle: 'Proyectos en los que he participado',
+    heroLocation: 'CDMX, México',
+    approachTitle: 'Del Problema al Producto Funcional',
+    approachIntro: 'Combino investigación, estrategia, diseño e implementación AI-first, junto a usuarios, producto y desarrollo, para pasar del problema a una solución funcional.',
+    approachCollabLabel: 'En colaboración',
   },
   en: {
     brandName: '',
@@ -107,9 +109,9 @@ export const TRANSLATIONS = {
     loadingLabel: 'Loading the page content...',
     splashLine: "Welcome, I'm Andur!",
     splashPhrases: [
-      'I’m a Product Designer evolving into Design Engineering.',
-      'I’ve spent 7+ years designing SaaS, fintech, and AI products.',
-      'I turn complex problems into clear digital products.',
+      'I’m a Product Designer evolving into Design Engineering',
+      'I’ve spent 7+ years designing SaaS, fintech, and AI products',
+      'I turn complex problems into clear digital products',
     ],
     splashHint: 'Click or scroll to continue',
     errorHeading: '404',
@@ -121,8 +123,7 @@ export const TRANSLATIONS = {
     heroDesc: 'Product Designer with 7+ years of experience in SaaS, fintech, and AI products. I combine UX/UI, product strategy, and Design Engineering to turn complex problems into functional solutions.',
     metricsTitle: 'Metrics',
     metricsLabel: '7 years of experience reflected in results.',
-    portfolioTitle: 'Featured Projects',
-    portfolioDesc: 'An exclusive selection of software products designed to maximize business metrics and simplify user experience.',
+    portfolioTitle: 'Projects',
     portfolioAll: 'All',
     viewProject: 'View project',
     modalRole: 'My role',
@@ -168,15 +169,89 @@ export const TRANSLATIONS = {
     toastToastLabel: 'Notification',
     footerCopyright: '© 2026 Portfolio. Built with AI and precision by Andur.',
     brandsTitle: 'Projects I have participated in',
-    navMetrics: 'Metrics',
+    heroLocation: 'CDMX, Mexico',
+    approachTitle: 'From Problem to Working Product',
+    approachIntro: 'I combine research, strategy, design, and AI-first implementation — with users, product, and engineering — to move from the problem to a working solution.',
+    approachCollabLabel: 'In collaboration',
     navCv: 'Resume',
   }
 };
 
 export const METRICS = (lang: 'es' | 'en'): Metric[] => [
-  { value: '11+', label: lang === 'es' ? 'proyectos en los que he participado' : 'projects I have participated in', icon: 'projects' },
-  { value: '74+', label: lang === 'es' ? 'flujos y módulos diseñados' : 'flows and modules designed', icon: 'flows' },
-  { value: '7+', label: lang === 'es' ? 'años de experiencia' : 'years of experience', icon: 'award' }
+  { value: '+8', label: lang === 'es' ? 'productos\ndiseñados' : 'products\ndesigned', icon: 'projects' },
+  { value: '+74', label: lang === 'es' ? 'módulos y flujos\ndesarrollados' : 'modules and flows\ndeveloped', icon: 'flows' },
+  { value: '+7', label: lang === 'es' ? 'años de\nexperiencia' : 'years of\nexperience', icon: 'award' }
+];
+
+export const APPROACH_STAGES = (lang: 'es' | 'en'): ApproachStage[] => [
+  {
+    number: '01',
+    title: 'Discover',
+    description: lang === 'es'
+      ? 'Investigo contexto, usuarios y procesos antes de diseñar.'
+      : 'I research context, users, and processes before designing.',
+    capabilities: lang === 'es'
+      ? ['Product Discovery', 'UX Research', 'Journey Mapping', 'BPMN']
+      : ['Product Discovery', 'UX Research', 'Journey Mapping', 'BPMN'],
+    icon: 'discover',
+  },
+  {
+    number: '02',
+    title: lang === 'es' ? 'Definición' : 'Define',
+    description: lang === 'es'
+      ? 'Convierto hallazgos en requerimientos, arquitectura y alcance.'
+      : 'I turn findings into requirements, architecture, and scope.',
+    capabilities: lang === 'es'
+      ? ['Product Strategy', 'User Flows', 'Priorización', 'MVP']
+      : ['Product Strategy', 'User Flows', 'Prioritization', 'MVP'],
+    icon: 'define',
+  },
+  {
+    number: '03',
+    title: lang === 'es' ? 'Diseño' : 'Design',
+    description: lang === 'es'
+      ? 'Diseño e itero interfaces claras, consistentes y escalables.'
+      : 'I design and iterate interfaces that stay clear, consistent, and scalable.',
+    capabilities: lang === 'es'
+      ? ['UX/UI', 'Prototipado', 'Design Systems', 'Usability Testing']
+      : ['UX/UI', 'Prototyping', 'Design Systems', 'Usability Testing'],
+    icon: 'design',
+  },
+  {
+    number: '04',
+    title: lang === 'es' ? 'Desarrollo' : 'Development',
+    description: lang === 'es'
+      ? 'Paso el diseño a prototipos y productos web que puedo validar y desplegar.'
+      : 'I take designs into working prototypes and web products I can validate and ship.',
+    capabilities: lang === 'es'
+      ? ['AI-first', 'HTML & CSS', 'GitHub', 'Vercel']
+      : ['AI-first', 'HTML & CSS', 'GitHub', 'Vercel'],
+    icon: 'build',
+  },
+];
+
+export const APPROACH_PARTNERS = (lang: 'es' | 'en'): ApproachPartner[] => [
+  {
+    title: lang === 'es' ? 'Clientes y Usuarios' : 'Clients and Users',
+    description: lang === 'es'
+      ? 'Discovery, entrevistas y pruebas con quien usa el producto.'
+      : 'Discovery, interviews, and tests with the people who use the product.',
+    icon: 'users',
+  },
+  {
+    title: lang === 'es' ? 'Producto y Negocio' : 'Product and Business',
+    description: lang === 'es'
+      ? 'Alcance, prioridades y criterios de éxito con PMs y stakeholders.'
+      : 'Scope, priorities, and success criteria with PMs and stakeholders.',
+    icon: 'product',
+  },
+  {
+    title: lang === 'es' ? 'Diseño y Desarrollo' : 'Design and Development',
+    description: lang === 'es'
+      ? 'Flujos, componentes y decisiones documentadas para ejecutar juntos.'
+      : 'Documented flows, components, and decisions so we can execute together.',
+    icon: 'delivery',
+  },
 ];
 
 export const DESIGN_BREAKPOINTS = (lang: 'es' | 'en') => [

@@ -1,12 +1,12 @@
 # Diseño y experiencia
 
-Última revisión: 2026-08-18. Fuente ejecutable: `src/styles/index.css` y componentes.
+Última revisión: 2026-08-19. Fuente ejecutable: `src/styles/index.css` y componentes.
 
 ## Lenguaje visual
 
 - Tipografía: Inter, pesos 400/500/600/700/900; hoy se carga desde Google Fonts. La página usa display/heading/body; los overlays reutilizan `typo-modal-title`, `typo-modal-subtitle`, `typo-overlay-heading` y `typo-overlay-body` (modales, Laboratorio y documentación).
 - Forma: tarjetas y controles redondeados (`rounded-xl`/`2xl`/`3xl`), bordes suaves y sombras contenidas.
-- Densidad: las secciones de landing (métricas, proyectos y contacto) comparten `max-w-7xl`, `px-4` y padding vertical de `40px` en móvil y `64px` desde `sm` (`py-section`). El carrusel de logos es una sección independiente bajo el hero. FAQ limita el contenido a `max-w-3xl`. Los contenedores internos usan borde `rounded-2xl` sin sombra de reposo.
+- Densidad: las secciones de landing (logos, enfoque, proyectos y contacto) comparten `max-w-7xl`, `px-4` y padding vertical de `40px` en móvil y `64px` desde `sm` (`py-section`). El carrusel de logos usa ese mismo ancho; el fade lateral queda en los bordes de la columna. FAQ limita el contenido a `max-w-3xl`. Los contenedores internos usan borde `rounded-2xl` sin sombra de reposo.
 - Iconografía: Lucide React, trazo lineal (`strokeWidth` 1.6) dentro de un recuadro `h-12 w-12` con `rounded-xl`, borde y fondo `icon-well`, sin sombra. El trazo usa el degradado `#brand-icon-gradient` (`--icon-gradient-from` → `--icon-gradient-to`) vía `BrandGlyph`. En oscuro el recuadro y el trazo son más claros para contraste. Este estilo aplica en métricas y la documentación del Design System; los logos de empresa en el carrusel de marcas son la excepción.
 - Movimiento: Motion para transiciones y CSS para shimmer/marquee; ofrecer alternativa con `prefers-reduced-motion`.
 
@@ -21,14 +21,16 @@
 ## Jerarquía y navegación
 
 - Header fijo de `64px`. Las tabs van pegadas debajo (`top-16`). El hero usa `pt-16` (64px) bajo el chrome.
-- Flujo principal: Hero (bienvenida, frases, métricas y retrato) → logos → proyectos → contacto → Preguntas Frecuentes.
-- El retrato del hero va a la derecha en un recorte vertical redondeado, con transparencia solo en el borde inferior; la foto se puede ampliar. En móvil el retrato queda debajo del texto.
+- Flujo principal: Hero (bienvenida, frases, ubicación, métricas y retrato) → logos → enfoque → proyectos → contacto → Preguntas Frecuentes.
+- El retrato del hero va a la derecha en escritorio (`lg`). La foto es un PNG RGBA (`src/assets/images/andur-hero.png`) con `min-height` 20rem, `max-height` 28rem y `border-radius` 80rem; el recuadro no pinta fondo ni fundido inferior. Por debajo de `lg` (incluye tablet pequeña) el copy del hero va centrado; las métricas se mantienen en tres columnas, con etiquetas de dos líneas (`whitespace-pre-line`) y `text-wrap: balance`. Bajo las frases hay un chip de ubicación (`CDMX, México` / `CDMX, Mexico`). La foto se puede ampliar.
+- Tras los logos, la sección `Del Problema al Producto Funcional` une proceso y colaboración: 4 cards (Discover → Desarrollo) con `BrandGlyph`, número, una línea y tags; debajo, 3 cards compactas de con quién colabora. No hay una segunda sección de Core Expertise. AI-first vive en Desarrollo.
+- Las tabs y el footer no incluyen Métricas: esa sección vive solo en el hero.
 - El CV / Resume se abre en una pestaña nueva desde las tabs, el footer y la FAQ. No hay descarga forzada desde el sitio.
 - El splash muestra un saludo fijo y frases que rotan cada 4 s.
 - Los IDs de sección son contratos compartidos por header y footer; renombrarlos exige actualizar ambos.
 - El laboratorio ofrece animaciones de entrada, Design System y el número de versión. En móvil el menú se ancla al viewport (`left/right` con margen) para no recortarse.
 - Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab y el footer usan el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ's` en inglés.
-- Los encabezados de sección usan el patrón de Proyectos destacados: sin badge ni icono, `text-2xl sm:text-4xl`, peso negro y capitalización en title case.
+- Los encabezados de sección usan el patrón de Proyectos: sin badge ni icono, `text-2xl sm:text-4xl`, peso negro y capitalización en title case. El `h2` y el tab son `Proyectos` / `Projects`; no hay descripción bajo el título.
 
 ## Estados y feedback
 

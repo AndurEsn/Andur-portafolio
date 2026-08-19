@@ -1,11 +1,12 @@
 # Problemas conocidos y mitigaciones
 
-Actualizado: 2026-08-18.
+Actualizado: 2026-08-19.
 
 | Área | Problema | Mitigación / solución |
 |---|---|---|
 | Preview local | Vite iniciado desde el agente no veía escrituras en disco (FSEvents). El preview seguía el módulo anterior hasta reiniciar. | `server.watch.usePolling` en `vite.config.ts`. Si el preview no coincide con el código, reiniciar `npm run dev`. |
-| Avatar | `App.tsx` usa `'/src/assets/images/...'` como string; Vite no lo emitió en `dist/assets`. | Importar el JPG como módulo y usar la URL importada antes de publicar. |
+| Avatar | `App.tsx` usa `'/src/assets/images/...'` como string; Vite no lo emitió en `dist/assets`. | Importar `andur-hero.png` como módulo y usar la URL importada antes de publicar. |
+| Chat de Cursor | Al adjuntar un PNG y enviar, Cursor lo recodifica a JPEG (JFIF, sin alfa). El visor del chat muestra negro donde había transparencia. | No usar el adjunto del chat como fuente. Copiar el PNG original desde disco (`~/Downloads/andur-photo-herosection.png` u otra ruta local). Comprobar firma `PNG` y color type 6 (RGBA) antes de reemplazar el asset. |
 | Contacto | El correo, LinkedIn y GitHub viven en `src/config/contact.ts`; el CV en `src/config/cv.ts`. | Abrir el PDF en una pestaña nueva. No reintroducir `download`, `VITE_CONTACT_EMAIL` ni WhatsApp sin una decisión explícita. |
 | Portadas de proyecto | Las URLs remotas de placeholders se eliminaron. Grill importa `src/assets/images/grill-design-system.png`. | Cada caso nuevo debe importar su portada como módulo Vite, no como URL remota. |
 | Fuentes | Inter depende de Google Fonts y de red en runtime. | Autoalojar si privacidad, CSP o disponibilidad offline importan. |

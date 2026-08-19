@@ -171,34 +171,38 @@ export default function LogoCarousel({ language }: LogoCarouselProps) {
 
   return (
     <section className="mx-auto w-full max-w-7xl px-4 pb-section pt-8" aria-label={t.brandsTitle}>
-      <div
-        ref={marqueeRef}
-        className={`logo-marquee overflow-hidden rounded-2xl border border-border bg-surface-lowest py-2 cursor-grab ${dragRef.current.active ? 'cursor-grabbing' : ''}`}
-        tabIndex={0}
-        role="button"
-        aria-pressed={isPaused}
-        aria-label={
-          language === 'es'
-            ? isPaused
-              ? 'Carrusel pausado. Haz clic para reanudar o arrastra para moverlo'
-              : 'Carrusel de logotipos. Haz clic para pausar o arrastra para moverlo'
-            : isPaused
-              ? 'Logo carousel paused. Click to resume or drag to move it'
-              : 'Logo carousel. Click to pause or drag to move it'
-        }
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-        onPointerEnter={clearResumeTimer}
-        onPointerLeave={scheduleResume}
-        onKeyDown={handleKeyDown}
-        style={{ touchAction: 'pan-y' }}
-      >
-        <div ref={trackRef} className="logo-marquee-track">
-          <LogoGroup onImageError={handleImageError} />
-          <LogoGroup duplicate onImageError={handleImageError} />
+      <div className="logo-carousel-fade relative overflow-hidden">
+        <div
+          ref={marqueeRef}
+          className={`logo-marquee cursor-grab overflow-hidden py-2 ${dragRef.current.active ? 'cursor-grabbing' : ''}`}
+          tabIndex={0}
+          role="button"
+          aria-pressed={isPaused}
+          aria-label={
+            language === 'es'
+              ? isPaused
+                ? 'Carrusel pausado. Haz clic para reanudar o arrastra para moverlo'
+                : 'Carrusel de logotipos. Haz clic para pausar o arrastra para moverlo'
+              : isPaused
+                ? 'Logo carousel paused. Click to resume or drag to move it'
+                : 'Logo carousel. Click to pause or drag to move it'
+          }
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          onPointerEnter={clearResumeTimer}
+          onPointerLeave={scheduleResume}
+          onKeyDown={handleKeyDown}
+          style={{ touchAction: 'pan-y' }}
+        >
+          <div ref={trackRef} className="logo-marquee-track">
+            <LogoGroup onImageError={handleImageError} />
+            <LogoGroup duplicate onImageError={handleImageError} />
+          </div>
         </div>
+        <div className="logo-carousel-fade-edge logo-carousel-fade-edge-start" aria-hidden="true" />
+        <div className="logo-carousel-fade-edge logo-carousel-fade-edge-end" aria-hidden="true" />
       </div>
       {failedLogos.length > 0 && (
         <span className="sr-only" role="status">
