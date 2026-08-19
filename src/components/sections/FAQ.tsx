@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FAQS, TRANSLATIONS } from '../../content/data';
-import { ChevronDown, ChevronUp, Download, Github } from 'lucide-react';
+import { ChevronDown, ChevronUp, FileText, Github } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FAQItem, Language } from '../../types';
 
@@ -99,15 +99,14 @@ export default function FAQ({ language }: FAQProps) {
                         <div className="mt-5">
                           <a
                             href={faq.link.href}
-                            download={faq.link.download}
                             target={faq.link.external ? '_blank' : undefined}
                             rel={faq.link.external ? 'noopener noreferrer' : undefined}
                             className="inline-flex h-12 cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-white transition-all hover:bg-primary-hover active:scale-[0.98]"
                           >
-                            {faq.link.download ? (
-                              <Download className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
-                            ) : (
+                            {faq.link.href.includes('github.com') ? (
                               <Github className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
+                            ) : (
+                              <FileText className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
                             )}
                             {faq.link.label}
                           </a>

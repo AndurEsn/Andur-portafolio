@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
+import RotatingPhrases from './RotatingPhrases';
 
 interface SplashScreenProps {
   language: Language;
@@ -48,6 +49,7 @@ export default function SplashScreen({ language, onComplete }: SplashScreenProps
   const shouldReduceMotion = useReducedMotion();
   const [canDismiss, setCanDismiss] = useState(Boolean(shouldReduceMotion));
   const [isExiting, setIsExiting] = useState(false);
+  const phrases = t.splashPhrases;
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setCanDismiss(true), shouldReduceMotion ? 0 : MIN_VISIBLE_MS);
@@ -103,16 +105,12 @@ export default function SplashScreen({ language, onComplete }: SplashScreenProps
         animate={
           isExiting
             ? { opacity: 0, scale: 8 }
-            : shouldReduceMotion
-              ? { opacity: 1, scale: 1 }
-              : { opacity: 1, scale: 1, y: [0, -6, 0] }
+            : { opacity: 1, scale: 1 }
         }
         transition={
           isExiting
             ? { duration: ZOOM_MS / 1000, ease: [0.22, 1, 0.36, 1] }
-            : shouldReduceMotion
-              ? { duration: 0.3 }
-              : { y: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 0.45 }, scale: { duration: 0.45 } }
+            : { duration: shouldReduceMotion ? 0 : 0.45 }
         }
         onAnimationComplete={() => {
           if (isExiting) onComplete();
@@ -120,15 +118,10 @@ export default function SplashScreen({ language, onComplete }: SplashScreenProps
       >
         <AnimatedLine
           text={t.splashLine}
-          className="text-3xl font-black leading-tight tracking-tight text-on-surface sm:text-5xl lg:text-6xl"
+          className="text-base font-semibold leading-snug tracking-tight text-on-surface-variant sm:text-xl"
           reduceMotion={Boolean(shouldReduceMotion)}
         />
-        <AnimatedLine
-          text={t.splashYear}
-          className="mt-3 text-3xl font-black tracking-tight text-primary sm:mt-4 sm:text-5xl lg:text-6xl"
-          delay={0.28}
-          reduceMotion={Boolean(shouldReduceMotion)}
-        />
+        <RotatingPhrases phrases={phrases} pause={isExiting} />
         <p
           className={`mt-10 text-sm font-semibold text-on-surface-variant transition-opacity duration-500 sm:text-base ${
             canDismiss ? 'opacity-100' : 'opacity-0'

@@ -1,13 +1,13 @@
 # Diseño y experiencia
 
-Última revisión: 2026-08-17. Fuente ejecutable: `src/styles/index.css` y componentes.
+Última revisión: 2026-08-18. Fuente ejecutable: `src/styles/index.css` y componentes.
 
 ## Lenguaje visual
 
 - Tipografía: Inter, pesos 400/500/600/700/900; hoy se carga desde Google Fonts. La página usa display/heading/body; los overlays reutilizan `typo-modal-title`, `typo-modal-subtitle`, `typo-overlay-heading` y `typo-overlay-body` (modales, Laboratorio y documentación).
 - Forma: tarjetas y controles redondeados (`rounded-xl`/`2xl`/`3xl`), bordes suaves y sombras contenidas.
-- Densidad: las secciones de landing (métricas, trayectoria, proyectos y contacto) comparten `max-w-7xl`, `px-4` y padding vertical de `40px` en móvil y `64px` desde `sm` (`py-section`). El carrusel de logos es una sección independiente, visualmente integrada bajo los CTAs del hero. FAQ limita el contenido a `max-w-3xl`. Los contenedores internos usan borde `rounded-2xl` sin sombra de reposo.
-- Iconografía: Lucide React, trazo lineal (`strokeWidth` 1.6) dentro de un recuadro `h-12 w-12` con `rounded-xl`, borde y fondo `icon-well`, sin sombra. El trazo usa el degradado `#brand-icon-gradient` (`--icon-gradient-from` → `--icon-gradient-to`) vía `BrandGlyph`. En oscuro el recuadro y el trazo son más claros para contraste. Este estilo aplica en métricas, trayectoria y la documentación del Design System; los logos de empresa en el carrusel de marcas son la excepción.
+- Densidad: las secciones de landing (métricas, proyectos y contacto) comparten `max-w-7xl`, `px-4` y padding vertical de `40px` en móvil y `64px` desde `sm` (`py-section`). El carrusel de logos es una sección independiente bajo el hero. FAQ limita el contenido a `max-w-3xl`. Los contenedores internos usan borde `rounded-2xl` sin sombra de reposo.
+- Iconografía: Lucide React, trazo lineal (`strokeWidth` 1.6) dentro de un recuadro `h-12 w-12` con `rounded-xl`, borde y fondo `icon-well`, sin sombra. El trazo usa el degradado `#brand-icon-gradient` (`--icon-gradient-from` → `--icon-gradient-to`) vía `BrandGlyph`. En oscuro el recuadro y el trazo son más claros para contraste. Este estilo aplica en métricas y la documentación del Design System; los logos de empresa en el carrusel de marcas son la excepción.
 - Movimiento: Motion para transiciones y CSS para shimmer/marquee; ofrecer alternativa con `prefers-reduced-motion`.
 
 ## Temas
@@ -20,8 +20,11 @@
 
 ## Jerarquía y navegación
 
-- Header fijo de `64px`. Las tabs van pegadas debajo (`top-16`). El espacio de `40px` en móvil y `64px` desde `sm` queda entre ese chrome y el avatar del hero (`pt-section`).
-- Flujo principal: Hero (con logos) → métricas → trayectoria → proyectos → contacto → Preguntas Frecuentes.
+- Header fijo de `64px`. Las tabs van pegadas debajo (`top-16`). El hero usa `pt-16` (64px) bajo el chrome.
+- Flujo principal: Hero (bienvenida, frases, métricas y retrato) → logos → proyectos → contacto → Preguntas Frecuentes.
+- El retrato del hero va a la derecha en un recorte vertical redondeado, con transparencia solo en el borde inferior; la foto se puede ampliar. En móvil el retrato queda debajo del texto.
+- El CV / Resume se abre en una pestaña nueva desde las tabs, el footer y la FAQ. No hay descarga forzada desde el sitio.
+- El splash muestra un saludo fijo y frases que rotan cada 4 s.
 - Los IDs de sección son contratos compartidos por header y footer; renombrarlos exige actualizar ambos.
 - El laboratorio ofrece animaciones de entrada, Design System y el número de versión. En móvil el menú se ancla al viewport (`left/right` con margen) para no recortarse.
 - Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab y el footer usan el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ's` en inglés.
@@ -31,7 +34,7 @@
 
 - `normal`, `loading` y `error` son estados reales: contenido, carga inicial y 404 de ruta.
 - Toasts confirman cambios sin bloquear.
-- El avatar del encabezado es informativo; no abre menús ni activa modos de edición.
+- El encabezado muestra el logotipo de marca como avatar redondo junto a “Portafolio”. La foto de perfil permanece en el hero.
 - Modales que bloquean contenido deben usar el lock compartido de scroll.
 - La documentación del Design System muestra un tema local que se inicializa desde el tema de la página y no lo modifica.
 - Los modales bloqueantes reutilizan `ModalCloseButton` de 40 px en la esquina superior derecha. En móvil ocupan todo el viewport (`h-dvh`) y se cierran con el icono, Escape o el botón atrás del sistema; el fondo no cierra. Desde `sm` conservan tarjeta centrada y el clic en el fondo sí cierra.

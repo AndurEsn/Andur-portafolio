@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Header from '../components/layout/Header';
 import Hero from '../components/sections/Hero';
-import Metrics from '../components/sections/Metrics';
-import Roadmap from '../components/sections/Roadmap';
 import Portfolio from '../components/sections/Portfolio';
 import Contact from '../components/sections/Contact';
 import FAQ from '../components/sections/FAQ';
@@ -12,15 +10,16 @@ import LogoCarousel from '../components/sections/LogoCarousel';
 import LandingParticleField from '../components/effects/LandingParticleField';
 import SplashScreen from '../components/effects/SplashScreen';
 import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
-import andurProfile from '../assets/images/andur-profile.jpg';
+import andurHero from '../assets/images/andur-hero.png';
 import { Theme, AppState, EntranceAnimation, HeroContent, Language, ToastVariant } from '../types';
 import { AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { METRICS, TRANSLATIONS } from '../content/data';
 import { goHome, isHomePath } from '../config/routes';
 import { applyThemeClass, getSystemTheme, persistTheme, readStoredTheme, resolveTheme } from '../config/theme';
+import { CV_HREF } from '../config/cv';
 
-const avatarPath = andurProfile;
+const avatarPath = andurHero;
 const INITIAL_LOADING_MS = 1000;
 
 interface ToastState {
@@ -141,10 +140,6 @@ export default function App() {
     return () => clearTimeout(id);
   };
 
-  const scrollToProjects = () => {
-    document.getElementById('tour-step-projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   const recoverHome = () => {
     goHome();
     setAppState('normal');
@@ -192,7 +187,6 @@ export default function App() {
         onOpenDesignSystem={() => setIsDesignSystemOpen(true)}
         entranceAnimation={entranceAnimation}
         setEntranceAnimation={setEntranceAnimation}
-        avatarSrc={heroContent.avatar}
         onNavigateToHero={navigateToHero}
       />
       )}
@@ -239,18 +233,12 @@ export default function App() {
               {/* Hero */}
               <LandingReveal animation={entranceAnimation}>
                 <Hero 
-                  onViewProjects={scrollToProjects}
                   language={language} 
                   content={heroContent}
+                  metrics={metrics}
                 />
                 <LogoCarousel language={language} />
               </LandingReveal>
-
-              {/* Metrics stack */}
-              <LandingReveal animation={entranceAnimation}><Metrics language={language} metrics={metrics} /></LandingReveal>
-
-              {/* Career Roadmap */}
-              <LandingReveal animation={entranceAnimation}><Roadmap language={language} /></LandingReveal>
 
               {/* Portfolio section with filters & modal */}
               <LandingReveal animation={entranceAnimation}><Portfolio language={language} /></LandingReveal>
@@ -282,9 +270,6 @@ export default function App() {
             <a href="#tour-step-metrics" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
               {t.navMetrics}
             </a>
-            <a href="#roadmap-section" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              {t.navRoadmap}
-            </a>
             <a href="#tour-step-projects" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
               {t.navProjects}
             </a>
@@ -293,6 +278,15 @@ export default function App() {
             </a>
             <a href="#faq-section" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
               {t.navFaq}
+            </a>
+            <a
+              href={CV_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors"
+              aria-label={language === 'es' ? 'Ver CV, se abre en una pestaña nueva' : 'View resume, opens in a new tab'}
+            >
+              {t.navCv}
             </a>
           </nav>
         </div>

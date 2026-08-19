@@ -2,7 +2,7 @@
 
 ## Proyecto
 
-Portafolio interactivo bilingüe (ES/EN) de Andur, Product Designer. Es una SPA cliente construida con React 19, TypeScript, Vite 6, Tailwind CSS 4, Motion y Lucide. Presenta experiencia, métricas, trayectoria, casos de estudio, contacto y FAQ; además incluye tema claro/oscuro, Laboratorio, Design System y estados reales de carga y 404.
+Portafolio interactivo bilingüe (ES/EN) de Andur, Product Designer. Es una SPA cliente construida con React 19, TypeScript, Vite 6, Tailwind CSS 4, Motion y Lucide. Presenta experiencia, métricas, casos de estudio, contacto y FAQ; además incluye tema claro/oscuro, Laboratorio, Design System y estados reales de carga y 404.
 
 ## Fuente de verdad y orden de lectura
 
@@ -24,12 +24,14 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 
 - `src/app/App.tsx`: estado global cliente y composición de la página.
 - `src/app/main.tsx`: entrypoint de la SPA.
-- `src/content/data.ts`: copy ES/EN, métricas, trayectoria, proyectos y FAQ.
+- `src/content/data.ts`: copy ES/EN, métricas y FAQ.
+- `src/content/projects.ts` y `src/content/cases/`: casos de estudio bilingües.
 - `src/types/index.ts`: contratos de dominio y estados de UI.
 - `src/components/`: secciones, overlays, layout, feedback, efectos y UI.
 - `src/config/`: versión SemVer, contacto, GitHub y ruta del CV.
 - `src/styles/index.css`: tokens de tema y utilidades globales.
-- `src/assets/`: avatar, logos y documentos locales.
+- `src/assets/`: avatar, logotipo de marca, portadas de proyecto y documentos locales.
+- `public/`: favicon y estáticos servidos en la raíz.
 - `vite.config.ts`: Vite, React, Tailwind y alias `@` → `src/`.
 - `dist/`: salida generada; nunca editar manualmente.
 - `CHANGELOG.md`: historial de versiones; publicar el detalle en GitHub Releases.
@@ -40,7 +42,7 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 - Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab de navegación usa el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ's` en inglés.
 - Mantener soporte de temas `light` y `dark`; usar tokens semánticos de `src/styles/index.css`, no colores arbitrarios salvo colores de marca justificados.
 - Mantener los estados `splash | loading | normal | error` (bienvenida, carga, contenido y 404 de ruta).
-- El contenido compartido pertenece en `src/content/data.ts`; los contratos, en `src/types/`; evitar copy duplicado en componentes cuando sea reutilizable.
+- El contenido compartido pertenece en `src/content/`; los contratos, en `src/types/`; evitar copy duplicado en componentes cuando sea reutilizable.
 - No introducir backend, persistencia remota ni afirmar que el contacto envía datos sin una decisión explícita y credenciales/configuración aprobadas.
 - No exponer secretos. Variables reales van en `.env.local`, nunca en archivos versionables.
 - Mantener accesibilidad básica: HTML semántico, teclado, nombres accesibles, foco visible y respeto por `prefers-reduced-motion`.
@@ -50,7 +52,7 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 
 ## Routing de tareas y skills
 
-- Cambios de copy, proyectos, métricas, FAQ o trayectoria: leer `state/current.md`, después `skills/workflows.md` → “Contenido e i18n”; editar principalmente `src/content/data.ts`.
+- Cambios de copy, métricas o FAQ: leer `state/current.md`, después `skills/workflows.md` → “Contenido e i18n”; editar principalmente `src/content/data.ts`. Casos de estudio: `src/content/cases/` y `src/content/projects.ts`.
 - Cambios visuales, responsive, tema, animación o accesibilidad: leer `decisions/design.md` y `skills/workflows.md` → “UI”.
 - Cambios de estado, overlays o persistencia: leer `decisions/architecture.md` y `gotchas/known-issues.md`.
 - Bugs: buscar primero en `gotchas/known-issues.md`; reproducir, hacer el cambio mínimo y ejecutar la validación proporcional.

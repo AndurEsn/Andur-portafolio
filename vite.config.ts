@@ -16,8 +16,11 @@ export default defineConfig(() => {
       port: 3000,
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       hmr: process.env.DISABLE_HMR !== 'true',
-      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      // Polling: FSEvents often misses agent/sandbox writes on this machine,
+      // so the preview kept serving the previous module until Vite restarted.
+      watch: process.env.DISABLE_HMR === 'true'
+        ? null
+        : { usePolling: true, interval: 300 },
     },
   };
 });

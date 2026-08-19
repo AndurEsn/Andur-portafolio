@@ -9,7 +9,7 @@
 
 ## Contenido e i18n
 
-1. Editar `src/content/data.ts` para proyectos, métricas, roadmap, FAQ y traducciones.
+1. Editar `src/content/data.ts` para métricas, FAQ y traducciones. Los casos de estudio van en `src/content/cases/` y se ensamblan en `src/content/projects.ts`.
 2. Si cambia la forma de datos, modificar primero `src/types/index.ts`.
 3. Añadir ES y EN en el mismo cambio; buscar la clave para detectar usos y duplicados.
 4. Revisar longitud en móvil, acentos, cifras, fechas, enlaces y claims.

@@ -1,17 +1,46 @@
 export type ProjectCategory = 'Website' | 'Product' | 'UX Research';
 
+export interface ProjectImpactStat {
+  value: string;
+  label: string;
+}
+
+export interface ProjectProcessStep {
+  number: string;
+  title: string;
+  duration?: string;
+  body: string;
+  items?: string[];
+  closing?: string;
+}
+
+export interface ProjectSection {
+  id: string;
+  title: string;
+  subtitle?: string;
+  body?: string;
+  items?: string[];
+  closing?: string;
+  steps?: ProjectProcessStep[];
+  stats?: ProjectImpactStat[];
+}
+
 export interface Project {
   id: string;
   title: string;
+  subtitle: string;
+  eyebrow: string;
   category: ProjectCategory;
   description: string;
-  fullDescription: string;
+  intro: string;
   image: string;
   role: string;
   impact: string;
+  impactStats: ProjectImpactStat[];
   duration: string;
   tools: string[];
   company?: string;
+  sections: ProjectSection[];
 }
 
 export type MetricIcon = 'award' | 'briefcase' | 'globe' | 'sparkles' | 'projects' | 'flows' | 'hours';
@@ -20,15 +49,6 @@ export interface Metric {
   value: string;
   label: string;
   icon: MetricIcon;
-}
-
-export interface RoadmapItem {
-  years: string;
-  tenure: string;
-  company: string;
-  role: string;
-  description: string;
-  highlight: string;
 }
 
 export interface HeroContent {
@@ -46,7 +66,6 @@ export interface FAQItem {
   link?: {
     label: string;
     href: string;
-    download?: string;
     external?: boolean;
   };
 }
