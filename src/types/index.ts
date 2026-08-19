@@ -76,3 +76,20 @@ export type Language = 'es' | 'en';
 export type EntranceAnimation = 'move' | 'fade' | 'scale';
 
 export type ToastVariant = 'default' | 'info' | 'success' | 'error';
+
+export type ApproachStageIcon = 'discover' | 'define' | 'design' | 'build';
+export type ApproachPartnerIcon = 'users' | 'product' | 'delivery';
+
+export interface ApproachStage {
+  number: string;
+  title: string;
+  description: string;
+  capabilities: string[];
+  icon: ApproachStageIcon;
+}
+
+export interface ApproachPartner {
+  title: string;
+  description: string;
+  icon: ApproachPartnerIcon;
+}

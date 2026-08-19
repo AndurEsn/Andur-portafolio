@@ -171,13 +171,10 @@ export default function Portfolio({ language }: PortfolioProps) {
       id="tour-step-projects"
       className="px-4 py-section max-w-7xl mx-auto w-full transition-all duration-300"
     >
-      <div className="flex flex-col items-center text-center mb-10">
-        <h2 id="tour-title-projects" className="text-2xl sm:text-4xl font-black text-on-surface tracking-tight mb-3">
+      <div className="mb-10 flex flex-col items-center text-center">
+        <h2 id="tour-title-projects" className="text-2xl font-black tracking-tight text-on-surface sm:text-4xl">
           {t.portfolioTitle}
         </h2>
-        <p className="text-sm sm:text-base text-on-surface-variant max-w-xl">
-          {t.portfolioDesc}
-        </p>
       </div>
 
       <div className="mb-8 flex flex-wrap justify-center gap-2 lg:flex-nowrap lg:overflow-x-auto lg:pb-6 lg:snap-x lg:hide-scrollbar">

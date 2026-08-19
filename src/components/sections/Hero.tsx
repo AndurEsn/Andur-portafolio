@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ZoomIn, ZoomOut } from 'lucide-react';
+import { ZoomIn, ZoomOut, MapPin } from 'lucide-react';
 import { HeroContent, Language, Metric } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
@@ -32,23 +32,30 @@ export default function Hero({ language, content, metrics }: HeroProps) {
       id="tour-step-hero"
       className="relative isolate w-full overflow-hidden pt-16 pb-8 transition-all duration-300"
     >
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 px-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-6">
-        <div className="flex max-w-xl flex-col text-left lg:max-w-none">
-          <h1 id="tour-title-hero" className="text-base font-semibold leading-snug tracking-tight text-on-surface-variant sm:text-xl">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 px-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-6">
+        <div className="mx-auto flex w-full max-w-xl flex-col items-center text-center lg:mx-0 lg:max-w-none lg:items-start lg:text-left">
+          <h1 id="tour-title-hero" className="text-balance text-base font-semibold leading-snug tracking-tight text-on-surface-variant sm:text-xl">
             {t.splashLine}
           </h1>
-          <RotatingPhrases phrases={t.splashPhrases} align="start" />
+          <RotatingPhrases phrases={t.splashPhrases} align="hero" />
+
+          <span
+            className="mt-6 inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-surface-low px-3 text-xs font-bold text-on-surface"
+          >
+            <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+            {t.heroLocation}
+          </span>
 
           <div
             id="tour-step-metrics"
-            className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4"
+            className="mt-10 grid w-full grid-cols-3 gap-3 sm:gap-4"
           >
             {metrics.map((metric) => (
-              <div key={metric.label} className="flex flex-col">
-                <span className="text-3xl font-black tracking-tight text-primary sm:text-4xl">
+              <div key={metric.value} className="flex min-w-0 flex-col items-center lg:items-start">
+                <span className="text-balance text-2xl font-black tracking-tight text-primary sm:text-3xl lg:text-4xl">
                   {metric.value}
                 </span>
-                <span className="mt-1 text-sm font-semibold leading-snug text-on-surface-variant">
+                <span className="mt-1 min-h-[2lh] whitespace-pre-line text-balance text-xs font-semibold leading-snug text-on-surface-variant sm:text-sm">
                   {metric.label}
                 </span>
               </div>
@@ -59,16 +66,15 @@ export default function Hero({ language, content, metrics }: HeroProps) {
         <button
           type="button"
           onClick={() => setIsPhotoOpen(true)}
-          className="relative mx-auto w-full max-w-md cursor-zoom-in justify-self-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:max-w-none lg:justify-self-end"
+          className="relative mx-auto cursor-zoom-in justify-self-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:justify-self-end"
           aria-label={language === 'es' ? 'Ampliar fotografía de perfil' : 'Enlarge profile photo'}
         >
-          <span className="relative block aspect-[3/4] w-full overflow-hidden rounded-[2.5rem] bg-surface-low sm:aspect-[4/5] lg:aspect-[3/4] lg:max-h-[36rem]">
+          <span className="relative mx-auto block aspect-[3/4] h-[clamp(20rem,42vw,28rem)] min-h-[20rem] max-h-[28rem] w-auto overflow-hidden rounded-[80rem] bg-transparent">
             <img
               src={content.avatar}
               alt={content.name}
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full rounded-[80rem] object-contain object-center"
             />
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background to-transparent" />
           </span>
         </button>
       </div>

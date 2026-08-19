@@ -7,6 +7,7 @@ import FAQ from '../components/sections/FAQ';
 import ErrorState from '../components/feedback/ErrorState';
 import DesignSystemModal from '../components/overlays/DesignSystemModal';
 import LogoCarousel from '../components/sections/LogoCarousel';
+import Approach from '../components/sections/Approach';
 import LandingParticleField from '../components/effects/LandingParticleField';
 import SplashScreen from '../components/effects/SplashScreen';
 import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
@@ -237,7 +238,12 @@ export default function App() {
                   content={heroContent}
                   metrics={metrics}
                 />
+              </LandingReveal>
+              <LandingReveal animation={entranceAnimation}>
                 <LogoCarousel language={language} />
+              </LandingReveal>
+              <LandingReveal animation={entranceAnimation}>
+                <Approach language={language} />
               </LandingReveal>
 
               {/* Portfolio section with filters & modal */}
@@ -266,9 +272,6 @@ export default function App() {
           <nav className="flex flex-wrap justify-center gap-6">
             <a href="#tour-step-hero" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
               {t.navAbout}
-            </a>
-            <a href="#tour-step-metrics" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              {t.navMetrics}
             </a>
             <a href="#tour-step-projects" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
               {t.navProjects}

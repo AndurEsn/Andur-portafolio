@@ -87,7 +87,7 @@ export default function Header({
   const [activeSection, setActiveSection] = useState('tour-step-hero');
 
   useEffect(() => {
-    const sections = ['tour-step-hero', 'tour-step-metrics', 'tour-step-projects', 'contact-section', 'faq-section'];
+    const sections = ['tour-step-hero', 'tour-step-projects', 'contact-section', 'faq-section'];
     const handleScrollActive = () => {
       const scrollPos = window.scrollY + 200; // offset
       for (const section of sections) {
@@ -131,7 +131,6 @@ export default function Header({
 
   const navTabs = [
     { id: 'tour-step-hero', label: t.navAbout },
-    { id: 'tour-step-metrics', label: t.navMetrics },
     { id: 'tour-step-projects', label: t.navProjects },
     { id: 'contact-section', label: t.navContact },
     { id: 'faq-section', label: t.navFaq },

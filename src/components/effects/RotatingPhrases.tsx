@@ -6,7 +6,7 @@ export const PHRASE_MS = 4000;
 interface RotatingPhrasesProps {
   phrases: string[];
   pause?: boolean;
-  align?: 'center' | 'start';
+  align?: 'center' | 'start' | 'hero';
 }
 
 export default function RotatingPhrases({ phrases, pause = false, align = 'center' }: RotatingPhrasesProps) {
@@ -21,19 +21,22 @@ export default function RotatingPhrases({ phrases, pause = false, align = 'cente
     return () => window.clearInterval(interval);
   }, [pause, phrases.length]);
 
+  const alignClass =
+    align === 'hero'
+      ? 'justify-center text-center lg:justify-start lg:text-left'
+      : align === 'start'
+        ? 'justify-start text-left'
+        : 'justify-center text-center';
+
   return (
     <div
-      className={`mt-4 flex min-h-[calc(2.25rem*3)] w-auto max-w-3xl sm:mt-5 sm:min-h-[calc(2.25rem*2)] ${
-        align === 'start' ? 'justify-start text-left' : 'justify-center text-center'
-      }`}
+      className={`mt-4 flex min-h-[calc(2.25rem*3)] w-auto max-w-3xl sm:mt-5 sm:min-h-[calc(2.25rem*2)] ${alignClass}`}
       aria-live="polite"
     >
       <AnimatePresence mode="wait">
         <motion.p
           key={phrases[phraseIndex]}
-          className={`w-auto max-w-full text-balance text-3xl font-black leading-9 tracking-tight text-on-surface ${
-            align === 'start' ? 'text-left' : 'text-center'
-          }`}
+          className={`w-auto max-w-full text-balance text-3xl font-black leading-9 tracking-tight text-on-surface ${alignClass}`}
           initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }}

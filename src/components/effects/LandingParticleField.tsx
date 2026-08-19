@@ -97,7 +97,7 @@ export default function LandingParticleField({ theme, waveActive = false }: Land
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
       particles.length = 0;
-      const spacing = width < 640 ? 24 : 28;
+      const spacing = width < 640 ? 20 : 24;
       for (let y = spacing / 2; y < height; y += spacing) {
         for (let x = spacing / 2; x < width; x += spacing) {
           particles.push({ x, y, renderX: x, renderY: y, renderScale: 1 });
