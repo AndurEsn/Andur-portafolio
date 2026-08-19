@@ -4,7 +4,9 @@ import { motion, useReducedMotion } from 'motion/react';
 import { Theme, AppState, EntranceAnimation, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import { APP_VERSION } from '../../config/version';
+import { CV_HREF } from '../../config/cv';
 import InfoTooltip from '../ui/InfoTooltip';
+import andurMark from '../../assets/images/andur-mark.png';
 
 interface HeaderProps {
   theme: Theme;
@@ -15,7 +17,6 @@ interface HeaderProps {
   onOpenDesignSystem: () => void;
   entranceAnimation: EntranceAnimation;
   setEntranceAnimation: (animation: EntranceAnimation) => void;
-  avatarSrc: string;
   onNavigateToHero: () => void;
 }
 
@@ -53,7 +54,6 @@ export default function Header({
   onOpenDesignSystem,
   entranceAnimation,
   setEntranceAnimation,
-  avatarSrc,
   onNavigateToHero
 }: HeaderProps) {
   const t = TRANSLATIONS[language];
@@ -87,13 +87,13 @@ export default function Header({
   const [activeSection, setActiveSection] = useState('tour-step-hero');
 
   useEffect(() => {
-    const sections = ['tour-step-hero', 'tour-step-metrics', 'roadmap-section', 'tour-step-projects', 'contact-section', 'faq-section'];
+    const sections = ['tour-step-hero', 'tour-step-metrics', 'tour-step-projects', 'contact-section', 'faq-section'];
     const handleScrollActive = () => {
       const scrollPos = window.scrollY + 200; // offset
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
-          const top = el.offsetTop;
+          const top = el.getBoundingClientRect().top + window.scrollY;
           const height = el.offsetHeight;
           if (scrollPos >= top && scrollPos < top + height) {
             setActiveSection(section);
@@ -130,11 +130,10 @@ export default function Header({
   };
 
   const navTabs = [
-    { id: 'tour-step-hero', label: language === 'es' ? 'Sobre mí' : 'About me' },
-    { id: 'tour-step-metrics', label: language === 'es' ? 'Métricas' : 'Metrics' },
-    { id: 'roadmap-section', label: language === 'es' ? 'Trayectoria' : 'Roadmap' },
-    { id: 'tour-step-projects', label: language === 'es' ? 'Proyectos' : 'Projects' },
-    { id: 'contact-section', label: language === 'es' ? 'Contacto' : 'Contact' },
+    { id: 'tour-step-hero', label: t.navAbout },
+    { id: 'tour-step-metrics', label: t.navMetrics },
+    { id: 'tour-step-projects', label: t.navProjects },
+    { id: 'contact-section', label: t.navContact },
     { id: 'faq-section', label: t.navFaq },
   ];
   const animationOptions: { value: EntranceAnimation; label: string }[] = [
@@ -165,13 +164,12 @@ export default function Header({
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         
         {/* Brand & Avatar */}
-        <button type="button" onClick={handleBrandClick} className="relative z-10 flex h-10 items-center gap-2 rounded-xl px-2 text-on-surface-variant transition-colors duration-200 hover:bg-surface-container hover:text-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-3 cursor-pointer" id="header-brand" aria-label="Portafolio">
+        <button type="button" onClick={handleBrandClick} className="relative z-10 flex h-10 items-center gap-2 rounded-xl px-2 text-on-surface-variant transition-colors duration-200 hover:bg-surface-container hover:text-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-3 cursor-pointer" id="header-brand" aria-label={language === 'es' ? 'Ir al inicio' : 'Go to home'}>
           <span className="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-border shadow-sm">
-            <img 
-              src={avatarSrc}
-              alt="Andur" 
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
+            <img
+              src={andurMark}
+              alt=""
+              className="h-full w-full object-cover"
             />
           </span>
           <span className="text-xs font-black tracking-tight sm:text-sm">Portafolio</span>
@@ -218,6 +216,16 @@ export default function Header({
               </div>
             )}
           </div>
+
+          <a
+            href={CV_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-10 items-center rounded-xl px-3 text-xs font-bold text-on-surface-variant transition-all hover:bg-surface-container hover:text-on-surface active:scale-95 cursor-pointer"
+            aria-label={language === 'es' ? 'Ver CV, se abre en una pestaña nueva' : 'View resume, opens in a new tab'}
+          >
+            {t.navCv}
+          </a>
 
           {/* 2. LABORATORIO DROPDOWN MENU */}
           <div ref={labRef} className="relative" id="lab-menu-btn">
@@ -333,8 +341,8 @@ export default function Header({
               key={tab.id}
               onClick={() => scrollToSection(tab.id)}
               className={`px-3 py-1.5 rounded-full transition-colors text-xs sm:text-sm font-bold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
-                isActive 
-                  ? 'text-primary bg-primary-bg/50' 
+                isActive
+                  ? 'text-primary bg-primary-bg/50'
                   : 'text-on-surface-variant hover:text-primary hover:bg-surface-low'
               }`}
             >

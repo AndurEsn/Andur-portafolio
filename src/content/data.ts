@@ -1,6 +1,8 @@
-import { Project, Metric, FAQItem, RoadmapItem } from '../types';
+import { Metric, FAQItem } from '../types';
 import { CONTACT_GITHUB } from '../config/contact';
-import { CV_DOWNLOAD_NAME, CV_HREF } from '../config/cv';
+import { CV_HREF } from '../config/cv';
+
+export { PROJECTS } from './projects';
 
 export const TRANSLATIONS = {
   es: {
@@ -10,7 +12,7 @@ export const TRANSLATIONS = {
     navFaq: 'Preguntas Frecuentes',
     navContact: 'Contacto',
     navMetrics: 'Métricas',
-    navRoadmap: 'Trayectoria',
+    navCv: 'CV',
     labTitle: 'Laboratorio',
     labDescription: 'Prueba animaciones y consulta el Design System.',
     labDesignSystem: 'Documentación Design System',
@@ -22,8 +24,12 @@ export const TRANSLATIONS = {
     evalPage: 'Evaluar Página',
     langSelect: 'Idioma',
     loadingLabel: 'Cargando el contenido de la página...',
-    splashLine: 'Bienvenido a mi portafolio',
-    splashYear: '2026',
+    splashLine: 'Bienvenidxs, ¡Soy Andur!',
+    splashPhrases: [
+      'Soy Product Designer evolucionando hacia Design Engineering.',
+      'Llevo más de 7 años diseñando productos SaaS, fintech e IA.',
+      'Transformo problemas complejos en productos digitales claros.',
+    ],
     splashHint: 'Haz clic o desplázate para continuar',
     errorHeading: '404',
     errorTitle: 'Página no encontrada',
@@ -32,19 +38,17 @@ export const TRANSLATIONS = {
     errorToast: 'Oops, algo salió mal',
     heroTitle: '¡Hola! Soy Andur',
     heroDesc: 'Product Designer con 7+ años de experiencia en productos SaaS, fintech e IA. Combino UX/UI, estrategia de producto y Design Engineering para transformar problemas complejos en soluciones funcionales.',
-    heroBtn: 'Descargar CV',
-    heroProjectsBtn: 'Ver proyectos',
     metricsTitle: 'Métricas',
     metricsLabel: '7 años de experiencia reflejados en resultados.',
     portfolioTitle: 'Proyectos Destacados',
     portfolioDesc: 'Una selección exclusiva de productos de software diseñados para maximizar métricas comerciales y simplificar la experiencia de usuario.',
     portfolioAll: 'Todos',
     viewProject: 'Ver proyecto',
-    modalRole: 'Rol Desempeñado',
+    modalRole: 'Mi rol',
     modalDuration: 'Duración',
-    modalImpact: 'Métrica de Impacto Lograda',
+    modalImpact: 'Impacto',
     modalSummary: 'Resumen del Proyecto',
-    modalTools: 'Herramientas & Habilidades',
+    modalTools: 'Herramientas y habilidades',
     modalClose: 'Cerrar',
     contactTitle: 'Contacto',
     contactDesc: 'Si tienes alguna pregunta, comentario o feedback, puedes contactarme directamente en mi LinkedIn o escribirme a andur-design@outlook.com',
@@ -83,8 +87,6 @@ export const TRANSLATIONS = {
     toastToastLabel: 'Notificación',
     footerCopyright: '© 2026 Portafolio. Creado con IA y precisión por Andur.',
     brandsTitle: 'Proyectos en los que he participado',
-    roadmapTitle: 'Trayectoria Profesional',
-    roadmapDesc: 'Mi camino como diseñador de producto, colaborando con empresas líderes y resolviendo problemas complejos.',
   },
   en: {
     brandName: '',
@@ -103,8 +105,12 @@ export const TRANSLATIONS = {
     evalPage: 'Evaluate Page',
     langSelect: 'Language',
     loadingLabel: 'Loading the page content...',
-    splashLine: 'Welcome to my portfolio',
-    splashYear: '2026',
+    splashLine: "Welcome, I'm Andur!",
+    splashPhrases: [
+      'I’m a Product Designer evolving into Design Engineering.',
+      'I’ve spent 7+ years designing SaaS, fintech, and AI products.',
+      'I turn complex problems into clear digital products.',
+    ],
     splashHint: 'Click or scroll to continue',
     errorHeading: '404',
     errorTitle: 'Page not found',
@@ -113,19 +119,17 @@ export const TRANSLATIONS = {
     errorToast: 'Oops, something went wrong',
     heroTitle: "Hi! I'm Andur",
     heroDesc: 'Product Designer with 7+ years of experience in SaaS, fintech, and AI products. I combine UX/UI, product strategy, and Design Engineering to turn complex problems into functional solutions.',
-    heroBtn: 'Download CV',
-    heroProjectsBtn: 'View projects',
     metricsTitle: 'Metrics',
     metricsLabel: '7 years of experience reflected in results.',
     portfolioTitle: 'Featured Projects',
     portfolioDesc: 'An exclusive selection of software products designed to maximize business metrics and simplify user experience.',
     portfolioAll: 'All',
     viewProject: 'View project',
-    modalRole: 'Role Played',
+    modalRole: 'My role',
     modalDuration: 'Duration',
-    modalImpact: 'Impact Metric Achieved',
+    modalImpact: 'Impact',
     modalSummary: 'Project Summary',
-    modalTools: 'Tools & Skills',
+    modalTools: 'Tools and skills',
     modalClose: 'Close',
     contactTitle: 'Contact',
     contactDesc: 'If you have any questions, comments or feedback, you can contact me directly at my LinkedIn or write to me at andur-design@outlook.com',
@@ -164,17 +168,15 @@ export const TRANSLATIONS = {
     toastToastLabel: 'Notification',
     footerCopyright: '© 2026 Portfolio. Built with AI and precision by Andur.',
     brandsTitle: 'Projects I have participated in',
-    roadmapTitle: 'Professional Roadmap',
-    roadmapDesc: 'My journey as a product designer, collaborating with leading companies and solving complex problems.',
     navMetrics: 'Metrics',
-    navRoadmap: 'Roadmap',
+    navCv: 'Resume',
   }
 };
 
 export const METRICS = (lang: 'es' | 'en'): Metric[] => [
   { value: '11+', label: lang === 'es' ? 'proyectos en los que he participado' : 'projects I have participated in', icon: 'projects' },
   { value: '74+', label: lang === 'es' ? 'flujos y módulos diseñados' : 'flows and modules designed', icon: 'flows' },
-  { value: '14,000+', label: lang === 'es' ? 'horas diseñando' : 'hours designing', icon: 'hours' }
+  { value: '7+', label: lang === 'es' ? 'años de experiencia' : 'years of experience', icon: 'award' }
 ];
 
 export const DESIGN_BREAKPOINTS = (lang: 'es' | 'en') => [
@@ -202,137 +204,6 @@ export const DESIGN_BREAKPOINTS = (lang: 'es' | 'en') => [
     value: 'lg · ≥ 1024px',
     icon: 'laptop' as const,
   },
-];
-
-export const ROADMAP = (lang: 'es' | 'en'): RoadmapItem[] => [
-  {
-    years: lang === 'es' ? 'Mar. 2019 – Ene. 2025' : 'Mar 2019 – Jan 2025',
-    tenure: lang === 'es' ? '5 años y 11 meses' : '5 years and 11 months',
-    company: 'Yaydoo',
-    role: 'UX/UI Designer',
-    description: lang === 'es'
-      ? 'Responsable del diseño e investigación de productos de software financiero y conciliación para miles de corporativos y PYMEs.'
-      : 'Responsible for product design and research of financial and reconciliation software products for thousands of corporates and SMEs.',
-    highlight: lang === 'es' ? 'Rediseño de flujos financieros clave' : 'Redesign of key financial flows'
-  },
-  {
-    years: lang === 'es' ? 'Jun. 2023 – Ene. 2026' : 'Jun 2023 – Jan 2026',
-    tenure: lang === 'es' ? '2 años y 8 meses' : '2 years and 8 months',
-    company: 'Leracom AI',
-    role: 'Product Designer',
-    description: lang === 'es'
-      ? 'Liderazgo en estrategia de diseño de plataformas empresariales complejas y maduración de sistemas de diseño multi-marca.'
-      : 'Leadership in design strategy of complex enterprise platforms and maturation of multi-brand design systems.',
-    highlight: lang === 'es' ? 'Maduración de Sistemas de Diseño' : 'Design System Maturity'
-  },
-  {
-    years: lang === 'es' ? 'Ene. 2026 – Presente' : 'Jan 2026 – Present',
-    tenure: lang === 'es' ? '8 meses' : '8 months',
-    company: 'Freelance',
-    role: 'Product Designer',
-    description: lang === 'es'
-      ? 'Consultoría estratégica de experiencia de usuario para startups tecnológicas internacionales enfocadas en fintech y SaaS complejo.'
-      : 'Strategic user experience consulting for international tech startups focused on fintech and complex SaaS.',
-    highlight: lang === 'es' ? 'Consultoría Estratégica' : 'Strategic Consulting'
-  }
-];
-
-export const PROJECTS = (lang: 'es' | 'en'): Project[] => [
-  {
-    id: 'xepelin-app',
-    title: 'Xepelin App',
-    category: 'Product',
-    company: lang === 'es' ? 'Independiente' : 'Independent',
-    description: lang === 'es' 
-      ? 'Rediseño integral de la aplicación móvil enfocada en la gestión de capital de trabajo para empresas latinoamericanas.'
-      : 'Comprehensive redesign of the mobile application focused on working capital management for Latin American enterprises.',
-    fullDescription: lang === 'es'
-      ? 'Un rediseño profundo de punta a punta enfocado en simplificar el factoraje financiero y la conciliación de facturas para directores financieros en PyMEs. Logramos simplificar flujos complejos de carga de documentos de 12 pasos a tan solo 3, reduciendo la fricción significativamente.'
-      : 'A deep end-to-end redesign focused on simplifying financial factoring and invoice reconciliation for CFOs in SMEs. We simplified complex 12-step document uploading flows down to just 3 steps, significantly reducing user friction.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC49yZPz2l69bVup9tzj7xQdXzPoSWobUSg06tLzjNkEtHV3Upr29F09SZbEl37ES8TiVqmCC6FCRfuvWQyTuuGAYt7WTleQxdFrprZF2GLkb2Jwe1--QlPyYRRkEq3ssYx0r4vl_OByGdYCzFdJBTXFB2XEW1H8Jo0FFu0pjd-pl7RDuRUJ3sCE1XYuslD4U2yBLexm0N95uAseIfmU3TxRSUcEAIPKMhLmi1TJQD9VJiEd3UmwRk',
-    role: lang === 'es' ? 'Diseñador de Producto Principal' : 'Lead Product Designer',
-    impact: lang === 'es'
-      ? 'Aumento del 42% en transacciones móviles mensuales y reducción del 30% en tickets de soporte técnico.'
-      : '42% increase in monthly mobile transactions and 30% reduction in technical support tickets.',
-    duration: lang === 'es' ? '6 meses (2025)' : '6 months (2025)',
-    tools: ['Figma', 'Prototyping', 'User Interviews', 'Hotjar']
-  },
-  {
-    id: 'saas-analytics',
-    title: 'SaaS Analytics Dashboard',
-    category: 'UX Research',
-    company: 'Leracom',
-    description: lang === 'es'
-      ? 'Plataforma B2B para visualización de datos complejos mediante interfaces limpias y componentes modulares.'
-      : 'B2B platform for complex data visualization using clean interfaces and modular components.',
-    fullDescription: lang === 'es'
-      ? 'Diseño e investigación de experiencia de usuario para una plataforma de analíticas multinivel de nivel empresarial. A través de extensas pruebas de usabilidad y sesiones de card sorting con analistas de datos, estructuramos un panel personalizable de widgets modulares altamente interactivos.'
-      : 'UX research and design for an enterprise-grade multi-level analytics platform. Through extensive usability testing and card sorting sessions with data analysts, we structured a customizable dashboard of highly interactive modular widgets.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBLbLRtsjXcX8x-4-fQwObntjghCn3zptoCtvqKOli7_K_a8EAveZyyNkYxs2yJa9_HhCprzJ-3HI_PSgiZ_y89lCRlpWnnoYXu_Y-RIFCHsk4sJK5SdsmaV_pwpoHow3uRD46lBiYMfQmRggbodkbsLaDSRul6ltmJPpCSkLYREmk4l4jviP8cxt0HTNQA5lVg2xjFGYcZT6AbXBsCUpv16p3lveTRIrfpUDyX5m7hJYnjB_lIz48',
-    role: lang === 'es' ? 'Investigador UX & Diseñador de Interacción' : 'UX Researcher & Interaction Designer',
-    impact: lang === 'es'
-      ? 'Mejora del 50% en el tiempo de generación de reportes y calificación de facilidad de uso (SUS) de 86/100.'
-      : '50% improvement in report generation time and a System Usability Scale (SUS) rating of 86/100.',
-    duration: lang === 'es' ? '4 meses (2025)' : '4 months (2025)',
-    tools: ['User Testing', 'Figma', 'Maze', 'Miro']
-  },
-  {
-    id: 'core-ui-library',
-    title: 'Core UI Library',
-    category: 'Website',
-    company: 'Leracom',
-    description: lang === 'es'
-      ? 'Creación y escalado del sistema de diseño unificado para acelerar el desarrollo y mantener consistencia visual.'
-      : 'Creation and scaling of the unified design system to accelerate development and maintain visual consistency.',
-    fullDescription: lang === 'es'
-      ? 'Lideré la conceptualización y documentación técnica de la biblioteca de interfaz del ecosistema. Definimos tokens de diseño de color, tipografía y espaciado siguiendo especificaciones modernas, proporcionando consistencia entre la web institucional y las aplicaciones nativas.'
-      : 'Led the conceptualization and technical documentation of the ecosystem interface library. We defined design tokens for color, typography, and spacing according to modern specifications, providing consistency across corporate website and native apps.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAUtak9-TLPnHrw6oB6EbZGFxjqRtud9JFxxAeN_FQ5Nx9ZiWzkdOP7p5FVRZIhd4NUn59Aup2yZ2VVVdXIMVXDJvzvveXVYBLS9uyMy1RlJ-RDXov3VW5aNHbP5IYORNOYaqbPmws-JoidU_QL3cBCpff8ZuQksM6yGR-FDwq2oI61j4BtDhy8fRpGUq4PtEtzaraRDps2dlnK5fAJcfSlXtKHQXUetjQwHxXCrIU2aKz9I9E6H-4',
-    role: lang === 'es' ? 'Arquitecto del Sistema de Diseño' : 'Design System Architect',
-    impact: lang === 'es'
-      ? 'Reducción del 65% en tiempo de entrega de UI/UX por parte del equipo de ingeniería frontend.'
-      : '65% reduction in UI/UX delivery time by the frontend engineering team.',
-    duration: lang === 'es' ? '8 meses (2024)' : '8 months (2024)',
-    tools: ['Figma Variable Tokens', 'Storybook', 'Tailwind', 'React']
-  },
-  {
-    id: 'onboarding-flow',
-    title: 'Onboarding Flow V2',
-    category: 'Product',
-    company: 'Yaydoo',
-    description: lang === 'es'
-      ? 'Optimización del embudo de conversión logrando un incremento del 35% en la retención de usuarios nuevos.'
-      : 'Onboarding funnel optimization achieving a 35% increase in new user retention.',
-    fullDescription: lang === 'es'
-      ? 'Proyecto centrado en reestructurar el embudo de bienvenida y verificación de identidad para nuevos usuarios de banca digital. Rediseñamos las pantallas explicativas con ilustraciones contextuales y retroalimentación interactiva en tiempo real.'
-      : 'Project centered on restructuring the welcome and identity verification funnel for new digital banking users. We redesigned explanatory screens with contextual illustrations and real-time interactive feedback.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBil8zb8hzr-GZVA8zc8iOfw5S2W-2i49pp_iDyk1Uzi5agpJ_sMYIjjJmOLexo4p5bRG9_liNYUJL3pU6lF2YS8iIuxc2zWwNOTmkVbCdqErIVymTphoUg4f4H__odp3Djz-5-oJceW7JA9Eu-BiL97P8xFrFKFyy6ASkFxpulk4-QY2JlSoVmo9LVRhrq290COBuKiLTMQLcGILiSpLvCC_e-kEmP7SD8vC8099o1WenfQC5uX6k',
-    role: lang === 'es' ? 'Diseñador de Producto Senior' : 'Senior Product Designer',
-    impact: lang === 'es'
-      ? 'Incremento del 35% en la tasa de activación de cuentas en los primeros 7 días.'
-      : '35% increase in bank account activation rate within the first 7 days.',
-    duration: lang === 'es' ? '3 meses (2024)' : '3 months (2024)',
-    tools: ['Figma', 'Interactive Micro-interactions', 'Amplitude']
-  },
-  {
-    id: 'wealth-tracker',
-    title: 'Wealth Tracker',
-    category: 'Website',
-    company: 'Yaydoo',
-    description: lang === 'es'
-      ? 'Herramienta integral para inversores institucionales, priorizando la legibilidad de datos y accesibilidad.'
-      : 'Comprehensive tool for institutional investors, prioritizing data legibility and accessibility.',
-    fullDescription: lang === 'es'
-      ? 'Creación de un portal de consulta y visualización de fondos de inversión privados de alta gama. El enfoque visual se basó en una legibilidad suprema, tipografía de grado editorial y componentes altamente accesibles siguiendo pautas WCAG 2.1.'
-      : 'Creation of a query and visualization portal for high-end private investment funds. The visual approach relied on supreme legibility, editorial-grade typography, and highly accessible components following WCAG 2.1 guidelines.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAlZaMZFLfB_YJh6fYpYa5WPMbcADzdv1I5gticGn5zP9-GaEmBpgNRh1uSIOfwzMfBEflcc8iRk20QgsEj3j8iurZEuYV0OSQOdFAstK9HXGVKdP2wo-oOtjo0_8XYyT6n8cFtf_hbXh89EOStcmqQBuMQhmY0VLyonK2EUP0qfacclgF66VltfiRIjF63eO98lbKIraOo-gGk4xSZNTBnAt2NKd_mEc3bvJEIMdXOd4vMJe0SnaE',
-    role: lang === 'es' ? 'Diseñador de Interfaz & UX Líder' : 'Lead Visual & UX Designer',
-    impact: lang === 'es'
-      ? 'Tiempo de sesión promedio incrementado en un 25% gracias a visualizaciones de datos claras e intuitivas.'
-      : 'Average session time increased by 25% due to clear and intuitive data visualizations.',
-    duration: lang === 'es' ? '5 meses (2024)' : '5 months (2024)',
-    tools: ['Figma', 'D3.js integration concepts', 'A11y Testing', 'High-Fidelity Mockups']
-  }
 ];
 
 export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
@@ -455,14 +326,14 @@ export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
   },
   {
     category: 'profile',
-    question: lang === 'es' ? '¿Dónde puedo consultar o descargar tu CV?' : 'Where can I view or download your CV?',
+    question: lang === 'es' ? '¿Dónde puedo consultar tu CV?' : 'Where can I view your resume?',
     answer: lang === 'es'
-      ? 'Puedes descargar y consultar mi experiencia, habilidades y principales resultados en el siguiente botón:'
-      : 'You can download and review my experience, skills, and key results with the following button:',
+      ? 'Puedes consultar mi experiencia, habilidades y principales resultados en el siguiente botón:'
+      : 'You can review my experience, skills, and key results with the following button:',
     link: {
-      label: lang === 'es' ? 'Descargar CV' : 'Download CV',
+      label: lang === 'es' ? 'Ver CV' : 'View Resume',
       href: CV_HREF,
-      download: CV_DOWNLOAD_NAME
+      external: true
     }
   }
 ];

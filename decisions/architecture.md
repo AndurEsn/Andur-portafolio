@@ -16,9 +16,9 @@
 
 ## ADR-003 — Contenido tipado y bilingüe en código
 
-- Decisión: tipos en `src/types/`; contenido estático y fábricas por idioma en `src/content/data.ts`.
-- Razón: mantiene paridad ES/EN y validación estática sin infraestructura de CMS.
-- Consecuencias: todo campo nuevo de contenido debe definirse en el tipo y en ambos idiomas. Considerar archivos de contenido separados solo si `data.ts` deja de ser navegable.
+- Decisión: tipos en `src/types/`; copy de UI, métricas y FAQ en `src/content/data.ts`; casos de estudio en `src/content/cases/` ensamblados por `src/content/projects.ts`. El CV se visualiza en una pestaña nueva vía `src/config/cv.ts`.
+- Razón: mantiene paridad ES/EN y validación estática sin infraestructura de CMS. Los casos largos no caben en un solo párrafo del modal.
+- Consecuencias: todo campo nuevo de contenido debe definirse en el tipo y en ambos idiomas. Añadir un archivo por caso; no reintroducir placeholders remotos.
 
 ## ADR-004 — Persistencia local limitada (superseded 2026-08-16)
 
