@@ -8,6 +8,7 @@ import ErrorState from '../components/feedback/ErrorState';
 import DesignSystemModal from '../components/overlays/DesignSystemModal';
 import LogoCarousel from '../components/sections/LogoCarousel';
 import Approach from '../components/sections/Approach';
+import Process from '../components/sections/Process';
 import LandingParticleField from '../components/effects/LandingParticleField';
 import SplashScreen from '../components/effects/SplashScreen';
 import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
@@ -244,6 +245,9 @@ export default function App() {
               </LandingReveal>
               <LandingReveal animation={entranceAnimation}>
                 <Approach language={language} />
+              </LandingReveal>
+              <LandingReveal animation={entranceAnimation}>
+                <Process language={language} />
               </LandingReveal>
 
               {/* Portfolio section with filters & modal */}

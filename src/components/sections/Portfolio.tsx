@@ -284,7 +284,7 @@ export default function Portfolio({ language }: PortfolioProps) {
                   <p className="text-base font-semibold leading-snug text-on-surface sm:text-lg">
                     {activeProject.subtitle}
                   </p>
-                  <RichText text={activeProject.intro} />
+                  {activeProject.intro ? <RichText text={activeProject.intro} /> : null}
                 </header>
 
                 <div className="grid grid-cols-2 gap-4 rounded-2xl border border-border bg-surface-low p-4">

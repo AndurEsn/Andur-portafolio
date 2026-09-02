@@ -1,6 +1,6 @@
 # Estado actual
 
-Actualizado: 2026-08-19.
+Actualizado: 2026-09-02.
 
 ## Verificado
 
@@ -9,13 +9,13 @@ Actualizado: 2026-08-19.
 - Tooltip: ancho al contenido; en táctil se abre/cierra con tap y se cierra al hacer scroll.
 - Modales en móvil: pantalla completa (`h-dvh`); se cierran con el icono, Escape o atrás. El fondo no cierra.
 - Design System: paleta con splash, tipografía Inter con wrap, iconos cortos, breakpoints sin descripción.
-- Portafolio: el único caso es Grill Design System (Yaydoo), con portada local y modal por secciones.
-- Hero a dos columnas en escritorio: bienvenida y frases a la izquierda (sin punto final), métricas (`+8` / `+74` / `+7`) debajo en tres columnas, con etiquetas de dos líneas. Por debajo de `lg` (incluye tablet pequeña) el copy se centra. Retrato PNG RGBA a la derecha, `min-h` 20rem / `max-h` 28rem y radio 80rem, sin fundido inferior.
+- Portafolio: el único caso es Grill Design System (Yaydoo), con portada local y modal por secciones. Duración 6 meses. El detalle cubre problema, contribución, construcción (Foundations → MVP → Expansión → Documentación) y resultados; ya no incluye retrospectiva ni la sección aparte de productos.
+- Hero a dos columnas en escritorio: bienvenida y frases a la izquierda (sin punto final), tres chips de rol (`UX/UI Designer`, `Product Designer`, `Design Systems`) y métricas (`+120` / `+250` / `+7`) debajo en tres columnas, con etiquetas de dos líneas. Por debajo de `lg` (incluye tablet pequeña) el copy se centra. Retrato PNG RGBA a la derecha, `min-h` 20rem / `max-h` 28rem y radio 80rem, sin fundido inferior. El splash no comparte las frases del hero.
 - Las tabs y el footer no enlazan a Métricas.
 - El carrusel de logos comparte `max-w-7xl px-4` con Proyectos y Contacto; el fade va en los bordes de esa columna.
-- El hero muestra un chip de ubicación (`CDMX, México` / `CDMX, Mexico`).
-- Tras los logos, `Del Problema al Producto Funcional` resume proceso (4 etapas) y colaboración (3 socios) en una sola sección, con iconos del Design System.
-- La sección de proyectos se titula `Proyectos` / `Projects`, sin descripción.
+- Favicon (`public/favicon.png`) y mark del header (`src/assets/images/andur-mark.png`) usan `Logo-Andur.png` (PNG RGBA 480×480).
+- Tras los logos, `Filosofía` / `Philosophy` cubre 3 principios (entender, colaborar, iterar). `Proceso` / `Process` es una línea de 6 pasos en círculo unidos por una flecha: vertical en móvil y horizontal con scroll desde `md`. Ya no hay sección de colaboración.
+- La sección de proyectos se titula `Proyectos` / `Work`, sin descripción. Tabs EN: About, Work, Connect, FAQ.
 - CV/Resume está en el header, entre idioma y Laboratorio. También en footer y FAQ. No hay botón de descarga ni CTA de proyectos en el hero.
 - El campo de partículas del fondo usa spacing 12px (móvil) / 14px (resto), el doble de densidad respecto a 24/28.
 - La sección de trayectoria se eliminó; esa información vive en el CV.

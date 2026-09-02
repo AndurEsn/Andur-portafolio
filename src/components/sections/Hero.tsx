@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ZoomIn, ZoomOut, MapPin } from 'lucide-react';
+import { ZoomIn, ZoomOut } from 'lucide-react';
 import { HeroContent, Language, Metric } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
@@ -37,14 +37,18 @@ export default function Hero({ language, content, metrics }: HeroProps) {
           <h1 id="tour-title-hero" className="text-balance text-base font-semibold leading-snug tracking-tight text-on-surface-variant sm:text-xl">
             {t.splashLine}
           </h1>
-          <RotatingPhrases phrases={t.splashPhrases} align="hero" />
+          <RotatingPhrases phrases={t.heroPhrases} align="hero" />
 
-          <span
-            className="mt-6 inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-surface-low px-3 text-xs font-bold text-on-surface"
-          >
-            <MapPin className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-            {t.heroLocation}
-          </span>
+          <ul className="mt-6 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+            {t.heroRoles.map((role) => (
+              <li
+                key={role}
+                className="inline-flex h-9 items-center rounded-full border border-border bg-surface-low px-3 text-xs font-bold text-on-surface"
+              >
+                {role}
+              </li>
+            ))}
+          </ul>
 
           <div
             id="tour-step-metrics"

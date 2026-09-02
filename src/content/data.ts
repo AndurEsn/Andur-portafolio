@@ -1,4 +1,4 @@
-import { Metric, FAQItem, ApproachStage, ApproachPartner } from '../types';
+import { Metric, FAQItem, ApproachStage, ProcessStep } from '../types';
 import { CONTACT_GITHUB } from '../config/contact';
 import { CV_HREF } from '../config/cv';
 
@@ -6,7 +6,7 @@ export { PROJECTS } from './projects';
 
 export const TRANSLATIONS = {
   es: {
-    brandName: '',
+    brandName: 'Portafolio',
     navProjects: 'Proyectos',
     navAbout: 'Sobre mí',
     navFaq: 'Preguntas Frecuentes',
@@ -28,6 +28,11 @@ export const TRANSLATIONS = {
       'Soy Product Designer evolucionando hacia Design Engineering',
       'Llevo más de 7 años diseñando productos SaaS, fintech e IA',
       'Transformo problemas complejos en productos digitales claros',
+    ],
+    heroPhrases: [
+      'Me apasiona construir sistemas vivos que evolucionen constantemente',
+      'Actualmente, me especializo en diseñar productos SaaS, fintech e IA',
+      'Creo experiencias únicas que conectan de forma genuina con las personas',
     ],
     splashHint: 'Haz clic o desplázate para continuar',
     errorHeading: '404',
@@ -85,17 +90,17 @@ export const TRANSLATIONS = {
     toastToastLabel: 'Notificación',
     footerCopyright: '© 2026 Portafolio. Creado con IA y precisión por Andur.',
     brandsTitle: 'Proyectos en los que he participado',
-    heroLocation: 'CDMX, México',
-    approachTitle: 'Del Problema al Producto Funcional',
-    approachIntro: 'Combino investigación, estrategia, diseño e implementación AI-first, junto a usuarios, producto y desarrollo, para pasar del problema a una solución funcional.',
-    approachCollabLabel: 'En colaboración',
+    heroRoles: ['UX/UI Designer', 'Product Designer', 'Design Systems'],
+    approachTitle: 'Filosofía',
+    approachIntro: 'Los mejores productos nacen de entender, colaborar y evolucionar.',
+    processTitle: 'Proceso',
   },
   en: {
-    brandName: '',
-    navProjects: 'Projects',
-    navAbout: 'About me',
-    navFaq: 'FAQ\'s',
-    navContact: 'Contact',
+    brandName: 'Portfolio',
+    navProjects: 'Work',
+    navAbout: 'About',
+    navFaq: 'FAQ',
+    navContact: 'Connect',
     labTitle: 'Laboratory',
     labDescription: 'Try animations and open the Design System.',
     labDesignSystem: 'Design System Docs',
@@ -113,6 +118,11 @@ export const TRANSLATIONS = {
       'I’ve spent 7+ years designing SaaS, fintech, and AI products',
       'I turn complex problems into clear digital products',
     ],
+    heroPhrases: [
+      'I’m passionate about building living systems that keep evolving',
+      'I currently specialize in designing SaaS, fintech, and AI products',
+      'I create unique experiences that connect genuinely with people',
+    ],
     splashHint: 'Click or scroll to continue',
     errorHeading: '404',
     errorTitle: 'Page not found',
@@ -123,7 +133,7 @@ export const TRANSLATIONS = {
     heroDesc: 'Product Designer with 7+ years of experience in SaaS, fintech, and AI products. I combine UX/UI, product strategy, and Design Engineering to turn complex problems into functional solutions.',
     metricsTitle: 'Metrics',
     metricsLabel: '7 years of experience reflected in results.',
-    portfolioTitle: 'Projects',
+    portfolioTitle: 'Work',
     portfolioAll: 'All',
     viewProject: 'View project',
     modalRole: 'My role',
@@ -132,11 +142,11 @@ export const TRANSLATIONS = {
     modalSummary: 'Project Summary',
     modalTools: 'Tools and skills',
     modalClose: 'Close',
-    contactTitle: 'Contact',
+    contactTitle: 'Connect',
     contactDesc: 'If you have any questions, comments or feedback, you can contact me directly at my LinkedIn or write to me at andur-design@outlook.com',
     contactLinkedin: 'Open LinkedIn',
     contactEmailCta: 'Send email',
-    faqTitle: 'FAQ\'s',
+    faqTitle: 'FAQ',
     faqDesc: 'Quick answers to the most common queries about my workflow.',
     faqCategoryDesign: 'Design and Build',
     faqCategoryCollaboration: 'Collaboration',
@@ -169,89 +179,54 @@ export const TRANSLATIONS = {
     toastToastLabel: 'Notification',
     footerCopyright: '© 2026 Portfolio. Built with AI and precision by Andur.',
     brandsTitle: 'Projects I have participated in',
-    heroLocation: 'CDMX, Mexico',
-    approachTitle: 'From Problem to Working Product',
-    approachIntro: 'I combine research, strategy, design, and AI-first implementation — with users, product, and engineering — to move from the problem to a working solution.',
-    approachCollabLabel: 'In collaboration',
+    heroRoles: ['UX/UI Designer', 'Product Designer', 'Design Systems'],
+    approachTitle: 'Philosophy',
+    approachIntro: 'The best products are born from understanding, collaborating, and evolving.',
+    processTitle: 'Process',
     navCv: 'Resume',
   }
 };
 
 export const METRICS = (lang: 'es' | 'en'): Metric[] => [
-  { value: '+8', label: lang === 'es' ? 'productos\ndiseñados' : 'products\ndesigned', icon: 'projects' },
-  { value: '+74', label: lang === 'es' ? 'módulos y flujos\ndesarrollados' : 'modules and flows\ndeveloped', icon: 'flows' },
+  { value: '+120', label: lang === 'es' ? 'proyectos\ncompletados' : 'projects\ncompleted', icon: 'projects' },
+  { value: '+250', label: lang === 'es' ? 'módulos y flujos\ndiseñados' : 'modules and flows\ndesigned', icon: 'flows' },
   { value: '+7', label: lang === 'es' ? 'años de\nexperiencia' : 'years of\nexperience', icon: 'award' }
 ];
 
 export const APPROACH_STAGES = (lang: 'es' | 'en'): ApproachStage[] => [
   {
     number: '01',
-    title: 'Discover',
+    title: lang === 'es' ? 'Entender para Diseñar' : 'Understand to Design',
     description: lang === 'es'
-      ? 'Investigo contexto, usuarios y procesos antes de diseñar.'
-      : 'I research context, users, and processes before designing.',
-    capabilities: lang === 'es'
-      ? ['Product Discovery', 'UX Research', 'Journey Mapping', 'BPMN']
-      : ['Product Discovery', 'UX Research', 'Journey Mapping', 'BPMN'],
-    icon: 'discover',
+      ? 'Antes de construir una solución busco entender a las personas, el negocio, el contexto y los alcances técnicos. Una interfaz clara comienza con un problema bien definido.'
+      : 'Before building a solution I seek to understand people, the business, the context, and the technical constraints. A clear interface starts with a well-defined problem.',
+    icon: 'understand',
   },
   {
     number: '02',
-    title: lang === 'es' ? 'Definición' : 'Define',
+    title: lang === 'es' ? 'Colaborar para Decidir' : 'Collaborate to Decide',
     description: lang === 'es'
-      ? 'Convierto hallazgos en requerimientos, arquitectura y alcance.'
-      : 'I turn findings into requirements, architecture, and scope.',
-    capabilities: lang === 'es'
-      ? ['Product Strategy', 'User Flows', 'Priorización', 'MVP']
-      : ['Product Strategy', 'User Flows', 'Prioritization', 'MVP'],
-    icon: 'define',
+      ? 'Colaborar con diferentes áreas ayuda a descubrir nuevas ideas, reducir supuestos, priorizar y tomar decisiones compartidas. La comunicación es una habilidad indispensable para construir mejores productos.'
+      : 'Collaborating with different teams helps uncover new ideas, reduce assumptions, prioritize, and make shared decisions. Communication is an essential skill for building better products.',
+    icon: 'collaborate',
   },
   {
     number: '03',
-    title: lang === 'es' ? 'Diseño' : 'Design',
+    title: lang === 'es' ? 'Iterar para Evolucionar' : 'Iterate to Evolve',
     description: lang === 'es'
-      ? 'Diseño e itero interfaces claras, consistentes y escalables.'
-      : 'I design and iterate interfaces that stay clear, consistent, and scalable.',
-    capabilities: lang === 'es'
-      ? ['UX/UI', 'Prototipado', 'Design Systems', 'Usability Testing']
-      : ['UX/UI', 'Prototyping', 'Design Systems', 'Usability Testing'],
-    icon: 'design',
-  },
-  {
-    number: '04',
-    title: lang === 'es' ? 'Desarrollo' : 'Development',
-    description: lang === 'es'
-      ? 'Paso el diseño a prototipos y productos web que puedo validar y desplegar.'
-      : 'I take designs into working prototypes and web products I can validate and ship.',
-    capabilities: lang === 'es'
-      ? ['AI-first', 'HTML & CSS', 'GitHub', 'Vercel']
-      : ['AI-first', 'HTML & CSS', 'GitHub', 'Vercel'],
-    icon: 'build',
+      ? 'Es importante medir, validar e iterar constantemente interfaces y sistemas de diseño para mejorar la experiencia de usuario. Un producto evoluciona constantemente con los usuarios, el negocio y la tecnología.'
+      : 'It is important to constantly measure, validate, and iterate interfaces and design systems to improve the user experience. A product constantly evolves with users, the business, and technology.',
+    icon: 'iterate',
   },
 ];
 
-export const APPROACH_PARTNERS = (lang: 'es' | 'en'): ApproachPartner[] => [
-  {
-    title: lang === 'es' ? 'Clientes y Usuarios' : 'Clients and Users',
-    description: lang === 'es'
-      ? 'Discovery, entrevistas y pruebas con quien usa el producto.'
-      : 'Discovery, interviews, and tests with the people who use the product.',
-    icon: 'users',
-  },
-  {
-    title: lang === 'es' ? 'Producto y Negocio' : 'Product and Business',
-    description: lang === 'es'
-      ? 'Alcance, prioridades y criterios de éxito con PMs y stakeholders.'
-      : 'Scope, priorities, and success criteria with PMs and stakeholders.',
-    icon: 'product',
-  },
-  {
-    title: lang === 'es' ? 'Diseño y Desarrollo' : 'Design and Development',
-    description: lang === 'es'
-      ? 'Flujos, componentes y decisiones documentadas para ejecutar juntos.'
-      : 'Documented flows, components, and decisions so we can execute together.',
-    icon: 'delivery',
-  },
+export const PROCESS_STEPS = (lang: 'es' | 'en'): ProcessStep[] => [
+  { number: '01', title: lang === 'es' ? 'Entiendo' : 'Understand', icon: 'understand' },
+  { number: '02', title: lang === 'es' ? 'Investigo' : 'Research', icon: 'research' },
+  { number: '03', title: lang === 'es' ? 'Defino' : 'Define', icon: 'define' },
+  { number: '04', title: lang === 'es' ? 'Bosquejo' : 'Sketch', icon: 'sketch' },
+  { number: '05', title: lang === 'es' ? 'Valido' : 'Validate', icon: 'validate' },
+  { number: '06', title: lang === 'es' ? 'Construyo' : 'Build', icon: 'build' },
 ];
 
 export const DESIGN_BREAKPOINTS = (lang: 'es' | 'en') => [
@@ -293,8 +268,8 @@ export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
     category: 'design',
     question: lang === 'es' ? '¿Cuál es tu proceso de diseño?' : 'What is your design process?',
     answer: lang === 'es'
-      ? 'Trabajo en cuatro etapas.\n\nDiscovery. Entiendo el problema, los objetivos del negocio, las necesidades de las personas usuarias y las restricciones del proyecto.\n\nDefinición. Ordeno esa información en requerimientos, arquitectura de información, flujos y criterios de éxito.\n\nDiseño. Exploro la interfaz, prototipo y valido con usuarios y stakeholders antes de ampliar el alcance.\n\nConstrucción. Si el proyecto requiere Design Engineering, acompaño la implementación para cuidar componentes, documentación y consistencia.'
-      : 'I work in four stages.\n\nDiscovery. I understand the problem, business goals, user needs, and project constraints.\n\nDefinition. I turn that understanding into requirements, information architecture, flows, and success criteria.\n\nDesign. I explore the interface, prototype, and validate with users and stakeholders before expanding the scope.\n\nBuild. If the project needs Design Engineering, I support implementation to keep components, documentation, and consistency in good shape.'
+      ? 'Mi filosofía es entender, colaborar y evolucionar.\n\nEl proceso concreto recorre seis pasos: entiendo, investigo, defino, bosquejo, valido y construyo.'
+      : 'My philosophy is to understand, collaborate, and evolve.\n\nThe concrete process follows six steps: understand, research, define, sketch, validate, and build.'
   },
   {
     category: 'design',
@@ -375,8 +350,8 @@ export const FAQS = (lang: 'es' | 'en'): FAQItem[] => [
     category: 'design',
     question: lang === 'es' ? '¿Qué experiencia tienes con Design Systems?' : 'What experience do you have with Design Systems?',
     answer: lang === 'es'
-      ? 'Construí el Design System Grill en Yaydoo, mediante la metodología de Atomic Design, homologando la base visual y funcional de más de seis productos.'
-      : 'I built the Grill Design System at Yaydoo using Atomic Design, standardizing the visual and functional foundation of more than six products.'
+      ? 'Construí el Design System Grill en Yaydoo, mediante la metodología de Atomic Design, homologando la base visual y funcional de 7 productos.'
+      : 'I built the Grill Design System at Yaydoo using Atomic Design, standardizing the visual and functional foundation of 7 products.'
   },
   {
     category: 'design',

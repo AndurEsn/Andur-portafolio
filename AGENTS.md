@@ -39,7 +39,7 @@ Nunca cargar todo el historial ni todos los archivos del proyecto. Cargar solo l
 ## Reglas duras e invariantes
 
 - Mantener paridad funcional y de contenido entre `es` y `en`.
-- Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab de navegación usa el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ's` en inglés.
+- Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab de navegación usa el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ` en inglés.
 - Mantener soporte de temas `light` y `dark`; usar tokens semánticos de `src/styles/index.css`, no colores arbitrarios salvo colores de marca justificados.
 - Mantener los estados `splash | loading | normal | error` (bienvenida, carga, contenido y 404 de ruta).
 - El contenido compartido pertenece en `src/content/`; los contratos, en `src/types/`; evitar copy duplicado en componentes cuando sea reutilizable.

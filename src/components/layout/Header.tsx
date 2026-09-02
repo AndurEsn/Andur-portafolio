@@ -63,7 +63,6 @@ export default function Header({
   const labRef = useRef<HTMLDivElement>(null);
   const langRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to hide/show header
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -164,14 +163,14 @@ export default function Header({
         
         {/* Brand & Avatar */}
         <button type="button" onClick={handleBrandClick} className="relative z-10 flex h-10 items-center gap-2 rounded-xl px-2 text-on-surface-variant transition-colors duration-200 hover:bg-surface-container hover:text-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:px-3 cursor-pointer" id="header-brand" aria-label={language === 'es' ? 'Ir al inicio' : 'Go to home'}>
-          <span className="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-border shadow-sm">
+          <span className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
             <img
               src={andurMark}
               alt=""
               className="h-full w-full object-cover"
             />
           </span>
-          <span className="text-xs font-black tracking-tight sm:text-sm">Portafolio</span>
+          <span className="text-xs font-black tracking-tight sm:text-sm">{t.brandName}</span>
         </button>
 
         {/* Action Blocks */}

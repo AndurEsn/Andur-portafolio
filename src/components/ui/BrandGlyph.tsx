@@ -4,11 +4,16 @@ interface BrandGlyphProps {
   icon: LucideIcon;
   label?: string;
   iconClassName?: string;
+  shape?: 'square' | 'circle';
 }
 
-export default function BrandGlyph({ icon: Icon, label, iconClassName }: BrandGlyphProps) {
+export default function BrandGlyph({ icon: Icon, label, iconClassName, shape = 'square' }: BrandGlyphProps) {
   return (
-    <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-icon-well">
+    <span
+      className={`inline-flex h-12 w-12 items-center justify-center border border-border bg-icon-well ${
+        shape === 'circle' ? 'rounded-full' : 'rounded-xl'
+      }`}
+    >
       <Icon
         className={`h-6 w-6 ${iconClassName ?? ''}`}
         strokeWidth={1.6}

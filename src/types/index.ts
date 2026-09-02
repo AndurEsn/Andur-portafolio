@@ -77,19 +77,18 @@ export type EntranceAnimation = 'move' | 'fade' | 'scale';
 
 export type ToastVariant = 'default' | 'info' | 'success' | 'error';
 
-export type ApproachStageIcon = 'discover' | 'define' | 'design' | 'build';
-export type ApproachPartnerIcon = 'users' | 'product' | 'delivery';
+export type ApproachStageIcon = 'understand' | 'collaborate' | 'iterate';
+export type ProcessStepIcon = 'understand' | 'research' | 'define' | 'sketch' | 'validate' | 'build';
 
 export interface ApproachStage {
   number: string;
   title: string;
   description: string;
-  capabilities: string[];
   icon: ApproachStageIcon;
 }
 
-export interface ApproachPartner {
+export interface ProcessStep {
+  number: string;
   title: string;
-  description: string;
-  icon: ApproachPartnerIcon;
+  icon: ProcessStepIcon;
 }
