@@ -20,6 +20,7 @@ import { METRICS, TRANSLATIONS } from '../content/data';
 import { goHome, isHomePath } from '../config/routes';
 import { applyThemeClass, getSystemTheme, persistTheme, readStoredTheme, resolveTheme } from '../config/theme';
 import { CV_HREF } from '../config/cv';
+import { PAGE_NAV } from '../config/nav';
 
 const avatarPath = andurHero;
 const INITIAL_LOADING_MS = 1000;
@@ -274,18 +275,15 @@ export default function App() {
           </div>
           
           <nav className="flex flex-wrap justify-center gap-6">
-            <a href="#tour-step-hero" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              {t.navAbout}
-            </a>
-            <a href="#tour-step-projects" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              {t.navProjects}
-            </a>
-            <a href="#contact-section" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              {t.navContact}
-            </a>
-            <a href="#faq-section" className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">
-              {t.navFaq}
-            </a>
+            {PAGE_NAV.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors"
+              >
+                {t[item.titleKey]}
+              </a>
+            ))}
             <a
               href={CV_HREF}
               target="_blank"

@@ -49,7 +49,7 @@ export default function SplashScreen({ language, onComplete }: SplashScreenProps
   const shouldReduceMotion = useReducedMotion();
   const [canDismiss, setCanDismiss] = useState(Boolean(shouldReduceMotion));
   const [isExiting, setIsExiting] = useState(false);
-  const phrases = t.splashPhrases;
+  const phrases = t.heroPhrases;
 
   useEffect(() => {
     const timeout = window.setTimeout(() => setCanDismiss(true), shouldReduceMotion ? 0 : MIN_VISIBLE_MS);

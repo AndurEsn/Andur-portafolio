@@ -5,6 +5,7 @@ import { Theme, AppState, EntranceAnimation, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import { APP_VERSION } from '../../config/version';
 import { CV_HREF } from '../../config/cv';
+import { PAGE_NAV } from '../../config/nav';
 import InfoTooltip from '../ui/InfoTooltip';
 import andurMark from '../../assets/images/andur-mark.png';
 
@@ -86,7 +87,7 @@ export default function Header({
   const [activeSection, setActiveSection] = useState('tour-step-hero');
 
   useEffect(() => {
-    const sections = ['tour-step-hero', 'tour-step-projects', 'contact-section', 'faq-section'];
+    const sections = PAGE_NAV.map((item) => item.id);
     const handleScrollActive = () => {
       const scrollPos = window.scrollY + 200; // offset
       for (const section of sections) {
@@ -128,12 +129,7 @@ export default function Header({
     setIsLangOpen(false);
   };
 
-  const navTabs = [
-    { id: 'tour-step-hero', label: t.navAbout },
-    { id: 'tour-step-projects', label: t.navProjects },
-    { id: 'contact-section', label: t.navContact },
-    { id: 'faq-section', label: t.navFaq },
-  ];
+  const navTabs = PAGE_NAV.map((item) => ({ id: item.id, label: t[item.titleKey] }));
   const animationOptions: { value: EntranceAnimation; label: string }[] = [
     { value: 'move', label: 'Move In' },
     { value: 'fade', label: 'Fade In' },
@@ -331,14 +327,14 @@ export default function Header({
         isVisible ? 'top-16' : 'top-0'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 flex items-center justify-center gap-1 sm:gap-3 md:gap-5 text-xs sm:text-sm font-bold">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-start gap-1 overflow-x-auto px-4 hide-scrollbar sm:justify-center sm:gap-3 md:gap-5 text-xs sm:text-sm font-bold">
         {navTabs.map((tab) => {
           const isActive = activeSection === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => scrollToSection(tab.id)}
-              className={`px-3 py-1.5 rounded-full transition-colors text-xs sm:text-sm font-bold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
+              className={`shrink-0 px-3 py-1.5 rounded-full transition-colors text-xs sm:text-sm font-bold cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
                 isActive
                   ? 'text-primary bg-primary-bg/50'
                   : 'text-on-surface-variant hover:text-primary hover:bg-surface-low'

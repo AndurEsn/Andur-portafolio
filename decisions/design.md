@@ -1,50 +1,41 @@
 # Diseño y experiencia
 
-Última revisión: 2026-09-02. Fuente ejecutable: `src/styles/index.css` y componentes.
+Última revisión: 2026-09-02. Tokens: `src/styles/index.css`. Layout vigente: `state/current.md`.
 
 ## Lenguaje visual
 
-- Tipografía: Inter, pesos 400/500/600/700/900; hoy se carga desde Google Fonts. La página usa display/heading/body; los overlays reutilizan `typo-modal-title`, `typo-modal-subtitle`, `typo-overlay-heading` y `typo-overlay-body` (modales, Laboratorio y documentación).
-- Forma: tarjetas y controles redondeados (`rounded-xl`/`2xl`/`3xl`), bordes suaves y sombras contenidas.
-- Densidad: las secciones de landing (logos, filosofía, proceso, proyectos y contacto) comparten `max-w-7xl`, `px-4` y padding vertical de `40px` en móvil y `64px` desde `sm` (`py-section`). El carrusel de logos usa ese mismo ancho; el fade lateral queda en los bordes de la columna. FAQ limita el contenido a `max-w-3xl`. Los contenedores internos usan borde `rounded-2xl` sin sombra de reposo.
-- Iconografía: Lucide React, trazo lineal (`strokeWidth` 1.6) dentro de un recuadro `h-12 w-12` con `rounded-xl`, borde y fondo `icon-well`, sin sombra. El trazo usa el degradado `#brand-icon-gradient` (`--icon-gradient-from` → `--icon-gradient-to`) vía `BrandGlyph`. En oscuro el recuadro y el trazo son más claros para contraste. Este estilo aplica en métricas y la documentación del Design System; los logos de empresa en el carrusel de marcas son la excepción.
-- Movimiento: Motion para transiciones y CSS para shimmer/marquee; ofrecer alternativa con `prefers-reduced-motion`.
+- Inter 400/500/600/700/900 (Google Fonts). Overlays: `typo-modal-*` y `typo-overlay-*`.
+- Radios `rounded-xl` / `2xl` / `3xl`; sombras contenidas.
+- Landing (logos, filosofía, proceso, proyectos, contacto): `max-w-7xl px-4 py-section` (40px móvil / 64px `sm+`). FAQ: `max-w-3xl`. Cards internas: `rounded-2xl`, sin sombra de reposo.
+- Iconos: Lucide `strokeWidth` 1.6 en `BrandGlyph` (`h-12 w-12`, `icon-well`, degradado `#brand-icon-gradient`). Default `rounded-xl`; Proceso usa `shape="circle"`. Logos del carrusel son la excepción.
+- Motion + CSS; respetar `prefers-reduced-motion`.
 
 ## Temas
 
-- Claro: fondo casi blanco, superficies blancas/grises, primario índigo `#4C63F6`, texto azul tinta.
-- Oscuro: fondo `#10131a`, superficies escalonadas, primario azul `#4090FE` y hover más oscuro `#2B72CD`.
-- El tema inicial sigue `prefers-color-scheme`. El usuario puede cambiarlo a mano; esa elección se guarda en `localStorage` (`andur-theme`) y deja de seguir al sistema. El splash usa los mismos tokens, así que respeta claro y oscuro.
-- Usar nombres semánticos (`primary`, `background`, `surface-*`, `on-surface*`, `border`, `muted`, `error*`, `icon-well`).
-- Un componente nuevo debe funcionar sin redefinir paleta dentro de él. Los logos de marca son la excepción justificada.
+- Claro: primario índigo `#4C63F6`. Oscuro: fondo `#10131a`, primario `#4090FE`, hover `#2B72CD`.
+- Inicial: `prefers-color-scheme`. Override en `localStorage` (`andur-theme`). Splash usa los mismos tokens.
+- Tokens semánticos (`primary`, `surface-*`, `on-surface*`, `border`, `muted`, `icon-well`). Un componente nuevo no redefine paleta; logos de marca sí pueden.
 
-## Jerarquía y navegación
+## Navegación
 
-- Header fijo de `64px`. Las tabs van pegadas debajo (`top-16`). El hero usa `pt-16` (64px) bajo el chrome.
-- Flujo principal: Hero (bienvenida, frases, roles, métricas y retrato) → logos → filosofía → proceso → proyectos → contacto → Preguntas Frecuentes.
-- El retrato del hero va a la derecha en escritorio (`lg`). La foto es un PNG RGBA (`src/assets/images/andur-hero.png`) con `min-height` 20rem, `max-height` 28rem y `border-radius` 80rem; el recuadro no pinta fondo ni fundido inferior. Por debajo de `lg` (incluye tablet pequeña) el copy del hero va centrado; las métricas se mantienen en tres columnas, con etiquetas de dos líneas (`whitespace-pre-line`) y `text-wrap: balance`. Bajo las frases hay tres chips de rol (`UX/UI Designer`, `Product Designer`, `Design Systems`), sin chip de ubicación. La foto se puede ampliar. El splash conserva frases propias; el hero usa `heroPhrases`.
-- Tras los logos, `Filosofía` / `Philosophy` cubre el enfoque en 3 cards (Entender para Diseñar → Colaborar para Decidir → Iterar para Evolucionar) con `BrandGlyph`, número y un párrafo. Sin tags. En `md+` van en tres columnas.
-- `Proceso` / `Process` es una línea de 6 pasos (Entiendo → Construyo). Los iconos van en un círculo `BrandGlyph` (`rounded-full`, `icon-well`) unidos por una línea con flecha. En móvil la secuencia es vertical; desde `md` es horizontal, con scroll si no cabe. No entra en las tabs. Ya no hay sección de colaboración.
-- Las tabs y el footer no incluyen Métricas: esa sección vive solo en el hero.
-- El CV / Resume se abre en una pestaña nueva desde las tabs, el footer y la FAQ. No hay descarga forzada desde el sitio.
-- El splash muestra un saludo fijo y frases que rotan cada 4 s.
-- Los IDs de sección son contratos compartidos por header y footer; renombrarlos exige actualizar ambos.
-- El laboratorio ofrece animaciones de entrada, Design System y el número de versión. En móvil el menú se ancla al viewport (`left/right` con margen) para no recortarse.
-- Los titulares de Preguntas Frecuentes (sección y categorías) van en title case. El tab y el footer usan el mismo nombre que el `h2`: `Preguntas Frecuentes` en español y `FAQ` en inglés.
-- Los encabezados de sección usan el patrón de Proyectos: sin badge ni icono, `text-2xl sm:text-4xl`, peso negro y capitalización en title case. El `h2` y el tab coinciden: `Proyectos` / `Work`, `Contacto` / `Connect`, `Preguntas Frecuentes` / `FAQ`. No hay descripción bajo el título de proyectos.
+- Header 64px; tabs `top-16`. Hero `pt-16`.
+- Tabs y footer salen de `src/config/nav.ts` (mismo `h2` + `id`). Ver `.cursor/rules/section-titles.mdc`.
+- Métricas solo en el hero. CV/Resume: pestaña nueva, sin `download`.
+- Splash: saludo `splashLine` + `heroPhrases` (misma lista que el hero).
+- IDs de sección: contrato Header/footer; cambiarlos en `nav.ts` y en el `h2` de la sección.
+- Laboratorio: animaciones, Design System, versión. En móvil el menú va de borde a borde con margen.
+- `h2` de sección: `text-2xl sm:text-4xl`, peso negro, title case, sin badge.
 
-## Estados y feedback
+## Estados
 
-- `normal`, `loading` y `error` son estados reales: contenido, carga inicial y 404 de ruta.
-- Toasts confirman cambios sin bloquear.
-- El encabezado muestra el logotipo de marca como avatar redondo junto a “Portafolio”. La foto de perfil permanece en el hero.
-- Modales que bloquean contenido deben usar el lock compartido de scroll.
-- La documentación del Design System muestra un tema local que se inicializa desde el tema de la página y no lo modifica.
-- Los modales bloqueantes reutilizan `ModalCloseButton` de 40 px en la esquina superior derecha. En móvil ocupan todo el viewport (`h-dvh`) y se cierran con el icono, Escape o el botón atrás del sistema; el fondo no cierra. Desde `sm` conservan tarjeta centrada y el clic en el fondo sí cierra.
+- `normal` / `loading` / `error` reales. Toasts no bloquean.
+- Header: mark redondo + `brandName`. Foto de perfil solo en el hero.
+- Modales bloqueantes: scroll lock + `ModalCloseButton` 40px. Móvil `h-dvh`; cierran con icono, Escape o atrás, no con el fondo. Desde `sm`: tarjeta y el fondo sí cierra.
+- Design System: tema local copiado de la página, no la muta.
 
-## Responsive y accesibilidad
+## Responsive y a11y
 
-- Base móvil; ampliar composición desde `sm` (≥ 640px), `md` (≥ 768px) y `lg` (≥ 1024px). No se usan `xl` ni `2xl`.
-- Conservar controles táctiles cercanos a 44 px, foco visible, `aria-*` cuando el texto visual no basta y navegación por teclado. Los tooltips en táctil se abren y cierran con el ícono, se cierran al hacer scroll y no superan el ancho del viewport.
-- Revisar contraste en ambos temas y no comunicar estado solo con color.
-- Imágenes deben tener `alt`, dimensiones/encuadre estables y fallback cuando sean remotas.
+- `sm` 640 · `md` 768 · `lg` 1024. No `xl` / `2xl`.
+- Táctil ~44px, foco visible, teclado, `aria-*` si el texto no basta. Tooltips táctiles: tap para abrir/cerrar, se cierran al scroll, no superan el viewport.
+- Contraste en ambos temas; no comunicar estado solo con color.
+- Imágenes: `alt`, encuadre estable, fallback si son remotas.

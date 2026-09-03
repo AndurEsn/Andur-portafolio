@@ -1,11 +1,25 @@
 ---
-description: Title case for FAQ headings and nav labels that match section titles
+description: FAQ titles, h2/nav/footer lockstep, and shared hero/splash phrases
 alwaysApply: true
 ---
 
-# Títulos de sección y navegación
+# Títulos, navegación y frases rotativas
 
-- Los titulares de Preguntas Frecuentes (sección y chips de categoría) usan mayúscula inicial en cada palabra con significado. En español, `y` puede quedar en minúscula: `Diseño y Construcción`, no `Diseño y construcción`.
-- El ítem de navegación (tabs y footer) usa el mismo nombre que el `h2` de la sección.
-- En español el `h2` y el tab son `Preguntas Frecuentes` (nunca `FAQ`). En inglés ambos son `FAQ`.
-- Copy en `src/content/data.ts`: mantener `faqTitle` y `navFaq` iguales **dentro de cada idioma**.
+## FAQ
+
+- Title case. En español, `y` puede ir en minúscula: `Diseño y Construcción`.
+- ES: `Preguntas Frecuentes` (nunca `FAQ`). EN: `FAQ`.
+
+## Sección con `h2` + `id`
+
+Tres superficies, mismo nombre, ambos idiomas: el `h2`, el tab de scroll-to y el footer.
+
+Al crear, renombrar o borrar la sección, actualizar las tres, el `id` y `src/config/nav.ts`.
+
+Usar la misma clave de copy para `h2` y nav/footer: `approachTitle`, `processTitle`, `portfolioTitle`, `contactTitle`, `faqTitle`.
+
+Excepciones: el hero usa `h1` (`splashLine`); su tab es `navAbout` (`Sobre mí` / `About`). El CV no es sección de página.
+
+## Frases rotativas
+
+Una lista: `heroPhrases`. Splash y hero la consumen. No reintroducir `splashPhrases`. `splashLine` (saludo) es independiente.

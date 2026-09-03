@@ -1,12 +1,11 @@
 # Plan de trabajo v2 — Simplificación y comportamiento real
 
-Actualizado: 2026-08-17. Estado: listo para revisión local (sin push).
+Actualizado: 2026-09-02. Estado: publicado como `v2.0.0`.
 
 ## Contexto
 
 - Baseline publicado: **`v1.0.0`**.
-- Última release en `main`: **`v1.1.0`**.
-- Trabajo actual en `feat/v2-simplification`.
+- Última release en `main`: **`v2.0.0`**.
 
 ## Objetivo de v2.0.0
 
@@ -33,9 +32,8 @@ Simplificar el producto y convertir estados simulados en comportamiento real.
 
 - [x] Contacto real: LinkedIn y `andur-design@outlook.com` (sin WhatsApp).
 - [x] CV de agosto 2026 como descarga del sitio.
-- [ ] Revisar y aprobar en local.
-- [ ] QA: ES/EN, light/dark, 375/768/1920, teclado, `/` y `/ruta-invalida`.
-- [ ] Tag **`v2.0.0`**, release en GitHub, deploy (solo con aprobación).
+- [x] Revisar y aprobar en local.
+- [x] Tag **`v2.0.0`** y GitHub Release.
 
 ## Referencias
 

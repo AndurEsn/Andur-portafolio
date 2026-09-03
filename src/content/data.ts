@@ -7,10 +7,7 @@ export { PROJECTS } from './projects';
 export const TRANSLATIONS = {
   es: {
     brandName: 'Portafolio',
-    navProjects: 'Proyectos',
     navAbout: 'Sobre mí',
-    navFaq: 'Preguntas Frecuentes',
-    navContact: 'Contacto',
     navCv: 'CV',
     labTitle: 'Laboratorio',
     labDescription: 'Prueba animaciones y consulta el Design System.',
@@ -24,11 +21,6 @@ export const TRANSLATIONS = {
     langSelect: 'Idioma',
     loadingLabel: 'Cargando el contenido de la página...',
     splashLine: 'Bienvenidxs, ¡Soy Andur!',
-    splashPhrases: [
-      'Soy Product Designer evolucionando hacia Design Engineering',
-      'Llevo más de 7 años diseñando productos SaaS, fintech e IA',
-      'Transformo problemas complejos en productos digitales claros',
-    ],
     heroPhrases: [
       'Me apasiona construir sistemas vivos que evolucionen constantemente',
       'Actualmente, me especializo en diseñar productos SaaS, fintech e IA',
@@ -97,10 +89,8 @@ export const TRANSLATIONS = {
   },
   en: {
     brandName: 'Portfolio',
-    navProjects: 'Work',
     navAbout: 'About',
-    navFaq: 'FAQ',
-    navContact: 'Connect',
+    navCv: 'Resume',
     labTitle: 'Laboratory',
     labDescription: 'Try animations and open the Design System.',
     labDesignSystem: 'Design System Docs',
@@ -113,11 +103,6 @@ export const TRANSLATIONS = {
     langSelect: 'Language',
     loadingLabel: 'Loading the page content...',
     splashLine: "Welcome, I'm Andur!",
-    splashPhrases: [
-      'I’m a Product Designer evolving into Design Engineering',
-      'I’ve spent 7+ years designing SaaS, fintech, and AI products',
-      'I turn complex problems into clear digital products',
-    ],
     heroPhrases: [
       'I’m passionate about building living systems that keep evolving',
       'I currently specialize in designing SaaS, fintech, and AI products',
@@ -183,7 +168,6 @@ export const TRANSLATIONS = {
     approachTitle: 'Philosophy',
     approachIntro: 'The best products are born from understanding, collaborating, and evolving.',
     processTitle: 'Process',
-    navCv: 'Resume',
   }
 };
 
