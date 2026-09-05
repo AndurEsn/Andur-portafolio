@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, FlaskConical, Layers, Tag } from 'lucide-react';
+import { Sun, Moon, FlaskConical, Layers, Tag, Download } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Theme, AppState, EntranceAnimation, Language } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
@@ -59,10 +59,8 @@ export default function Header({
 }: HeaderProps) {
   const t = TRANSLATIONS[language];
   const [isLabOpen, setIsLabOpen] = useState(false);
-  const [isLangOpen, setIsLangOpen] = useState(false);
   
   const labRef = useRef<HTMLDivElement>(null);
-  const langRef = useRef<HTMLDivElement>(null);
 
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -73,7 +71,6 @@ export default function Header({
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
         setIsVisible(false);
         setIsLabOpen(false);
-        setIsLangOpen(false);
       } else {
         setIsVisible(true);
       }
@@ -112,9 +109,6 @@ export default function Header({
       if (labRef.current && !labRef.current.contains(target)) {
         setIsLabOpen(false);
       }
-      if (langRef.current && !langRef.current.contains(target)) {
-        setIsLangOpen(false);
-      }
     }
     document.addEventListener('pointerdown', handlePointerOutside);
     return () => document.removeEventListener('pointerdown', handlePointerOutside);
@@ -124,9 +118,8 @@ export default function Header({
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  const handleLanguageChange = (lang: Language) => {
-    setLanguage(lang);
-    setIsLangOpen(false);
+  const toggleLanguage = () => {
+    setLanguage(language === 'es' ? 'en' : 'es');
   };
 
   const navTabs = PAGE_NAV.map((item) => ({ id: item.id, label: t[item.titleKey] }));
@@ -136,7 +129,6 @@ export default function Header({
     { value: 'scale', label: 'Scale In' },
   ];
   const dropdownPanelClass = 'fixed left-3 right-3 top-[calc(var(--header-row)+0.5rem)] z-50 flex max-h-[min(70dvh,calc(100dvh-5.5rem))] w-auto flex-col gap-2 overflow-y-auto rounded-2xl border border-border bg-surface-lowest p-3 shadow-2xl animate-[fadeIn_0.2s_ease-out] sm:absolute sm:left-auto sm:right-0 sm:top-auto sm:mt-2 sm:max-h-[min(70dvh,calc(100dvh-5.5rem))] sm:w-[min(22rem,calc(100vw-1.5rem))]';
-  const languageDropdownPanelClass = 'absolute right-0 mt-2 w-32 max-w-[calc(100vw-1.5rem)] bg-surface-lowest border border-border rounded-2xl p-2.5 shadow-2xl z-50 flex flex-col gap-1.5 animate-[fadeIn_0.2s_ease-out]';
   const dropdownItemClass = 'w-full h-10 px-3 rounded-xl text-xs font-bold text-left text-on-surface-variant hover:bg-surface-low hover:text-on-surface transition-all flex items-center gap-2 cursor-pointer';
 
   const scrollToSection = (id: string) => {
@@ -148,7 +140,6 @@ export default function Header({
 
   const handleBrandClick = () => {
     setIsLabOpen(false);
-    setIsLangOpen(false);
     onNavigateToHero();
   };
 
@@ -172,52 +163,24 @@ export default function Header({
         {/* Action Blocks */}
         <div className="flex items-center gap-1.5 sm:gap-3">
           
-          {/* 1. LANGUAGE SELECTOR WITH FLAGS */}
-          <div ref={langRef} className="relative">
-            <button
-              onClick={() => {
-                setIsLangOpen((open) => !open);
-                setIsLabOpen(false);
-              }}
-              className="p-2 h-10 w-10 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center justify-center cursor-pointer active:scale-95"
-              title={t.langSelect}
-              aria-label={t.langSelect}
-              aria-expanded={isLangOpen}
-            >
-              <span className="text-base leading-none" aria-hidden="true">{language === 'es' ? '🇲🇽' : '🇺🇸'}</span>
-            </button>
-
-            {isLangOpen && (
-              <div className={languageDropdownPanelClass}>
-                <button
-                  onClick={() => handleLanguageChange('es')}
-                  className={`${dropdownItemClass} ${
-                    language === 'es' ? 'bg-primary/10 text-primary' : ''
-                  }`}
-                >
-                  <span className="text-base">🇲🇽</span>
-                  <span>Español</span>
-                </button>
-                <button
-                  onClick={() => handleLanguageChange('en')}
-                  className={`${dropdownItemClass} ${
-                    language === 'en' ? 'bg-primary/10 text-primary' : ''
-                  }`}
-                >
-                  <span className="text-base">🇺🇸</span>
-                  <span>English</span>
-                </button>
-              </div>
-            )}
-          </div>
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="p-2 h-10 w-10 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center justify-center cursor-pointer active:scale-95"
+            title={t.langSelect}
+            aria-label={t.langSelect}
+          >
+            <span className="text-base leading-none" aria-hidden="true">{language === 'es' ? '🇲🇽' : '🇺🇸'}</span>
+          </button>
 
           <a
             href={CV_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-10 items-center rounded-xl px-3 text-xs font-bold text-on-surface-variant transition-all hover:bg-surface-container hover:text-on-surface active:scale-95 cursor-pointer"
+            className="flex h-10 items-center gap-1.5 rounded-xl px-3 text-xs font-bold text-on-surface-variant transition-all hover:bg-surface-container hover:text-on-surface active:scale-95 cursor-pointer"
             aria-label={language === 'es' ? 'Ver CV, se abre en una pestaña nueva' : 'View resume, opens in a new tab'}
           >
+            <Download className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
             {t.navCv}
           </a>
 
@@ -226,7 +189,6 @@ export default function Header({
             <button
               onClick={() => {
                 setIsLabOpen((open) => !open);
-                setIsLangOpen(false);
               }}
               className="h-10 px-3 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-1.5 active:scale-95 text-xs font-bold cursor-pointer"
               title={t.labTitle}
@@ -322,7 +284,8 @@ export default function Header({
     </header>
 
     {/* 5. FLOATING SECTION TABS - Visible on tablet/desktop, hidden on mobile */}
-    {appState === 'normal' && <div 
+    {appState === 'normal' && <div
+      id="section-tabs" 
       className={`fixed left-0 right-0 z-30 hidden h-12 items-center justify-center border-b border-border bg-surface-lowest/90 backdrop-blur-md transition-all duration-300 sm:flex ${
         isVisible ? 'top-16' : 'top-0'
       }`}

@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, BadgeCheck, CodeXml, Eye, PenLine, ScanSearch, Waypoints } from 'lucide-react';
+import { BadgeCheck, CodeXml, Eye, PenLine, ScanSearch, Waypoints } from 'lucide-react';
 import BrandGlyph from '../ui/BrandGlyph';
 import { Language, ProcessStepIcon } from '../../types';
 import { PROCESS_STEPS, TRANSLATIONS } from '../../content/data';
@@ -37,33 +37,25 @@ export default function Process({ language }: ProcessProps) {
         role="region"
         aria-labelledby="tour-title-process"
       >
-        <ol className="flex flex-col md:w-max md:min-w-full md:flex-row md:items-start">
+        <ol className="flex flex-col items-center md:min-w-full md:flex-row md:items-stretch">
           {steps.map((step, index) => {
             const isLast = index === steps.length - 1;
 
             return (
-              <li
-                key={step.number}
-                className={`flex flex-col md:flex-row md:items-start ${isLast ? 'md:flex-none' : 'md:flex-1'}`}
-              >
-                <div className="flex items-center gap-4 md:w-24 md:shrink-0 md:flex-col md:items-center md:gap-3 md:text-center">
-                  <BrandGlyph icon={STEP_ICONS[step.icon]} shape="circle" />
-                  <div className="min-w-0">
-                    <span className="text-xs font-bold tracking-widest text-primary">{step.number}</span>
-                    <h3 className="text-sm font-black tracking-tight text-on-surface sm:text-base">
-                      {step.title}
-                    </h3>
-                  </div>
-                </div>
+              <li key={step.number} className="flex w-full max-w-xs flex-col items-center md:contents">
+                <article className="flex w-full flex-col items-center rounded-xl border border-border bg-surface-lowest px-3 py-4 text-center md:min-w-0 md:flex-1">
+                  <BrandGlyph icon={STEP_ICONS[step.icon]} />
+                  <span className="mt-3 text-[11px] font-bold tracking-widest text-primary">{step.number}</span>
+                  <h3 className="text-sm font-black tracking-tight text-on-surface sm:text-base">
+                    {step.title}
+                  </h3>
+                </article>
 
                 {isLast ? null : (
                   <div
                     aria-hidden="true"
-                    className="relative ml-6 h-10 w-px bg-border md:ml-0 md:mt-6 md:h-px md:min-w-8 md:flex-1 md:self-start"
-                  >
-                    <ArrowDown className="absolute -bottom-1.5 left-1/2 h-3.5 w-3.5 -translate-x-1/2 bg-background text-on-surface-variant md:hidden" />
-                    <ArrowRight className="absolute -right-1.5 top-1/2 hidden h-3.5 w-3.5 -translate-y-1/2 bg-background text-on-surface-variant md:block" />
-                  </div>
+                    className="h-8 w-px shrink-0 bg-border md:h-px md:w-3 md:self-center"
+                  />
                 )}
               </li>
             );

@@ -252,7 +252,7 @@ export default function App() {
               </LandingReveal>
 
               {/* Portfolio section with filters & modal */}
-              <LandingReveal animation={entranceAnimation}><Portfolio language={language} /></LandingReveal>
+              <LandingReveal animation={entranceAnimation}><Portfolio language={language} theme={theme} /></LandingReveal>
 
               {/* Contact section */}
               <LandingReveal animation={entranceAnimation}><Contact language={language} /></LandingReveal>
