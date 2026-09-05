@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Montserrat:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -19,6 +19,7 @@
   --surface-highest: #e2e2e2;
   --card-bg: #ffffff;
   --font-inter: "Inter", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
   --error: #BA1A1A;
   --on-error: #FFFFFF;
   --error-container: #FFDAD6;
@@ -44,6 +45,11 @@
 html {
   scroll-padding-top: calc(var(--header-row) + var(--tabs-h));
   color-scheme: light;
+}
+
+html.project-modal-open header.fixed,
+html.project-modal-open #section-tabs {
+  display: none !important;
 }
 
 .dark {
@@ -164,6 +170,7 @@ html {
   --color-success-container: var(--success-container);
   --color-on-success-container: var(--on-success-container);
   --font-sans: var(--font-inter);
+  --font-montserrat: "Montserrat", sans-serif;
   --spacing-section: var(--section-y);
 }
 

@@ -8,10 +8,14 @@ export interface ProjectImpactStat {
 export interface ProjectProcessStep {
   number: string;
   title: string;
+  label?: string;
   duration?: string;
   body: string;
   items?: string[];
   closing?: string;
+  image?: string;
+  imageDark?: string;
+  imageAlt?: string;
 }
 
 export interface ProjectSection {
@@ -19,21 +23,25 @@ export interface ProjectSection {
   title: string;
   subtitle?: string;
   body?: string;
+  detailBody?: string;
   items?: string[];
   closing?: string;
   steps?: ProjectProcessStep[];
   stats?: ProjectImpactStat[];
+  detailOnly?: boolean;
 }
 
 export interface Project {
   id: string;
   title: string;
-  subtitle: string;
-  eyebrow: string;
+  subtitle?: string;
+  eyebrow?: string;
+  logo?: string;
   category: ProjectCategory;
   description: string;
   intro: string;
   image: string;
+  cardTitle?: string;
   role: string;
   impact: string;
   impactStats: ProjectImpactStat[];
