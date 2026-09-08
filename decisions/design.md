@@ -1,6 +1,6 @@
 # Diseño y experiencia
 
-Última revisión: 2026-09-03. Tokens: `src/styles/index.css`. Layout vigente: `state/current.md`.
+Última revisión: 2026-09-08. Tokens: `src/styles/index.css`. Layout vigente: `state/current.md`.
 
 ## Lenguaje visual
 
@@ -27,6 +27,7 @@
 - Laboratorio: animaciones, Design System, versión. En móvil el menú va de borde a borde con margen.
 - Proceso: bloques (`rounded-xl` + borde) del mismo ancho, centrados; en fila desde `md`. Cada paso lleva su `BrandGlyph`.
 - Proyectos: la card es cover (`object-cover object-center`) sin overlay oscuro; icono de expandir (hover / foco; visible si no hay hover, p. ej. táctil). El `title` del modal puede ser distinto.
+- Caso Supervisor: comparaciones before/after en el paso de validación (`BeforeAfterSlider`). Con hover, el corte sigue el cursor; en táctil se arrastra; teclado con flechas. `prefers-reduced-motion` deja el corte en 50% hasta que hay arrastre o teclado. El toggle sticky del modal (`z-20 isolate`) queda por encima de los sliders al hacer scroll.
 
 ## Estados
 

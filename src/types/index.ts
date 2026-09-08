@@ -5,6 +5,13 @@ export interface ProjectImpactStat {
   label: string;
 }
 
+export interface ProjectImageComparison {
+  before: string;
+  after: string;
+  alt: string;
+  caption?: string;
+}
+
 export interface ProjectProcessStep {
   number: string;
   title: string;
@@ -16,6 +23,8 @@ export interface ProjectProcessStep {
   image?: string;
   imageDark?: string;
   imageAlt?: string;
+  imageFlush?: boolean;
+  comparisons?: ProjectImageComparison[];
 }
 
 export interface ProjectSection {
