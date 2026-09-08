@@ -7,6 +7,7 @@ import { Calendar, Shield, Cpu, Maximize2 } from 'lucide-react';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
 import useModalDismiss from '../../hooks/useModalDismiss';
 import ModalCloseButton from '../ui/ModalCloseButton';
+import BeforeAfterSlider from '../ui/BeforeAfterSlider';
 
 interface PortfolioProps {
   language: Language;
@@ -77,11 +78,15 @@ function CaseProcessStep({
   detailed,
   isLast,
   theme,
+  beforeLabel,
+  afterLabel,
 }: {
   step: ProjectProcessStep;
   detailed: boolean;
   isLast: boolean;
   theme: Theme;
+  beforeLabel: string;
+  afterLabel: string;
 }) {
   const numeral = step.number.replace(/^0/, '');
   const stepImage = theme === 'dark' && step.imageDark ? step.imageDark : step.image;
@@ -103,11 +108,27 @@ function CaseProcessStep({
           {detailed ? <RichText text={step.body} /> : <RichText text={step.body.split('\n\n')[0]} />}
           {detailed && step.items ? <BulletList items={step.items} /> : null}
           {detailed && step.closing ? <RichText text={step.closing} /> : null}
+          {step.comparisons?.map((comparison) => (
+            <div key={`${comparison.before}-${comparison.after}`}>
+              <BeforeAfterSlider
+                before={comparison.before}
+                after={comparison.after}
+                alt={comparison.alt}
+                caption={comparison.caption}
+                beforeLabel={beforeLabel}
+                afterLabel={afterLabel}
+              />
+            </div>
+          ))}
           {stepImage ? (
             <img
               src={stepImage}
               alt={step.imageAlt ?? ''}
-              className="mt-1 w-full rounded-xl border border-border object-contain"
+              className={
+                step.imageFlush
+                  ? 'mt-1 block w-full'
+                  : 'mt-1 w-full rounded-xl border border-border object-contain'
+              }
             />
           ) : null}
         </div>
@@ -120,10 +141,14 @@ function CaseSection({
   section,
   detailed,
   theme,
+  beforeLabel,
+  afterLabel,
 }: {
   section: ProjectSection;
   detailed: boolean;
   theme: Theme;
+  beforeLabel: string;
+  afterLabel: string;
 }): React.ReactElement | null {
   if (!detailed && section.detailOnly) return null;
 
@@ -168,6 +193,8 @@ function CaseSection({
                 detailed={detailed}
                 isLast={index === allSteps.length - 1}
                 theme={theme}
+                beforeLabel={beforeLabel}
+                afterLabel={afterLabel}
               />
             </div>
           ))}
@@ -317,7 +344,7 @@ export default function Portfolio({ language, theme }: PortfolioProps) {
                   />
                 </div>
 
-                <div className="sticky top-0 z-10 flex justify-center bg-surface-lowest/95 py-3 backdrop-blur-md">
+                <div className="sticky top-0 z-20 isolate flex justify-center bg-surface-lowest/95 py-3 backdrop-blur-md">
                   <div
                     className="flex w-[240px] rounded-full border border-border bg-surface-low p-1"
                     role="group"
@@ -399,7 +426,13 @@ export default function Portfolio({ language, theme }: PortfolioProps) {
 
                 {activeProject.sections.map((section) => (
                   <div key={section.id}>
-                    <CaseSection section={section} detailed={detailed} theme={theme} />
+                    <CaseSection
+                      section={section}
+                      detailed={detailed}
+                      theme={theme}
+                      beforeLabel={t.modalCompareBefore}
+                      afterLabel={t.modalCompareAfter}
+                    />
                   </div>
                 ))}
 
