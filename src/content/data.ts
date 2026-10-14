@@ -23,7 +23,7 @@ export const TRANSLATIONS = {
     splashLine: 'Bienvenidxs, ¡Soy Andur!',
     heroPhrases: [
       'Me apasiona construir sistemas vivos que evolucionen constantemente',
-      'Actualmente, me especializo en diseñar productos SaaS, fintech e IA',
+      'Me especializo en diseñar productos SaaS, fintech e IA',
       'Creo experiencias únicas que conectan de forma genuina con las personas',
     ],
     splashHint: 'Haz clic o desplázate para continuar',
@@ -109,7 +109,7 @@ export const TRANSLATIONS = {
     splashLine: "Welcome, I'm Andur!",
     heroPhrases: [
       'I’m passionate about building living systems that keep evolving',
-      'I currently specialize in designing SaaS, fintech, and AI products',
+      'I specialize in designing SaaS, fintech, and AI products',
       'I create unique experiences that connect genuinely with people',
     ],
     splashHint: 'Click or scroll to continue',
@@ -129,7 +129,7 @@ export const TRANSLATIONS = {
     modalDuration: 'Duration',
     modalImpact: 'Impact',
     modalDetail: 'Detailed',
-    modalBrief: 'Brief',
+    modalBrief: 'TL:DR',
     modalSummary: 'Project Summary',
     modalTools: 'Tools and skills',
     modalClose: 'Close',
@@ -188,26 +188,26 @@ export const METRICS = (lang: 'es' | 'en'): Metric[] => [
 export const APPROACH_STAGES = (lang: 'es' | 'en'): ApproachStage[] => [
   {
     number: '01',
-    title: lang === 'es' ? 'Entender para Diseñar' : 'Understand to Design',
+    title: lang === 'es' ? 'Entender para Definir' : 'Understand to Define',
     description: lang === 'es'
-      ? 'Antes de construir una solución busco entender a las personas, el negocio, el contexto y los alcances técnicos. Una interfaz clara comienza con un problema bien definido.'
-      : 'Before building a solution I seek to understand people, the business, the context, and the technical constraints. A clear interface starts with a well-defined problem.',
+      ? 'Antes de construir una solución busco entender a las personas, el negocio, el contexto y los alcances técnicos.'
+      : 'Before building a solution I seek to understand people, the business, the context, and the technical constraints.',
     icon: 'understand',
   },
   {
     number: '02',
     title: lang === 'es' ? 'Colaborar para Decidir' : 'Collaborate to Decide',
     description: lang === 'es'
-      ? 'Colaborar con diferentes áreas ayuda a descubrir nuevas ideas, reducir supuestos, priorizar y tomar decisiones compartidas. La comunicación es una habilidad indispensable para construir mejores productos.'
-      : 'Collaborating with different teams helps uncover new ideas, reduce assumptions, prioritize, and make shared decisions. Communication is an essential skill for building better products.',
+      ? 'La comunicación constante con diferentes áreas es indispensable para descubrir nuevas ideas, reducir supuestos, priorizar y tomar decisiones compartidas para construir mejores productos.'
+      : 'Constant communication with different teams is essential to uncover new ideas, reduce assumptions, prioritize, and make shared decisions to build better products.',
     icon: 'collaborate',
   },
   {
     number: '03',
     title: lang === 'es' ? 'Iterar para Evolucionar' : 'Iterate to Evolve',
     description: lang === 'es'
-      ? 'Es importante medir, validar e iterar constantemente interfaces y sistemas de diseño para mejorar la experiencia de usuario. Un producto evoluciona constantemente con los usuarios, el negocio y la tecnología.'
-      : 'It is important to constantly measure, validate, and iterate interfaces and design systems to improve the user experience. A product constantly evolves with users, the business, and technology.',
+      ? 'Para que un producto evolucione, es necesario medir, validar y optimizar constantemente los flujos y sistemas de diseño para mejorar la experiencia de usuario.'
+      : 'For a product to evolve, it is necessary to constantly measure, validate, and optimize flows and design systems to improve the user experience.',
     icon: 'iterate',
   },
 ];

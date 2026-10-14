@@ -63,8 +63,8 @@ export function grillProject(lang: Language): Project {
         id: 'problem',
         title: es ? 'Problema' : 'Problem',
         detailBody: es
-          ? 'Los productos de Yaydoo habían evolucionado con diferentes estilos de interfaces. Componentes como botones, inputs, estados y espaciados podían verse o comportarse de forma distinta dependiendo del producto.'
-          : 'Yaydoo’s products had evolved with different interface styles. Components such as buttons, inputs, states, and spacing could look or behave differently depending on the product.',
+          ? 'Los productos de Yaydoo habían evolucionado con diferentes estilos de interfaces. Componentes como botones, inputs, estados y espaciados podían verse o comportarse de forma distinta dependiendo del producto.\n\nEl reto era crear una base compartida y escalable que unificara la experiencia, redujera el trabajo repetitivo y facilitara y acelerara la creación de nuevas interfaces entre los productos de Yaydoo.'
+          : 'Yaydoo’s products had evolved with different interface styles. Components such as buttons, inputs, states, and spacing could look or behave differently depending on the product.\n\nThe challenge was to create a shared, scalable foundation that would unify the experience, reduce repetitive work, and make it easier and faster to create new interfaces across Yaydoo’s products.',
         body: es
           ? 'El reto era crear una base compartida y escalable que unificara la experiencia, redujera el trabajo repetitivo y facilitara y acelerara la creación de nuevas interfaces entre los productos de Yaydoo.'
           : 'The challenge was to create a shared, scalable foundation that would unify the experience, reduce repetitive work, and make it easier and faster to create new interfaces across Yaydoo’s products.'
