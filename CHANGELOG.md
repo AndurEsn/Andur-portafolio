@@ -4,6 +4,17 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-14
+
+### Added
+
+- Caso **Framework para agentes de voz con IA** (Leracom AI): cover, modal bilingüe, impacto y herramientas.
+
+### Changed
+
+- Copy de Principios, frase rotativa de especialización y toggle **TL:DR** en inglés.
+- Imágenes de secciones del caso Supervisor AI.
+
 ## [2.0.0] - 2026-09-02
 
 ### Added
@@ -56,7 +67,8 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 - Tema claro/oscuro, tour, Laboratorio, Design System y NPS.
 - Secciones Hero, Métricas, Trayectoria, Proyectos, Contacto y FAQ.
 
-[Unreleased]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/AndurEsn/Andur-portafolio/releases/tag/v1.0.0

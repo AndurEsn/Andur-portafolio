@@ -163,7 +163,7 @@ function CaseSection({
         ) : null}
       </div>
       {detailed && section.detailBody ? <RichText text={section.detailBody} /> : null}
-      {section.body ? (
+      {section.body && !(detailed && section.detailBody) ? (
         <RichText text={detailed || section.detailBody ? section.body : section.body.split('\n\n')[0]} />
       ) : null}
       {section.stats ? <ImpactStats stats={section.stats} /> : null}
