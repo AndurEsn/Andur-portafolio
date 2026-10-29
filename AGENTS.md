@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Portafolio SPA bilingüe (ES/EN) de Andur, Product Designer. React 19, TypeScript, Vite 6, Tailwind 4, Motion, Lucide. Temas claro/oscuro, Laboratorio, Design System y estados `splash | loading | normal | error`.
+Portafolio SPA bilingüe (ES/EN) de Andur, Product Designer. React 19, TypeScript, Vite 6, Tailwind 4, Motion, Lucide. Temas claro/oscuro, Design System y estados `loading | normal | error`.
 
 ## Lectura
 
@@ -32,7 +32,7 @@ Títulos, nav/footer y frases rotativas: `.cursor/rules/section-titles.mdc` (sie
 
 ## DoD
 
-El pedido funciona sin ampliar alcance; `npm run lint` y `npm run build`; si cambió UI: claro/oscuro, ES/EN, móvil/escritorio y teclado; `state/current.md` al día; decisiones duraderas en `decisions/`.
+El pedido funciona sin ampliar alcance. ES/EN en el diff. `npm run lint` (y `build` al cerrar el lote). UI: `skills/workflows.md` → UI. `state/current.md` al día; decisiones duraderas en `decisions/`.
 
 ## Punteros
 

@@ -16,10 +16,10 @@ Tres superficies, mismo nombre, ambos idiomas: el `h2`, el tab de scroll-to y el
 
 Al crear, renombrar o borrar la sección, actualizar las tres, el `id` y `src/config/nav.ts`.
 
-Usar la misma clave de copy para `h2` y nav/footer: `approachTitle`, `processTitle`, `portfolioTitle`, `contactTitle`, `faqTitle`.
+Usar la misma clave de copy para `h2` y nav/footer: `approachTitle`, `processTitle`, `portfolioTitle`, `faqTitle`.
 
-Excepciones: el hero usa `h1` (`splashLine`); su tab es `navAbout` (`Sobre mí` / `About`). El CV no es sección de página.
+Excepciones: el hero usa `h1` (`splashLine`); el logo del pill hace scroll al hero (no hay tab `Sobre mí`). El CV y el contacto (LinkedIn, correo, WhatsApp) no son secciones de página.
 
 ## Frases rotativas
 
-Una lista: `heroPhrases`. Splash y hero la consumen. No reintroducir `splashPhrases`. `splashLine` (saludo) es independiente.
+`splashLine` (saludo) es independiente. El hero usa `heroTagline` estático; no reintroducir `splashPhrases` ni carrusel en el hero.

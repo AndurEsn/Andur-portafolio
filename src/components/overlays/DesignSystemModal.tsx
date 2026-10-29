@@ -115,10 +115,6 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
                 </div>
               ))}
             </div>
-            <div className="splash-bg flex h-24 flex-col justify-between rounded-2xl border border-border p-4 text-on-surface">
-              <span className="text-xs font-bold">{t.dsPaletteSplash}</span>
-              <span className="font-mono text-[10px] text-on-surface-variant">165deg · primary → primary-bg → background</span>
-            </div>
           </section>
 
           <section className="space-y-3">
@@ -126,16 +122,19 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
             <p className="typo-overlay-body">{t.dsTypographyDesc}</p>
             <div className="space-y-4 rounded-2xl border border-border bg-surface-low p-5">
               {[
-                { token: 'display large', className: 'text-3xl font-black tracking-tight text-on-surface', sample: 'Aa Bb Cc' },
-                { token: 'heading medium', className: 'text-xl font-extrabold text-on-surface', sample: 'Typography scale' },
-                { token: 'body standard', className: 'text-sm leading-relaxed text-on-surface-variant', sample: 'Lorem ipsum dolor sit amet.' },
-                { token: 'modal title', className: 'typo-modal-title', sample: 'Aa Bb Cc' },
-                { token: 'modal subtitle', className: 'typo-modal-subtitle mt-0', sample: 'Subtitle copy' },
-                { token: 'overlay heading', className: 'typo-overlay-heading', sample: 'Section title' },
-                { token: 'overlay body', className: 'typo-overlay-body', sample: 'Lorem ipsum dolor sit amet.' },
+                { token: '--font-display-large', rem: '2.75rem', className: 'typo-display-large', sample: 'Aa Bb Cc' },
+                { token: 'heading medium', rem: '1.25rem', className: 'text-xl font-extrabold text-on-surface', sample: 'Typography scale' },
+                { token: 'body standard', rem: '0.875rem', className: 'text-sm leading-relaxed text-on-surface-variant', sample: 'Lorem ipsum dolor sit amet.' },
+                { token: 'modal title', rem: '1.25rem · 1.5rem sm', className: 'typo-modal-title', sample: 'Aa Bb Cc' },
+                { token: 'modal subtitle', rem: '0.75rem · 0.875rem sm', className: 'typo-modal-subtitle mt-0', sample: 'Subtitle copy' },
+                { token: 'overlay heading', rem: '0.875rem', className: 'typo-overlay-heading', sample: 'Section title' },
+                { token: 'overlay body', rem: '0.75rem', className: 'typo-overlay-body', sample: 'Lorem ipsum dolor sit amet.' },
               ].map((row) => (
-                <div key={row.token} className="flex flex-col gap-1 border-b border-border/40 pb-2 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                  <span className="shrink-0 font-mono text-[10px] text-muted">{row.token}</span>
+                <div key={row.token} className="flex flex-col gap-1 border-b border-border/40 pb-3 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                  <span className="shrink-0 font-mono text-[10px] text-muted">
+                    {row.token}
+                    <span className="mt-0.5 block">{row.rem}</span>
+                  </span>
                   <span className={`min-w-0 break-words sm:text-right ${row.className}`}>{row.sample}</span>
                 </div>
               ))}
@@ -266,8 +265,8 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
             <h4 className="typo-overlay-heading">{t.dsTooltipTitle}</h4>
             <p className="typo-overlay-body">{t.dsTooltipDesc}</p>
             <div className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface-low p-3 text-xs font-bold text-on-surface">
-              <span>{t.labAnimation}</span>
-              <InfoTooltip label={t.labAnimationHelpLabel} placement="top" align="left">{t.dsTooltipExample}</InfoTooltip>
+              <span>{t.dsTooltipTitle}</span>
+              <InfoTooltip label={t.dsTooltipTitle} placement="top" align="left">{t.dsTooltipExample}</InfoTooltip>
             </div>
           </section>
 

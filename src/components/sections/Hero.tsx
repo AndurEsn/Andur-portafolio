@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { ZoomIn, ZoomOut } from 'lucide-react';
+import { Download, Linkedin, Mail, ZoomIn, ZoomOut } from 'lucide-react';
 import { HeroContent, Language, Metric } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
+import { CONTACT_EMAIL, CONTACT_LINKEDIN, CONTACT_WHATSAPP } from '../../config/contact';
+import { CV_HREF } from '../../config/cv';
 import useBodyScrollLock from '../../hooks/useBodyScrollLock';
 import useModalDismiss from '../../hooks/useModalDismiss';
 import ModalCloseButton from '../ui/ModalCloseButton';
-import RotatingPhrases from '../effects/RotatingPhrases';
 
 interface HeroProps {
   language: Language;
@@ -37,18 +38,50 @@ export default function Hero({ language, content, metrics }: HeroProps) {
           <h1 id="tour-title-hero" className="text-balance text-base font-semibold leading-snug tracking-tight text-on-surface-variant sm:text-xl">
             {t.splashLine}
           </h1>
-          <RotatingPhrases phrases={t.heroPhrases} align="hero" />
-
-          <ul className="mt-6 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
-            {t.heroRoles.map((role) => (
-              <li
-                key={role}
-                className="inline-flex h-9 items-center rounded-full border border-border bg-surface-low px-3 text-xs font-bold text-on-surface"
+          <p className="typo-display-large mt-4 w-auto max-w-3xl text-balance sm:mt-5">
+            {t.heroTagline}
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+            <a
+              href={CV_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-white transition-all hover:bg-primary-hover active:scale-[0.98] cursor-pointer"
+              aria-label={language === 'es' ? 'Descargar CV, se abre en una pestaña nueva' : 'Download resume, opens in a new tab'}
+            >
+              <Download className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
+              {t.heroCvCta}
+            </a>
+            <div className="flex items-center gap-2">
+              <a
+                href={CONTACT_LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface-lowest text-on-surface transition-all hover:bg-surface-high hover:text-primary active:scale-[0.98] cursor-pointer"
+                aria-label={language === 'es' ? 'LinkedIn, se abre en una pestaña nueva' : 'LinkedIn, opens in a new tab'}
               >
-                {role}
-              </li>
-            ))}
-          </ul>
+                <Linkedin className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+              </a>
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface-lowest text-on-surface transition-all hover:bg-surface-high hover:text-primary active:scale-[0.98] cursor-pointer"
+                aria-label={language === 'es' ? 'Enviar correo' : 'Send email'}
+              >
+                <Mail className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+              </a>
+              <a
+                href={CONTACT_WHATSAPP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface-lowest text-on-surface transition-all hover:bg-surface-high hover:text-primary active:scale-[0.98] cursor-pointer"
+                aria-label={language === 'es' ? 'WhatsApp, se abre en una pestaña nueva' : 'WhatsApp, opens in a new tab'}
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24m-5.46 4.27c-.17 0-.45.06-.68.31-.24.24-.9.88-.9 2.15s.92 2.5 1.05 2.67c.12.17 1.81 2.76 4.37 3.87 2.13.92 2.56.74 3.03.69.46-.05 1.5-.61 1.71-1.2.21-.59.21-1.09.15-1.2-.07-.11-.24-.17-.5-.3-.27-.12-1.57-.78-1.81-.86-.24-.09-.42-.13-.59.13-.17.25-.67.86-.82 1.03-.15.17-.3.2-.56.07-.27-.13-1.12-.41-2.14-1.32-.79-.7-1.32-1.57-1.48-1.84-.15-.26-.02-.4.12-.53.12-.12.27-.31.4-.46.13-.15.17-.26.27-.43.09-.17.04-.32-.02-.45-.07-.12-.59-1.43-.81-1.96-.21-.51-.43-.44-.59-.45h-.5z" />
+                </svg>
+              </a>
+            </div>
+          </div>
 
           <div
             id="tour-step-metrics"

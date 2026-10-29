@@ -6,7 +6,7 @@
 
 - Decisión: mantener una aplicación React/Vite ejecutada enteramente en el navegador.
 - Razón: el portafolio actual es contenido e interacción de presentación; no necesita servidor para renderizar sus funciones existentes.
-- Consecuencias: el contacto es LinkedIn y `mailto:` (sin formulario ni envío). Cualquier CMS, analítica, autenticación o envío de datos exige diseñar backend, privacidad y manejo de errores.
+- Consecuencias: el contacto es LinkedIn, `mailto:` y `wa.me` en el hero (sin formulario ni envío). Cualquier CMS, analítica, autenticación o envío de datos exige diseñar backend, privacidad y manejo de errores.
 
 ## ADR-002 — Estado de página centralizado en `App`
 
@@ -34,13 +34,13 @@
 
 ## ADR-008 — 404 y carga inicial reales
 
-- Decisión: la única ruta válida es `/`. Cualquier otra pathname muestra `ErrorState`. La carga inicial muestra el campo de puntos con una ola de hover de 1 s y un indicador central; antes hay un splash de 2 s.
-- Razón: los toggles de Laboratorio simulaban esos estados y no coincidían con el comportamiento de producción.
-- Consecuencias: si la carga termina antes de 1 s, la ola permanece hasta completar ese tiempo; si tarda más, permanece hasta que el contenido esté listo. Con `prefers-reduced-motion` se omiten splash, ola y el mínimo de 1 s. El hosting debe servir `index.html` para rutas desconocidas (fallback SPA).
+- Decisión: la única ruta válida es `/`. Cualquier otra pathname muestra `ErrorState`. La carga inicial muestra el campo de puntos con una ola de hover de 1 s y un indicador central.
+- Razón: esos estados coinciden con el comportamiento de producción.
+- Consecuencias: si la carga termina antes de 1 s, la ola permanece hasta completar ese tiempo; si tarda más, permanece hasta que el contenido esté listo. Con `prefers-reduced-motion` se omiten ola y el mínimo de 1 s. El hosting debe servir `index.html` para rutas desconocidas (fallback SPA).
 
 ## ADR-009 — Tema según sistema, con override manual
 
-- Decisión: el tema inicial sigue `prefers-color-scheme`. Un cambio manual se guarda en `localStorage` bajo `andur-theme` y deja de seguir al sistema. Un script en `index.html` aplica la clase `dark` antes de React para evitar un flash en el splash.
-- Razón: el splash y la página deben coincidir con el sistema desde el primer frame, y el usuario debe poder forzar claro u oscuro.
+- Decisión: el tema inicial sigue `prefers-color-scheme`. Un cambio manual se guarda en `localStorage` bajo `andur-theme` y deja de seguir al sistema. Un script en `index.html` aplica la clase `dark` antes de React para evitar un flash.
+- Razón: la página debe coincidir con el sistema desde el primer frame, y el usuario debe poder forzar claro u oscuro.
 - Consecuencias: borrar `andur-theme` restaura el seguimiento del sistema. No hay opción “Automático” en la UI más allá de no haber elegido a mano.
 

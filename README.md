@@ -11,7 +11,7 @@ Repositorio: [github.com/AndurEsn/Andur-portafolio](https://github.com/AndurEsn/
 - Navegación por secciones y estados reales `normal`, `loading` y `error`.
 - Filtros y modal de casos de estudio.
 - Métricas, trayectoria tipo Gantt, FAQ y Design System documentado.
-- Laboratorio de animaciones y Design System documentado.
+- Design System documentado desde el footer.
 - Contacto por LinkedIn y correo (`mailto:`), más descarga de CV.
 - Soporte para teclado, `prefers-reduced-motion` y nombres accesibles.
 
@@ -41,7 +41,7 @@ La aplicación se sirve por defecto en [http://127.0.0.1:3000](http://127.0.0.1:
 
 ## Configuración
 
-No hay variables de entorno requeridas. Correo, LinkedIn y GitHub están en `src/config/contact.ts`; el PDF del CV, en `src/config/cv.ts`. Cualquier secreto futuro debe ir en `.env.local`, nunca en archivos versionables.
+No hay variables de entorno requeridas. Correo, LinkedIn, GitHub y WhatsApp están en `src/config/contact.ts`; el PDF del CV, en `src/config/cv.ts`. Cualquier secreto futuro debe ir en `.env.local`, nunca en archivos versionables.
 
 ## Scripts disponibles
 
@@ -83,7 +83,7 @@ Consulta [`contexto/README.md`](contexto/README.md) para navegar la documentaci�
 ## Notas de desarrollo
 
 - No hay backend activo ni persistencia remota.
-- El contacto abre LinkedIn o un enlace `mailto:`; no envía datos por un servicio propio.
+- El contacto abre LinkedIn, `mailto:` o WhatsApp (`wa.me`) desde el hero; no envía datos por un servicio propio.
 - Algunas imágenes de proyectos todavía se cargan desde URLs externas.
 - No existe aún una suite automatizada de pruebas de interacción; la validación actual combina TypeScript, build y revisión manual.
 

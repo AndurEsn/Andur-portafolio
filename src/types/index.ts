@@ -87,12 +87,30 @@ export interface FAQItem {
   };
 }
 
-export type AppState = 'splash' | 'normal' | 'loading' | 'error';
+export type AppState = 'normal' | 'loading' | 'error';
 export type Theme = 'light' | 'dark';
 export type Language = 'es' | 'en';
-export type EntranceAnimation = 'move' | 'fade' | 'scale';
 
 export type ToastVariant = 'default' | 'info' | 'success' | 'error';
+
+export type SkillIcon =
+  | 'layers'
+  | 'compass'
+  | 'users'
+  | 'pen'
+  | 'message'
+  | 'waypoints'
+  | 'rocket'
+  | 'smartphone'
+  | 'layout'
+  | 'prototype'
+  | 'sparkles';
+
+export interface Skill {
+  id: string;
+  label: string;
+  icon: SkillIcon;
+}
 
 export type ApproachStageIcon = 'understand' | 'collaborate' | 'iterate';
 export type ProcessStepIcon = 'understand' | 'research' | 'define' | 'sketch' | 'validate' | 'build';

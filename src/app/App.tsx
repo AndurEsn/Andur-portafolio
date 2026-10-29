@@ -1,19 +1,17 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/layout/Header';
 import Hero from '../components/sections/Hero';
+import SkillsCarousel from '../components/sections/SkillsCarousel';
 import Portfolio from '../components/sections/Portfolio';
-import Contact from '../components/sections/Contact';
+import Approach from '../components/sections/Approach';
+import Process from '../components/sections/Process';
 import FAQ from '../components/sections/FAQ';
 import ErrorState from '../components/feedback/ErrorState';
 import DesignSystemModal from '../components/overlays/DesignSystemModal';
-import LogoCarousel from '../components/sections/LogoCarousel';
-import Approach from '../components/sections/Approach';
-import Process from '../components/sections/Process';
 import LandingParticleField from '../components/effects/LandingParticleField';
-import SplashScreen from '../components/effects/SplashScreen';
 import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
 import andurHero from '../assets/images/andur-hero.png';
-import { Theme, AppState, EntranceAnimation, HeroContent, Language, ToastVariant } from '../types';
+import { Theme, AppState, HeroContent, Language, ToastVariant } from '../types';
 import { AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { METRICS, TRANSLATIONS } from '../content/data';
@@ -21,6 +19,8 @@ import { goHome, isHomePath } from '../config/routes';
 import { applyThemeClass, getSystemTheme, persistTheme, readStoredTheme, resolveTheme } from '../config/theme';
 import { CV_HREF } from '../config/cv';
 import { PAGE_NAV } from '../config/nav';
+import { APP_VERSION } from '../config/version';
+import AndurBrand from '../components/ui/AndurBrand';
 
 const avatarPath = andurHero;
 const INITIAL_LOADING_MS = 1000;
@@ -32,22 +32,17 @@ interface ToastState {
 }
 
 interface LandingRevealProps {
-  animation: EntranceAnimation;
   children: React.ReactNode;
 }
 
-function LandingReveal({ animation, children }: LandingRevealProps) {
+function LandingReveal({ children }: LandingRevealProps) {
   const shouldReduceMotion = useReducedMotion();
   const revealRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(revealRef, { amount: 0.2, once: true, margin: '0px 0px -12% 0px' });
 
   const hidden = shouldReduceMotion
     ? { opacity: 1, y: 0, scale: 1 }
-    : animation === 'move'
-      ? { opacity: 0, y: 32, scale: 1 }
-      : animation === 'scale'
-        ? { opacity: 0, y: 0, scale: 0.94 }
-        : { opacity: 0, y: 0, scale: 1 };
+    : { opacity: 0, y: 32, scale: 1 };
   const visible = { opacity: 1, y: 0, scale: 1 };
 
   return (
@@ -87,9 +82,8 @@ export default function App() {
     applyThemeClass(initial);
     return initial;
   });
-  const [appState, setAppState] = useState<AppState>(() => (isHomePath() ? 'splash' : 'error'));
+  const [appState, setAppState] = useState<AppState>(() => (isHomePath() ? 'loading' : 'error'));
   const [language, setLanguage] = useState<Language>('es');
-  const [entranceAnimation, setEntranceAnimation] = useState<EntranceAnimation>('move');
   const [isDesignSystemOpen, setIsDesignSystemOpen] = useState(false);
   const [toast, setToast] = useState<ToastState | null>(null);
 
@@ -130,10 +124,6 @@ export default function App() {
     return () => window.clearTimeout(timer);
   }, [appState]);
 
-  const handleSplashComplete = useCallback(() => {
-    setAppState('loading');
-  }, []);
-
   // Handle toast notifications helper
   const triggerToast = (message: string, variant: ToastVariant = 'default', title?: string) => {
     setToast({ message, variant, title });
@@ -169,11 +159,6 @@ export default function App() {
     <div className="relative isolate min-h-screen bg-background pb-12 font-sans text-on-surface antialiased transition-colors duration-300">
       <BrandGlyphDefs />
       
-      {appState === 'splash' && (
-        <SplashScreen language={language} onComplete={handleSplashComplete} />
-      )}
-
-      {appState !== 'splash' && (
       <Header
         theme={theme}
         setTheme={(newTheme) => {
@@ -187,14 +172,10 @@ export default function App() {
           setLanguage(lang);
           triggerToast(TRANSLATIONS[lang].toastLanguageChanged);
         }}
-        onOpenDesignSystem={() => setIsDesignSystemOpen(true)}
-        entranceAnimation={entranceAnimation}
-        setEntranceAnimation={setEntranceAnimation}
         onNavigateToHero={navigateToHero}
       />
-      )}
 
-      {appState !== 'error' && appState !== 'splash' && (
+      {appState !== 'error' && (
         <LandingParticleField theme={theme} waveActive={appState === 'loading'} />
       )}
 
@@ -234,31 +215,19 @@ export default function App() {
               transition={{ duration: 0.25 }}
             >
               {/* Hero */}
-              <LandingReveal animation={entranceAnimation}>
+              <LandingReveal>
                 <Hero 
                   language={language} 
                   content={heroContent}
                   metrics={metrics}
                 />
               </LandingReveal>
-              <LandingReveal animation={entranceAnimation}>
-                <LogoCarousel language={language} />
-              </LandingReveal>
-              <LandingReveal animation={entranceAnimation}>
-                <Approach language={language} />
-              </LandingReveal>
-              <LandingReveal animation={entranceAnimation}>
-                <Process language={language} />
-              </LandingReveal>
 
-              {/* Portfolio section with filters & modal */}
-              <LandingReveal animation={entranceAnimation}><Portfolio language={language} theme={theme} /></LandingReveal>
-
-              {/* Contact section */}
-              <LandingReveal animation={entranceAnimation}><Contact language={language} /></LandingReveal>
-
-              {/* Accordion FAQ */}
-              <LandingReveal animation={entranceAnimation}><FAQ language={language} /></LandingReveal>
+              <LandingReveal><SkillsCarousel language={language} /></LandingReveal>
+              <LandingReveal><Portfolio language={language} theme={theme} /></LandingReveal>
+              <LandingReveal><Approach language={language} /></LandingReveal>
+              <LandingReveal><Process language={language} /></LandingReveal>
+              <LandingReveal><FAQ language={language} /></LandingReveal>
             </motion.div>
           )}
         </AnimatePresence>
@@ -268,7 +237,8 @@ export default function App() {
       {appState === 'normal' && (
       <footer className="relative z-10 mx-auto max-w-7xl border-t border-border px-4 pt-8 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 pb-8">
-          <div className="flex flex-col items-center md:items-start gap-1">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <AndurBrand theme={theme} className="h-7 w-auto" />
             <p className="text-xs text-muted text-center md:text-left">
               {t.footerCopyright}
             </p>
@@ -292,6 +262,22 @@ export default function App() {
               aria-label={language === 'es' ? 'Ver CV, se abre en una pestaña nueva' : 'View resume, opens in a new tab'}
             >
               {t.navCv}
+            </a>
+            <button
+              type="button"
+              onClick={() => setIsDesignSystemOpen(true)}
+              className="text-xs font-bold text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+            >
+              {t.labDesignSystem}
+            </button>
+            <a
+              href="https://github.com/AndurEsn/Andur-portafolio/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-primary hover:text-primary-hover transition-colors"
+              aria-label={`${t.labVersion} v${APP_VERSION}. ${t.labVersionLink}`}
+            >
+              v{APP_VERSION}
             </a>
           </nav>
         </div>

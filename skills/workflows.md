@@ -17,9 +17,9 @@
 
 1. `decisions/design.md` + componente dueño.
 2. Tokens y patrones existentes; mobile-first.
-3. Probar normal y, si aplica, loading/error/overlays.
-4. ES/EN, claro/oscuro, móvil/escritorio, teclado, reduced motion.
-5. Lint + build.
+3. ES y EN en el mismo cambio (no abrir el menú de idioma para demostrarlo).
+4. Browser: ir al bloque tocado. Una pasada en el viewport que cambió; el otro ancho solo si el layout pasa de fila a columna. Un tema, salvo que el pedido sea color/tema. Sin recorrer tabs ni FAQ. Matriz completa (claro/oscuro + ES/EN + móvil/escritorio + teclado) solo si el cambio cruza tema, nav o chrome.
+5. `npm run lint` una vez al cerrar. `build` si el lint no cubre el riesgo o es cierre de lote.
 
 ## Bug
 
@@ -31,7 +31,7 @@
 npm run lint && npm run build
 ```
 
-Regenerar `dist/`. UI: anchos representativos. Deploy: hosting SPA, assets, contacto.
+Regenerar `dist/`. UI: ver sección UI (no repetir la matriz). Deploy: hosting SPA, assets, contacto.
 
 ## Cierre
 
