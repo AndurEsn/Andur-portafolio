@@ -122,7 +122,7 @@ export default function DesignSystemModal({ isOpen, onClose, language, theme }: 
             <p className="typo-overlay-body">{t.dsTypographyDesc}</p>
             <div className="space-y-4 rounded-2xl border border-border bg-surface-low p-5">
               {[
-                { token: '--font-display-large', rem: '2.75rem', className: 'typo-display-large', sample: 'Aa Bb Cc' },
+                { token: '--font-display-large', rem: '2.25rem · 2.5 sm · 2.75 lg', className: 'typo-display-large', sample: 'Aa Bb Cc' },
                 { token: 'heading medium', rem: '1.25rem', className: 'text-xl font-extrabold text-on-surface', sample: 'Typography scale' },
                 { token: 'body standard', rem: '0.875rem', className: 'text-sm leading-relaxed text-on-surface-variant', sample: 'Lorem ipsum dolor sit amet.' },
                 { token: 'modal title', rem: '1.25rem · 1.5rem sm', className: 'typo-modal-title', sample: 'Aa Bb Cc' },

@@ -33,15 +33,16 @@ export default function Hero({ language, content, metrics }: HeroProps) {
       id="tour-step-hero"
       className="relative isolate w-full overflow-hidden pt-16 pb-8 transition-all duration-300"
     >
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 px-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-6">
-        <div className="mx-auto flex w-full max-w-xl flex-col items-center text-center lg:mx-0 lg:max-w-none lg:items-start lg:text-left">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-8 px-4 [grid-template-areas:'copy'_'photo'_'actions'_'metrics'] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-6 lg:[grid-template-areas:'copy_photo'_'actions_photo'_'metrics_photo']">
+        <div className="mx-auto flex w-full max-w-xl flex-col items-center text-center [grid-area:copy] lg:mx-0 lg:max-w-none lg:items-start lg:text-left">
           <h1 id="tour-title-hero" className="text-balance text-base font-semibold leading-snug tracking-tight text-on-surface-variant sm:text-xl">
             {t.splashLine}
           </h1>
           <p className="typo-display-large mt-4 w-auto max-w-3xl text-balance sm:mt-5">
             {t.heroTagline}
           </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+        </div>
+        <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-center gap-3 [grid-area:actions] lg:mx-0 lg:max-w-none lg:justify-start">
             <a
               href={CV_HREF}
               target="_blank"
@@ -82,13 +83,12 @@ export default function Hero({ language, content, metrics }: HeroProps) {
               </a>
             </div>
           </div>
-
-          <div
-            id="tour-step-metrics"
-            className="mt-10 grid w-full grid-cols-3 gap-3 sm:gap-4"
-          >
+        <div
+          id="tour-step-metrics"
+          className="mx-auto grid w-full max-w-xl grid-cols-3 gap-3 [grid-area:metrics] sm:gap-4 lg:mx-0 lg:max-w-none"
+        >
             {metrics.map((metric) => (
-              <div key={metric.value} className="flex min-w-0 flex-col items-center lg:items-start">
+              <div key={metric.value} className="flex min-w-0 flex-col items-center text-center lg:items-start lg:text-left">
                 <span className="text-balance text-2xl font-black tracking-tight text-primary sm:text-3xl lg:text-4xl">
                   {metric.value}
                 </span>
@@ -97,13 +97,12 @@ export default function Hero({ language, content, metrics }: HeroProps) {
                 </span>
               </div>
             ))}
-          </div>
         </div>
 
         <button
           type="button"
           onClick={() => setIsPhotoOpen(true)}
-          className="relative mx-auto cursor-zoom-in justify-self-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:justify-self-end"
+          className="relative mx-auto cursor-zoom-in justify-self-center [grid-area:photo] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:justify-self-end"
           aria-label={language === 'es' ? 'Ampliar fotografía de perfil' : 'Enlarge profile photo'}
         >
           <span className="relative mx-auto block aspect-[3/4] h-[clamp(20rem,42vw,28rem)] min-h-[20rem] max-h-[28rem] w-auto overflow-hidden rounded-[80rem] bg-transparent">

@@ -11,12 +11,18 @@ import DesignSystemModal from '../components/overlays/DesignSystemModal';
 import LandingParticleField from '../components/effects/LandingParticleField';
 import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
 import andurHero from '../assets/images/andur-hero.png';
-import { Theme, AppState, HeroContent, Language, ToastVariant } from '../types';
+import { Theme, ThemePreference, AppState, HeroContent, Language, ToastVariant } from '../types';
 import { AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
 import { METRICS, TRANSLATIONS } from '../content/data';
 import { goHome, isHomePath } from '../config/routes';
-import { applyThemeClass, getSystemTheme, persistTheme, readStoredTheme, resolveTheme } from '../config/theme';
+import {
+  applyThemeClass,
+  getSystemTheme,
+  persistThemePreference,
+  readStoredThemePreference,
+  resolveTheme,
+} from '../config/theme';
 import { CV_HREF } from '../config/cv';
 import { PAGE_NAV } from '../config/nav';
 import { APP_VERSION } from '../config/version';
@@ -77,6 +83,7 @@ const defaultHeroContent: Record<Language, HeroContent> = {
 };
 
 export default function App() {
+  const [themePreference, setThemePreference] = useState<ThemePreference>(() => readStoredThemePreference());
   const [theme, setTheme] = useState<Theme>(() => {
     const initial = resolveTheme();
     applyThemeClass(initial);
@@ -92,14 +99,19 @@ export default function App() {
   const metrics = METRICS(language);
 
   useEffect(() => {
-    applyThemeClass(theme);
-  }, [theme]);
+    persistThemePreference(themePreference);
+    const resolved = resolveTheme(themePreference);
+    setTheme(resolved);
+    applyThemeClass(resolved);
+  }, [themePreference]);
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const syncWithSystem = () => {
-      if (readStoredTheme()) return;
-      setTheme(getSystemTheme());
+      if (readStoredThemePreference() !== 'system') return;
+      const resolved = getSystemTheme();
+      setTheme(resolved);
+      applyThemeClass(resolved);
     };
 
     media.addEventListener('change', syncWithSystem);
@@ -161,14 +173,22 @@ export default function App() {
       
       <Header
         theme={theme}
-        setTheme={(newTheme) => {
-          persistTheme(newTheme);
-          setTheme(newTheme);
-          triggerToast(newTheme === 'dark' ? t.toastThemeDark : t.toastThemeLight, 'success');
+        themePreference={themePreference}
+        setThemePreference={(preference) => {
+          if (preference === themePreference) return;
+          setThemePreference(preference);
+          const toast =
+            preference === 'system'
+              ? t.toastThemeAuto
+              : preference === 'dark'
+                ? t.toastThemeDark
+                : t.toastThemeLight;
+          triggerToast(toast, 'success');
         }}
         appState={appState}
         language={language}
         setLanguage={(lang) => {
+          if (lang === language) return;
           setLanguage(lang);
           triggerToast(TRANSLATIONS[lang].toastLanguageChanged);
         }}
@@ -236,14 +256,9 @@ export default function App() {
       {/* 3. FOOTER */}
       {appState === 'normal' && (
       <footer className="relative z-10 mx-auto max-w-7xl border-t border-border px-4 pt-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pb-8">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <AndurBrand theme={theme} className="h-7 w-auto" />
-            <p className="text-xs text-muted text-center md:text-left">
-              {t.footerCopyright}
-            </p>
-          </div>
-          
+        <div className="flex flex-col items-center gap-6 pb-8">
+          <AndurBrand theme={theme} className="h-7 w-auto" />
+
           <nav className="flex flex-wrap justify-center gap-6">
             {PAGE_NAV.map((item) => (
               <a
@@ -280,6 +295,10 @@ export default function App() {
               v{APP_VERSION}
             </a>
           </nav>
+
+          <p className="text-xs text-muted text-center">
+            {t.footerCopyright}
+          </p>
         </div>
       </footer>
       )}

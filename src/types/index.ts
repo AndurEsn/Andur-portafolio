@@ -89,6 +89,7 @@ export interface FAQItem {
 
 export type AppState = 'normal' | 'loading' | 'error';
 export type Theme = 'light' | 'dark';
+export type ThemePreference = 'light' | 'dark' | 'system';
 export type Language = 'es' | 'en';
 
 export type ToastVariant = 'default' | 'info' | 'success' | 'error';

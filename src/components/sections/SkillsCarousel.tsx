@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, type MutableRefObject, type PointerEvent } from 'react';
+import React, { useEffect, useRef, useState, type MutableRefObject, type PointerEvent } from 'react';
 import { useReducedMotion } from 'motion/react';
 import {
   Compass,
@@ -178,15 +178,54 @@ function SkillMarqueeRow({
   );
 }
 
+type SkillsLayout = 'mobile' | 'tablet' | 'desktop';
+
+function getSkillsLayout(): SkillsLayout {
+  if (window.matchMedia('(min-width: 1024px)').matches) return 'desktop';
+  if (window.matchMedia('(min-width: 768px)').matches) return 'tablet';
+  return 'mobile';
+}
+
 export default function SkillsCarousel({ language }: SkillsCarouselProps) {
   const t = TRANSLATIONS[language];
   const skills = SKILLS(language);
-  const topRow = skills.slice(0, 6);
-  const bottomRow = skills.slice(6);
+  const [layout, setLayout] = useState<SkillsLayout>(() => getSkillsLayout());
   const pausedRef = useRef(false);
   const hoverRef = useRef(false);
   const dragCountRef = useRef(0);
   const reduceMotion = Boolean(useReducedMotion());
+
+  useEffect(() => {
+    const sync = () => setLayout(getSkillsLayout());
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const tablet = window.matchMedia('(min-width: 768px)');
+    sync();
+    desktop.addEventListener('change', sync);
+    tablet.addEventListener('change', sync);
+    return () => {
+      desktop.removeEventListener('change', sync);
+      tablet.removeEventListener('change', sync);
+    };
+  }, []);
+
+  const rows =
+    layout === 'mobile'
+      ? [
+          { items: skills.slice(0, 3), direction: 'right' as const },
+          { items: skills.slice(3, 6), direction: 'left' as const },
+          { items: skills.slice(6, 9), direction: 'right' as const },
+          { items: skills.slice(9), direction: 'left' as const },
+        ]
+      : layout === 'tablet'
+        ? [
+            { items: skills.slice(0, 4), direction: 'right' as const },
+            { items: skills.slice(4, 8), direction: 'left' as const },
+            { items: skills.slice(8), direction: 'right' as const },
+          ]
+        : [
+            { items: skills.slice(0, 6), direction: 'right' as const },
+            { items: skills.slice(6), direction: 'left' as const },
+          ];
 
   const syncPaused = () => {
     pausedRef.current = hoverRef.current || dragCountRef.current > 0;
@@ -206,26 +245,20 @@ export default function SkillsCarousel({ language }: SkillsCarouselProps) {
         }}
       >
         <div className="flex flex-col gap-2">
-          <SkillMarqueeRow
-            items={topRow}
-            direction="right"
-            pausedRef={pausedRef}
-            onDragChange={(active) => {
-              dragCountRef.current = Math.max(0, dragCountRef.current + (active ? 1 : -1));
-              syncPaused();
-            }}
-            reduceMotion={reduceMotion}
-          />
-          <SkillMarqueeRow
-            items={bottomRow}
-            direction="left"
-            pausedRef={pausedRef}
-            onDragChange={(active) => {
-              dragCountRef.current = Math.max(0, dragCountRef.current + (active ? 1 : -1));
-              syncPaused();
-            }}
-            reduceMotion={reduceMotion}
-          />
+          {rows.map((row, index) => (
+            <React.Fragment key={`${layout}-${index}`}>
+              <SkillMarqueeRow
+                items={row.items}
+                direction={row.direction}
+                pausedRef={pausedRef}
+                onDragChange={(active) => {
+                  dragCountRef.current = Math.max(0, dragCountRef.current + (active ? 1 : -1));
+                  syncPaused();
+                }}
+                reduceMotion={reduceMotion}
+              />
+            </React.Fragment>
+          ))}
         </div>
         <div className="logo-carousel-fade-edge logo-carousel-fade-edge-start" aria-hidden="true" />
         <div className="logo-carousel-fade-edge logo-carousel-fade-edge-end" aria-hidden="true" />

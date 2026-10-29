@@ -1,4 +1,4 @@
-import { Theme } from '../types';
+import { Theme, ThemePreference } from '../types';
 
 export const THEME_STORAGE_KEY = 'andur-theme';
 
@@ -6,18 +6,25 @@ export function getSystemTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-export function readStoredTheme(): Theme | null {
+export function readStoredThemePreference(): ThemePreference {
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark') return stored;
+    if (stored === 'light' || stored === 'dark' || stored === 'system') return stored;
   } catch {
-    return null;
+    return 'system';
   }
+  return 'system';
+}
+
+export function readStoredTheme(): Theme | null {
+  const preference = readStoredThemePreference();
+  if (preference === 'light' || preference === 'dark') return preference;
   return null;
 }
 
-export function resolveTheme(): Theme {
-  return readStoredTheme() ?? getSystemTheme();
+export function resolveTheme(preference: ThemePreference = readStoredThemePreference()): Theme {
+  if (preference === 'light' || preference === 'dark') return preference;
+  return getSystemTheme();
 }
 
 export function applyThemeClass(theme: Theme) {
@@ -27,10 +34,14 @@ export function applyThemeClass(theme: Theme) {
   root.style.colorScheme = theme;
 }
 
-export function persistTheme(theme: Theme) {
+export function persistThemePreference(preference: ThemePreference) {
   try {
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
+    localStorage.setItem(THEME_STORAGE_KEY, preference);
   } catch {
     // Ignore quota / private-mode failures; the in-session theme still applies.
   }
+}
+
+export function persistTheme(theme: Theme) {
+  persistThemePreference(theme);
 }

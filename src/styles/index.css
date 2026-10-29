@@ -33,7 +33,7 @@
   --section-y: 40px;
   --header-row: 5.25rem;
   --tabs-h: 0px;
-  --font-display-large: 2.75rem;
+  --font-display-large: 2.25rem;
 }
 
 @media (min-width: 640px) {
@@ -41,6 +41,13 @@
     --section-y: 64px;
     --header-row: 5.5rem;
     --tabs-h: 0px;
+    --font-display-large: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --font-display-large: 2.75rem;
   }
 }
 
