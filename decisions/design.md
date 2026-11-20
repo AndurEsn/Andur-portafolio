@@ -8,25 +8,25 @@
 - Radios `rounded-xl` / `2xl` / `3xl`; sombras contenidas.
 - Landing (skills, principios, proceso, proyectos): `max-w-7xl px-4 py-section` (40px móvil / 64px `sm+`). FAQ: `max-w-3xl`. Cards internas: `rounded-2xl`, sin sombra de reposo.
 - Iconos: Lucide `strokeWidth` 1.6 en `BrandGlyph` (`h-12 w-12`, `icon-well`, degradado `#brand-icon-gradient`). Default `rounded-xl`. Chips del carrusel de skills: Lucide lineal + `rounded-full`.
-- Carrusel de skills: cuatro filas en móvil, tres en tableta (`md`–`lg`), dos en `lg+`. Filas impares a la derecha, pares a la izquierda. Hover pausa todas; drag mueve solo la fila activa. `prefers-reduced-motion` apila chips sin autoplay.
+- Carrusel de skills: cuatro filas en móvil, tres en tableta (`md`–`lg`), dos en `lg+`. Filas impares a la derecha, pares a la izquierda. Misma velocidad lineal (px/s) en todas. Hover pausa todas; drag mueve solo la fila activa. `prefers-reduced-motion` apila chips sin autoplay.
 - Motion + CSS; respetar `prefers-reduced-motion`.
 
 ## Temas
 
 - Claro: primario índigo `#4C63F6`. Oscuro: fondo `#10131a`, primario `#4090FE`, hover `#2B72CD`.
-- Inicial: `prefers-color-scheme` (preferencia `system`). Override en `localStorage` (`andur-theme`: `light` | `dark` | `system`).
+- Inicial: se lee `prefers-color-scheme` y se guarda `light` o `dark` en `localStorage` (`andur-theme`). Después el toggle solo cambia claro/oscuro.
 - Tokens semánticos (`primary`, `surface-*`, `on-surface*`, `border`, `muted`, `icon-well`). Un componente nuevo no redefine paleta; logos de marca sí pueden.
 
 ## Navegación
 
-- Header: navbar-pill flotante `max-w-7xl` (marca al hero + secciones + settings). Si el imagotipo choca con los tabs, pasa a isotipo; si sigue chocando, entra al scroll horizontal con las secciones. Hero `pt-chrome`. CV + avatares LinkedIn, correo y WhatsApp en el hero.
+- Header: navbar-pill flotante `max-w-7xl` (marca al hero + secciones + idioma ES/EN + tema). Si el imagotipo choca con los tabs, pasa a isotipo; si sigue chocando, entra al scroll horizontal con las secciones. Hero `pt-chrome`. CTA Ver CV (icono pestaña nueva) + Contacto (icono de tarjeta); el contacto abre una tarjeta de presentación que sigue el tema claro/oscuro.
 - Tabs y footer salen de `src/config/nav.ts` (mismo `h2` + `id`). Ver `.cursor/rules/section-titles.mdc`.
-- Métricas solo en el hero. CV/Resume: pestaña nueva, sin atributo `download`; el CTA del hero lleva ícono Lucide `Download`.
-- Settings (engrane): dropdown con tema Claro / Oscuro / Auto e idioma ES/EN.
-- Hero: saludo `splashLine` + `heroTagline` estático + foto + CTA CV + métricas. Hasta tableta: texto, foto, botones, métricas (métricas centradas). `lg+`: texto/acciones/métricas a la izquierda y foto a la derecha. Entrada de secciones: Move In fijo.
+- Hero: chips de disponibilidad y sede; `h1` `splashLine`; rol y párrafo; CTA Ver CV + Contacto. CV: pestaña nueva, sin atributo `download`. La tarjeta de contacto sigue el tema de la página.
+- Idioma: switch ES/EN. Tema: un ícono (sol/luna) del mismo color en ambos modos, sin Auto.
+- Hero: chips + `splashLine` (`h1`) + rol + intro + foto + CTA. Hasta tableta: texto, foto, botones. `lg+`: texto/acciones a la izquierda y foto a la derecha. Entrada de secciones: Move In fijo. Sin enfoque ni carrusel de frases.
 - IDs de sección: contrato Header/footer; cambiarlos en `nav.ts` y en el `h2` de la sección.
 - Footer: columna centrada en todos los anchos (logo, secciones, copyright). Design System y versión (enlace a GitHub Releases). Sin Laboratorio.
-- Proceso: bloques (`rounded-xl` + borde) del mismo ancho, centrados; en fila desde `md`. Cada paso lleva su `BrandGlyph`.
+- Principios (`principles-section`): `pt`/`pb-section` como el resto. El bloque se pega al centro al scrollear (Proyectos queda atrás). Cards `max-w-3xl`, altura `fit-content` igualada a la más alta. La nueva entra desde abajo y descansa bajo el título de la anterior (peek 56px); opacidad 100% al 80% del recorrido. Cabecera: número / título / ícono. Margen intro→cards 32px. `prefers-reduced-motion` lista estática.
 - Proyectos: la card es cover (`object-cover object-center`) sin overlay oscuro; icono de expandir (hover / foco; visible si no hay hover, p. ej. táctil). El `title` del modal puede ser distinto.
 - Caso Supervisor: comparaciones before/after en el paso de validación (`BeforeAfterSlider`). Con hover, el corte sigue el cursor; en táctil se arrastra; teclado con flechas. `prefers-reduced-motion` deja el corte en 50% hasta que hay arrastre o teclado. El toggle sticky del modal (`z-20 isolate`) queda por encima de los sliders al hacer scroll.
 

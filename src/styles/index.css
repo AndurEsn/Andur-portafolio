@@ -253,6 +253,53 @@ html.project-modal-open #section-tabs {
     }
   }
 
+  @keyframes availability-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.28;
+    }
+  }
+
+  @keyframes availability-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(2.35);
+      opacity: 0;
+    }
+  }
+
+  .availability-dot {
+    position: relative;
+    display: inline-flex;
+    height: 0.5rem;
+    width: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .availability-dot::before,
+  .availability-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: var(--success);
+  }
+
+  .availability-dot::before {
+    animation: availability-ring 1.8s ease-out infinite;
+  }
+
+  .availability-dot::after {
+    animation: availability-pulse 1.8s ease-in-out infinite;
+  }
+
   .animate-shimmer {
     background: linear-gradient(90deg, var(--surface-lowest) 25%, var(--surface-container) 50%, var(--surface-lowest) 75%);
     background-size: 200% 100%;
@@ -319,6 +366,11 @@ html.project-modal-open #section-tabs {
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .availability-dot::before,
+    .availability-dot::after {
+      animation: none;
+    }
+
     .skill-marquee-track {
       width: 100%;
       animation: none;

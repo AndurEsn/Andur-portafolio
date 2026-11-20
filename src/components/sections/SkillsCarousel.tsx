@@ -1,37 +1,10 @@
 import React, { useEffect, useRef, useState, type MutableRefObject, type PointerEvent } from 'react';
 import { useReducedMotion } from 'motion/react';
-import {
-  Compass,
-  Layers,
-  LayoutGrid,
-  MessageCircle,
-  MousePointerClick,
-  PenLine,
-  Rocket,
-  ScanSearch,
-  Smartphone,
-  Sparkles,
-  Waypoints,
-  type LucideIcon,
-} from 'lucide-react';
-import { Language, Skill, SkillIcon } from '../../types';
+import { Language, Skill } from '../../types';
 import { SKILLS, TRANSLATIONS } from '../../content/data';
+import { SKILL_ICONS } from '../../content/skillIcons';
 
-const SKILL_ICONS = {
-  layers: Layers,
-  compass: Compass,
-  users: ScanSearch,
-  pen: PenLine,
-  message: MessageCircle,
-  waypoints: Waypoints,
-  rocket: Rocket,
-  smartphone: Smartphone,
-  layout: LayoutGrid,
-  prototype: MousePointerClick,
-  sparkles: Sparkles,
-} as const satisfies Record<SkillIcon, LucideIcon>;
-
-const CYCLE_MS = 28000;
+const SPEED_PX_PER_SEC = 48;
 
 interface SkillsCarouselProps {
   language: Language;
@@ -106,7 +79,7 @@ function SkillMarqueeRow({
       }
 
       if (!pausedRef.current && !dragRef.current.active && cycleWidth > 0) {
-        const delta = (elapsed * cycleWidth) / CYCLE_MS;
+        const delta = (elapsed / 1000) * SPEED_PX_PER_SEC;
         offsetRef.current += direction === 'right' ? delta : -delta;
         offsetRef.current = wrapOffset(offsetRef.current, cycleWidth);
         applyOffset(offsetRef.current);
@@ -211,20 +184,20 @@ export default function SkillsCarousel({ language }: SkillsCarouselProps) {
   const rows =
     layout === 'mobile'
       ? [
-          { items: skills.slice(0, 3), direction: 'right' as const },
-          { items: skills.slice(3, 6), direction: 'left' as const },
-          { items: skills.slice(6, 9), direction: 'right' as const },
-          { items: skills.slice(9), direction: 'left' as const },
+          { items: skills.slice(0, 4), direction: 'right' as const },
+          { items: skills.slice(4, 8), direction: 'left' as const },
+          { items: skills.slice(8, 12), direction: 'right' as const },
+          { items: skills.slice(12), direction: 'left' as const },
         ]
       : layout === 'tablet'
         ? [
-            { items: skills.slice(0, 4), direction: 'right' as const },
-            { items: skills.slice(4, 8), direction: 'left' as const },
-            { items: skills.slice(8), direction: 'right' as const },
+            { items: skills.slice(0, 6), direction: 'right' as const },
+            { items: skills.slice(6, 12), direction: 'left' as const },
+            { items: skills.slice(12), direction: 'right' as const },
           ]
         : [
-            { items: skills.slice(0, 6), direction: 'right' as const },
-            { items: skills.slice(6), direction: 'left' as const },
+            { items: skills.slice(0, 9), direction: 'right' as const },
+            { items: skills.slice(9), direction: 'left' as const },
           ];
 
   const syncPaused = () => {

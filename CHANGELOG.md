@@ -4,6 +4,26 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-20
+
+### Added
+
+- Sección **Principios** con cards apiladas al scroll (peek de título, misma altura, opacidad al 80% del recorrido).
+- **Acerca de mí**: competencias con ícono y herramientas en tres columnas (hueco para logos SVG).
+- Tarjeta de **Contacto** en el hero (LinkedIn, correo, WhatsApp) alineada al tema.
+
+### Changed
+
+- Hero: disponibilidad, sede, CTAs Ver CV + Contacto; sin métricas ni mail/WA sueltos.
+- Carrusel de skills: misma velocidad lineal en todas las filas.
+- Espaciado de Principios alineado al resto de secciones; Proyectos queda atrás mientras el bloque se centra.
+- Copy de competencias homologado con el CV (`Product Design`, sin trabajos recientes ni educación).
+
+### Removed
+
+- Sección Proceso (6 pasos).
+- Perfil como sección independiente (contenido absorbido en Acerca de mí).
+
 ## [2.1.0] - 2026-10-14
 
 ### Added
@@ -67,7 +87,8 @@ Este proyecto sigue [Versionado Semántico (SemVer)](https://semver.org/lang/es/
 - Tema claro/oscuro, tour, Laboratorio, Design System y NPS.
 - Secciones Hero, Métricas, Trayectoria, Proyectos, Contacto y FAQ.
 
-[Unreleased]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/AndurEsn/Andur-portafolio/compare/v1.0.0...v1.1.0
