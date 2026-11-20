@@ -8,7 +8,7 @@ alwaysApply: true
 ## FAQ
 
 - Title case. En español, `y` puede ir en minúscula: `Diseño y Construcción`.
-- ES: `Preguntas Frecuentes` (nunca `FAQ`). EN: `FAQ`.
+- ES: `Preguntas` (nunca `FAQ`). EN: `FAQ`.
 
 ## Sección con `h2` + `id`
 
@@ -16,9 +16,9 @@ Tres superficies, mismo nombre, ambos idiomas: el `h2`, el tab de scroll-to y el
 
 Al crear, renombrar o borrar la sección, actualizar las tres, el `id` y `src/config/nav.ts`.
 
-Usar la misma clave de copy para `h2` y nav/footer: `approachTitle`, `processTitle`, `portfolioTitle`, `faqTitle`.
+Usar la misma clave de copy para `h2` y nav/footer: `principlesTitle`, `approachTitle`, `portfolioTitle`, `faqTitle`.
 
-Excepciones: el hero usa `h1` (`splashLine`); el logo del pill hace scroll al hero (no hay tab `Sobre mí`). El CV y el contacto (LinkedIn, correo, WhatsApp) no son secciones de página.
+Excepciones: el hero usa `h1` (`splashLine`); el logo del pill hace scroll al hero. El CV y el contacto (LinkedIn, correo, WhatsApp) no son secciones de página.
 
 ## Frases rotativas
 

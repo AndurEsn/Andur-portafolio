@@ -1,26 +1,31 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { AppState, Language, Theme, ThemePreference } from '../../types';
+import { Moon, Sun } from 'lucide-react';
+import { AppState, Language, Theme } from '../../types';
 import { TRANSLATIONS } from '../../content/data';
 import { PAGE_NAV } from '../../config/nav';
 import AndurBrand from '../ui/AndurBrand';
-import HeaderSettings from './HeaderSettings';
 
 type BrandFit = 'lockup' | 'symbol' | 'scroll';
 
 interface HeaderProps {
   theme: Theme;
-  themePreference: ThemePreference;
-  setThemePreference: (preference: ThemePreference) => void;
+  setTheme: (theme: Theme) => void;
   appState: AppState;
   language: Language;
   setLanguage: (lang: Language) => void;
   onNavigateToHero: () => void;
 }
 
+const langChipClass = (active: boolean) =>
+  `inline-flex h-8 items-center gap-1 rounded-full px-2 text-[11px] font-bold transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+    active
+      ? 'bg-surface-lowest text-on-surface shadow-sm'
+      : 'text-on-surface-variant hover:text-on-surface'
+  }`;
+
 export default function Header({
   theme,
-  themePreference,
-  setThemePreference,
+  setTheme,
   appState,
   language,
   setLanguage,
@@ -30,7 +35,7 @@ export default function Header({
   const [activeSection, setActiveSection] = useState('');
   const [brandFit, setBrandFit] = useState<BrandFit>('lockup');
   const pillRef = useRef<HTMLDivElement>(null);
-  const settingsRef = useRef<HTMLDivElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
   const lockupMeasureRef = useRef<HTMLSpanElement>(null);
   const symbolMeasureRef = useRef<HTMLSpanElement>(null);
   const tabsMeasureRef = useRef<HTMLDivElement>(null);
@@ -61,18 +66,18 @@ export default function Header({
 
   useLayoutEffect(() => {
     const pill = pillRef.current;
-    const settings = settingsRef.current;
+    const actions = actionsRef.current;
     const lockup = lockupMeasureRef.current;
     const symbol = symbolMeasureRef.current;
     const tabs = tabsMeasureRef.current;
-    if (!pill || !settings || !lockup || !symbol || !tabs) return undefined;
+    if (!pill || !actions || !lockup || !symbol || !tabs) return undefined;
 
     const update = () => {
       const styles = getComputedStyle(pill);
       const gap = Number.parseFloat(styles.columnGap || styles.gap) || 8;
       const pad =
         (Number.parseFloat(styles.paddingLeft) || 0) + (Number.parseFloat(styles.paddingRight) || 0);
-      const available = pill.clientWidth - pad - settings.offsetWidth - gap * 2;
+      const available = pill.clientWidth - pad - actions.offsetWidth - gap * 2;
       const tabsWidth = tabs.scrollWidth;
       const lockupWidth = lockup.offsetWidth;
       const symbolWidth = symbol.offsetWidth;
@@ -85,7 +90,7 @@ export default function Header({
     update();
     const observer = new ResizeObserver(update);
     observer.observe(pill);
-    observer.observe(settings);
+    observer.observe(actions);
     observer.observe(lockup);
     observer.observe(symbol);
     observer.observe(tabs);
@@ -175,13 +180,42 @@ export default function Header({
           <div className="min-w-0 flex-1" />
         )}
 
-        <div ref={settingsRef}>
-          <HeaderSettings
-            language={language}
-            setLanguage={setLanguage}
-            themePreference={themePreference}
-            setThemePreference={setThemePreference}
-          />
+        <div ref={actionsRef} className="flex shrink-0 items-center gap-1">
+          <div
+            className="flex items-center rounded-full bg-surface-container p-0.5"
+            role="group"
+            aria-label={t.langAria}
+          >
+            <button
+              type="button"
+              className={langChipClass(language === 'es')}
+              aria-pressed={language === 'es'}
+              onClick={() => setLanguage('es')}
+            >
+              ES
+            </button>
+            <button
+              type="button"
+              className={langChipClass(language === 'en')}
+              aria-pressed={language === 'en'}
+              onClick={() => setLanguage('en')}
+            >
+              EN
+            </button>
+          </div>
+          <button
+            type="button"
+            id="theme-toggle-btn"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="flex h-10 w-10 items-center justify-center rounded-full text-on-surface-variant transition-all hover:bg-surface-container hover:text-on-surface cursor-pointer active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label={theme === 'dark' ? t.themeToLight : t.themeToDark}
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-[18px] w-[18px]" strokeWidth={1.75} />
+            ) : (
+              <Moon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+            )}
+          </button>
         </div>
       </div>
     </header>

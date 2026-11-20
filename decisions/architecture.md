@@ -40,7 +40,7 @@
 
 ## ADR-009 — Tema según sistema, con override manual
 
-- Decisión: el tema inicial sigue `prefers-color-scheme` (`system`). Light, Dark o Auto se guardan en `localStorage` (`andur-theme`). Un script en `index.html` aplica `dark` antes de React; cualquier valor distinto de `light`/`dark` se trata como sistema.
-- Razón: la página debe coincidir con el sistema desde el primer frame, y el usuario debe poder forzar claro, oscuro o Auto.
-- Consecuencias: Auto sigue `prefers-color-scheme`. Light/Dark dejan de seguir al sistema hasta elegir Auto otra vez.
+- Decisión: el tema inicial sigue `prefers-color-scheme` y se persiste como `light` o `dark` en `localStorage` (`andur-theme`). El toggle solo cambia claro/oscuro. Un script en `index.html` aplica `dark` antes de React; cualquier valor distinto de `light`/`dark` se trata como sistema en el primer frame.
+- Razón: la página debe coincidir con el sistema desde el primer frame, y el usuario debe poder forzar claro u oscuro.
+- Consecuencias: borrar `andur-theme` restaura la detección del sistema en la siguiente visita. No hay opción Auto en la UI.
 

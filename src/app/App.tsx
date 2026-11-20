@@ -3,26 +3,20 @@ import Header from '../components/layout/Header';
 import Hero from '../components/sections/Hero';
 import SkillsCarousel from '../components/sections/SkillsCarousel';
 import Portfolio from '../components/sections/Portfolio';
+import Principles from '../components/sections/Principles';
 import Approach from '../components/sections/Approach';
-import Process from '../components/sections/Process';
 import FAQ from '../components/sections/FAQ';
 import ErrorState from '../components/feedback/ErrorState';
 import DesignSystemModal from '../components/overlays/DesignSystemModal';
 import LandingParticleField from '../components/effects/LandingParticleField';
 import { BrandGlyphDefs } from '../components/ui/BrandGlyph';
 import andurHero from '../assets/images/andur-hero.png';
-import { Theme, ThemePreference, AppState, HeroContent, Language, ToastVariant } from '../types';
+import { Theme, AppState, HeroContent, Language, ToastVariant } from '../types';
 import { AlertTriangle, CheckCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence, useInView, useReducedMotion } from 'motion/react';
-import { METRICS, TRANSLATIONS } from '../content/data';
+import { TRANSLATIONS } from '../content/data';
 import { goHome, isHomePath } from '../config/routes';
-import {
-  applyThemeClass,
-  getSystemTheme,
-  persistThemePreference,
-  readStoredThemePreference,
-  resolveTheme,
-} from '../config/theme';
+import { applyThemeClass, persistTheme, resolveTheme } from '../config/theme';
 import { CV_HREF } from '../config/cv';
 import { PAGE_NAV } from '../config/nav';
 import { APP_VERSION } from '../config/version';
@@ -83,10 +77,10 @@ const defaultHeroContent: Record<Language, HeroContent> = {
 };
 
 export default function App() {
-  const [themePreference, setThemePreference] = useState<ThemePreference>(() => readStoredThemePreference());
   const [theme, setTheme] = useState<Theme>(() => {
     const initial = resolveTheme();
     applyThemeClass(initial);
+    persistTheme(initial);
     return initial;
   });
   const [appState, setAppState] = useState<AppState>(() => (isHomePath() ? 'loading' : 'error'));
@@ -96,27 +90,10 @@ export default function App() {
 
   const t = TRANSLATIONS[language];
   const heroContent = defaultHeroContent[language];
-  const metrics = METRICS(language);
 
   useEffect(() => {
-    persistThemePreference(themePreference);
-    const resolved = resolveTheme(themePreference);
-    setTheme(resolved);
-    applyThemeClass(resolved);
-  }, [themePreference]);
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const syncWithSystem = () => {
-      if (readStoredThemePreference() !== 'system') return;
-      const resolved = getSystemTheme();
-      setTheme(resolved);
-      applyThemeClass(resolved);
-    };
-
-    media.addEventListener('change', syncWithSystem);
-    return () => media.removeEventListener('change', syncWithSystem);
-  }, []);
+    applyThemeClass(theme);
+  }, [theme]);
 
   useEffect(() => {
     const syncRoute = () => {
@@ -173,17 +150,10 @@ export default function App() {
       
       <Header
         theme={theme}
-        themePreference={themePreference}
-        setThemePreference={(preference) => {
-          if (preference === themePreference) return;
-          setThemePreference(preference);
-          const toast =
-            preference === 'system'
-              ? t.toastThemeAuto
-              : preference === 'dark'
-                ? t.toastThemeDark
-                : t.toastThemeLight;
-          triggerToast(toast, 'success');
+        setTheme={(nextTheme) => {
+          persistTheme(nextTheme);
+          setTheme(nextTheme);
+          triggerToast(nextTheme === 'dark' ? t.toastThemeDark : t.toastThemeLight, 'success');
         }}
         appState={appState}
         language={language}
@@ -236,17 +206,13 @@ export default function App() {
             >
               {/* Hero */}
               <LandingReveal>
-                <Hero 
-                  language={language} 
-                  content={heroContent}
-                  metrics={metrics}
-                />
+                <Hero language={language} content={heroContent} />
               </LandingReveal>
 
               <LandingReveal><SkillsCarousel language={language} /></LandingReveal>
               <LandingReveal><Portfolio language={language} theme={theme} /></LandingReveal>
+              <Principles language={language} />
               <LandingReveal><Approach language={language} /></LandingReveal>
-              <LandingReveal><Process language={language} /></LandingReveal>
               <LandingReveal><FAQ language={language} /></LandingReveal>
             </motion.div>
           )}

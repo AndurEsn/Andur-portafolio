@@ -89,7 +89,6 @@ export interface FAQItem {
 
 export type AppState = 'normal' | 'loading' | 'error';
 export type Theme = 'light' | 'dark';
-export type ThemePreference = 'light' | 'dark' | 'system';
 export type Language = 'es' | 'en';
 
 export type ToastVariant = 'default' | 'info' | 'success' | 'error';
@@ -99,13 +98,24 @@ export type SkillIcon =
   | 'compass'
   | 'users'
   | 'pen'
+  | 'window'
   | 'message'
   | 'waypoints'
   | 'rocket'
   | 'smartphone'
   | 'layout'
   | 'prototype'
-  | 'sparkles';
+  | 'sparkles'
+  | 'frame'
+  | 'map'
+  | 'gantt'
+  | 'tour'
+  | 'survey'
+  | 'cards'
+  | 'architecture'
+  | 'interaction'
+  | 'prioritization'
+  | 'stakeholders';
 
 export interface Skill {
   id: string;
@@ -113,18 +123,31 @@ export interface Skill {
   icon: SkillIcon;
 }
 
-export type ApproachStageIcon = 'understand' | 'collaborate' | 'iterate';
-export type ProcessStepIcon = 'understand' | 'research' | 'define' | 'sketch' | 'validate' | 'build';
+export interface AboutCompetency {
+  id: string;
+  label: string;
+  icon: SkillIcon;
+}
 
-export interface ApproachStage {
+export interface AboutTool {
+  id: string;
+  name: string;
+}
+
+export interface AboutToolGroup {
+  id: string;
+  title: string;
+  tools: AboutTool[];
+}
+
+export type PrincipleIcon = 'discovery' | 'definition' | 'validation' | 'evolution';
+
+export interface Principle {
   number: string;
+  eyebrow: string;
   title: string;
   description: string;
-  icon: ApproachStageIcon;
+  chips: string[];
+  icon: PrincipleIcon;
 }
 
-export interface ProcessStep {
-  number: string;
-  title: string;
-  icon: ProcessStepIcon;
-}

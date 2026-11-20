@@ -1,4 +1,4 @@
-import { Metric, FAQItem, ApproachStage, ProcessStep, Skill } from '../types';
+import { AboutCompetency, AboutToolGroup, Metric, FAQItem, Principle, Skill } from '../types';
 import { CONTACT_GITHUB } from '../config/contact';
 import { CV_HREF } from '../config/cv';
 
@@ -9,24 +9,22 @@ export const TRANSLATIONS = {
     brandName: 'Portafolio',
     navAbout: 'Sobre mí',
     navCv: 'CV',
-    heroCvCta: 'Descargar CV',
+    heroCvCta: 'Ver CV',
+    heroContactCta: 'Contacto',
+    heroContactRole: 'UX/UI Product Designer',
+    heroAvailable: 'Disponible para trabajar',
+    heroIntro: 'Desarrollo productos digitales de principio a fin en los sectores fintech, SaaS e IA para miles de usuarios.',
     labDesignSystem: 'Documentación Design System',
     labVersion: 'Versión',
     labVersionLink: 'Ver historial en GitHub',
     evalPage: 'Evaluar Página',
     langSelect: 'Cambiar a inglés',
-    settingsAria: 'Ajustes',
-    settingsThemeTitle: 'Modo de tema',
-    settingsThemeDesc: 'Elige claro u oscuro',
-    settingsThemeLight: 'Claro',
-    settingsThemeDark: 'Oscuro',
-    settingsThemeAuto: 'Auto',
-    settingsLangTitle: 'Idioma',
-    settingsLangDesc: 'Selecciona el idioma',
-    settingsLangEs: 'Español',
-    settingsLangEn: 'Inglés',
+    langAria: 'Idioma',
+    themeToLight: 'Cambiar a modo claro',
+    themeToDark: 'Cambiar a modo oscuro',
     loadingLabel: 'Cargando el contenido de la página...',
-    splashLine: '¡Hola! Soy Andur',
+    splashLine: '¡Hola, soy Andur!',
+    heroLocation: 'Ciudad de México, México',
     heroTagline: 'Diseño productos digitales end-to-end: SaaS, Fintech e IA',
     heroPhrases: [
       'Me apasiona construir sistemas vivos que evolucionen constantemente',
@@ -59,7 +57,7 @@ export const TRANSLATIONS = {
     contactDesc: 'Si tienes alguna pregunta, comentario o feedback, puedes contactarme directamente en mi LinkedIn o escribirme a andur-design@outlook.com',
     contactLinkedin: 'Abrir LinkedIn',
     contactEmailCta: 'Enviar correo',
-    faqTitle: 'Preguntas Frecuentes',
+    faqTitle: 'Preguntas',
     faqDesc: 'Respuestas rápidas a las consultas más comunes sobre mi flujo de trabajo.',
     faqCategoryDesign: 'Diseño y Construcción',
     faqCategoryCollaboration: 'Colaboración',
@@ -87,37 +85,37 @@ export const TRANSLATIONS = {
     dsTooltipExample: 'Este es un ejemplo de tooltip.',
     toastThemeLight: 'Modo claro activado',
     toastThemeDark: 'Modo oscuro activado',
-    toastThemeAuto: 'Tema del sistema activado',
     toastLanguageChanged: 'Idioma cambiado correctamente',
     toastToastLabel: 'Notificación',
     footerCopyright: '© 2026 Portafolio. Creado con IA y precisión por Andur.',
     skillsTitle: 'Habilidades',
-    approachTitle: 'Principios',
-    approachIntro: 'Los mejores productos nacen de entender, colaborar y evolucionar.',
-    processTitle: 'Proceso',
+    approachTitle: 'Acerca de mí',
+    approachIntro: 'UX/UI Product Designer con 7+ años de experiencia diseñando productos digitales en los sectores Fintech, SaaS e IA. Combino diversas habilidades de investigación y de diseño para convertir herramientas complejas en flujos claros y escalables. Actualmente transiciono hacia Design Engineering, con un proceso AI-first orientado a crear, validar y desplegar productos digitales y sitios web funcionales.',
+    aboutExpertiseTitle: 'Competencias principales',
+    aboutToolsTitle: 'Herramientas',
+    principlesTitle: 'Principios',
+    principlesIntro: 'Los mejores productos nacen de entender, definir, validar y evolucionar.',
   },
   en: {
     brandName: 'Portfolio',
     navAbout: 'About',
     navCv: 'Resume',
-    heroCvCta: 'Download Resume',
+    heroCvCta: 'View CV',
+    heroContactCta: 'Contact',
+    heroContactRole: 'UX/UI Product Designer',
+    heroAvailable: 'Available for work',
+    heroIntro: 'I build digital products end to end in fintech, SaaS, and AI for thousands of users.',
     labDesignSystem: 'Design System Docs',
     labVersion: 'Version',
     labVersionLink: 'View history on GitHub',
     evalPage: 'Evaluate Page',
     langSelect: 'Switch to Spanish',
-    settingsAria: 'Settings',
-    settingsThemeTitle: 'Theme Mode',
-    settingsThemeDesc: 'Choose light or dark mode',
-    settingsThemeLight: 'Light',
-    settingsThemeDark: 'Dark',
-    settingsThemeAuto: 'Auto',
-    settingsLangTitle: 'Language',
-    settingsLangDesc: 'Select language',
-    settingsLangEs: 'Spanish',
-    settingsLangEn: 'English',
+    langAria: 'Language',
+    themeToLight: 'Switch to light mode',
+    themeToDark: 'Switch to dark mode',
     loadingLabel: 'Loading the page content...',
-    splashLine: "Hi! I'm Andur",
+    splashLine: "Hi, I'm Andur!",
+    heroLocation: 'Mexico City, Mexico',
     heroTagline: 'I design digital products end-to-end: SaaS, Fintech, and AI',
     heroPhrases: [
       'I’m passionate about building living systems that keep evolving',
@@ -178,28 +176,38 @@ export const TRANSLATIONS = {
     dsAccordionText: 'This is the interactive accordion style used to answer frequently asked questions.',
     toastThemeLight: 'Light mode active',
     toastThemeDark: 'Dark mode active',
-    toastThemeAuto: 'System theme active',
     toastLanguageChanged: 'Language changed successfully',
     toastToastLabel: 'Notification',
     footerCopyright: '© 2026 Portfolio. Built with AI and precision by Andur.',
     skillsTitle: 'Skills',
-    approachTitle: 'Principles',
-    approachIntro: 'The best products are born from understanding, collaborating, and evolving.',
-    processTitle: 'Process',
+    approachTitle: 'About Me',
+    approachIntro: 'UX/UI Product Designer with 7+ years of experience designing digital products in Fintech, SaaS, and AI. I combine research and design skills to turn complex tools into clear, scalable flows. I am currently transitioning into Design Engineering, with an AI-first process focused on creating, validating, and shipping functional digital products and websites.',
+    aboutExpertiseTitle: 'Core Competencies',
+    aboutToolsTitle: 'Tools',
+    principlesTitle: 'Principles',
+    principlesIntro: 'The best products are born from understanding, defining, validating, and evolving.',
   }
 };
 
 export const SKILLS = (lang: 'es' | 'en'): Skill[] => [
-  { id: 'e2e-product', icon: 'layers', label: lang === 'es' ? 'Diseño de producto end-to-end' : 'End-to-End Product Design' },
+  { id: 'e2e-product', icon: 'layers', label: lang === 'es' ? 'Diseño de producto' : 'Product Design' },
   { id: 'discovery', icon: 'compass', label: lang === 'es' ? 'Product Discovery' : 'Product Discovery' },
   { id: 'research', icon: 'users', label: lang === 'es' ? 'Investigación de usuarios' : 'User Research' },
-  { id: 'e2e-uxui', icon: 'pen', label: lang === 'es' ? 'Diseño UX/UI end-to-end' : 'End-to-End UX/UI Design' },
+  { id: 'e2e-ux', icon: 'pen', label: lang === 'es' ? 'Diseño de experiencia (UX)' : 'User Experience (UX) Design' },
+  { id: 'e2e-ui', icon: 'window', label: lang === 'es' ? 'Diseño de interfaz (UI)' : 'User Interface (UI) Design' },
   { id: 'conversational', icon: 'message', label: lang === 'es' ? 'UX conversacional' : 'Conversational UX' },
-  { id: 'user-flow', icon: 'waypoints', label: lang === 'es' ? 'Flujos de usuario' : 'User Flow' },
+  { id: 'user-flow', icon: 'waypoints', label: lang === 'es' ? 'Diagramas de flujo' : 'Flow Diagrams' },
+  { id: 'wireframes', icon: 'frame', label: lang === 'es' ? 'Wireframes' : 'Wireframes' },
+  { id: 'roadmaps', icon: 'map', label: lang === 'es' ? 'Roadmaps' : 'Roadmaps' },
+  { id: 'gantt', icon: 'gantt', label: lang === 'es' ? 'Gantt' : 'Gantt' },
+  { id: 'product-tour', icon: 'tour', label: lang === 'es' ? 'Product Tour' : 'Product Tour' },
+  { id: 'nps', icon: 'survey', label: lang === 'es' ? 'Encuestas NPS' : 'NPS Surveys' },
   { id: 'mvp', icon: 'rocket', label: lang === 'es' ? 'Diseño y estrategia de MVP' : 'MVP Design & Strategy' },
   { id: 'mobile-first', icon: 'smartphone', label: lang === 'es' ? 'Diseño mobile-first' : 'Mobile-First Design' },
   { id: 'design-systems', icon: 'layout', label: lang === 'es' ? 'Design Systems' : 'Design Systems' },
   { id: 'prototyping', icon: 'prototype', label: lang === 'es' ? 'Prototipado' : 'Prototyping' },
+  { id: 'card-sorting', icon: 'cards', label: 'Card Sorting' },
+  { id: 'info-architecture', icon: 'architecture', label: lang === 'es' ? 'Information Architecture' : 'Information Architecture' },
   { id: 'ai-design', icon: 'sparkles', label: lang === 'es' ? 'Diseño asistido por IA' : 'AI-Assisted Design' },
 ];
 
@@ -209,40 +217,105 @@ export const METRICS = (lang: 'es' | 'en'): Metric[] => [
   { value: '+7', label: lang === 'es' ? 'años de\nexperiencia' : 'years of\nexperience', icon: 'award' }
 ];
 
-export const APPROACH_STAGES = (lang: 'es' | 'en'): ApproachStage[] => [
+export const ABOUT_COMPETENCIES = (lang: 'es' | 'en'): AboutCompetency[] => [
+  { id: 'product-design', icon: 'layers', label: 'Product Design' },
+  { id: 'discovery', icon: 'compass', label: 'Product Discovery' },
+  { id: 'research', icon: 'users', label: 'UX Research' },
+  { id: 'ux-ui', icon: 'pen', label: 'UX/UI Design' },
+  { id: 'interaction', icon: 'interaction', label: 'Interaction Design' },
+  { id: 'prioritization', icon: 'prioritization', label: lang === 'es' ? 'Priorización de producto' : 'Product prioritization' },
+  { id: 'conversational', icon: 'message', label: 'Conversational UX' },
+  { id: 'design-systems', icon: 'layout', label: 'Design Systems' },
+  { id: 'prototyping', icon: 'prototype', label: lang === 'es' ? 'Prototipado funcional' : 'Functional prototyping' },
+  { id: 'stakeholders', icon: 'stakeholders', label: lang === 'es' ? 'Gestión de stakeholders' : 'Stakeholder management' },
+  { id: 'info-architecture', icon: 'architecture', label: lang === 'es' ? 'Arquitectura de información' : 'Information Architecture' },
+  { id: 'mvp', icon: 'rocket', label: lang === 'es' ? 'Definición/Validación de MVP' : 'MVP definition/validation' },
+  { id: 'mobile-first', icon: 'smartphone', label: lang === 'es' ? 'Diseño mobile-first' : 'Mobile-first design' },
+  { id: 'ai-dev', icon: 'sparkles', label: lang === 'es' ? 'Desarrollo asistido por IA' : 'AI-assisted development' },
+];
+
+export const ABOUT_TOOL_GROUPS = (lang: 'es' | 'en'): AboutToolGroup[] => [
   {
-    number: '01',
-    title: lang === 'es' ? 'Entender para Definir' : 'Understand to Define',
-    description: lang === 'es'
-      ? 'Antes de construir una solución busco entender a las personas, el negocio, el contexto y los alcances técnicos.'
-      : 'Before building a solution I seek to understand people, the business, the context, and the technical constraints.',
-    icon: 'understand',
+    id: 'design-prototyping',
+    title: lang === 'es' ? 'Diseño y prototipado' : 'Design and prototyping',
+    tools: [
+      { id: 'figma', name: 'Figma' },
+      { id: 'lovable', name: 'Lovable' },
+      { id: 'google-stitch', name: 'Google Stitch' },
+      { id: 'google-ai-studio', name: 'Google AI Studio' },
+    ],
   },
   {
-    number: '02',
-    title: lang === 'es' ? 'Colaborar para Decidir' : 'Collaborate to Decide',
-    description: lang === 'es'
-      ? 'La comunicación constante con diferentes áreas es indispensable para descubrir nuevas ideas, reducir supuestos, priorizar y tomar decisiones compartidas para construir mejores productos.'
-      : 'Constant communication with different teams is essential to uncover new ideas, reduce assumptions, prioritize, and make shared decisions to build better products.',
-    icon: 'collaborate',
+    id: 'ai-llms',
+    title: 'AI & LLMs',
+    tools: [
+      { id: 'chatgpt', name: 'ChatGPT (OpenAI)' },
+      { id: 'claude', name: 'Claude (Anthropic)' },
+      { id: 'gemini', name: 'Gemini (Google)' },
+      { id: 'retell', name: 'Retell AI' },
+    ],
   },
   {
-    number: '03',
-    title: lang === 'es' ? 'Iterar para Evolucionar' : 'Iterate to Evolve',
-    description: lang === 'es'
-      ? 'Para que un producto evolucione, es necesario medir, validar y optimizar constantemente los flujos y sistemas de diseño para mejorar la experiencia de usuario.'
-      : 'For a product to evolve, it is necessary to constantly measure, validate, and optimize flows and design systems to improve the user experience.',
-    icon: 'iterate',
+    id: 'design-engineering',
+    title: 'Design Engineering',
+    tools: [
+      { id: 'codex', name: 'Codex' },
+      { id: 'cursor', name: 'Cursor' },
+      { id: 'vercel', name: 'Vercel' },
+      { id: 'github', name: 'Github' },
+    ],
   },
 ];
 
-export const PROCESS_STEPS = (lang: 'es' | 'en'): ProcessStep[] => [
-  { number: '01', title: lang === 'es' ? 'Entiendo' : 'Understand', icon: 'understand' },
-  { number: '02', title: lang === 'es' ? 'Investigo' : 'Research', icon: 'research' },
-  { number: '03', title: lang === 'es' ? 'Defino' : 'Define', icon: 'define' },
-  { number: '04', title: lang === 'es' ? 'Bosquejo' : 'Sketch', icon: 'sketch' },
-  { number: '05', title: lang === 'es' ? 'Valido' : 'Validate', icon: 'validate' },
-  { number: '06', title: lang === 'es' ? 'Construyo' : 'Build', icon: 'build' },
+export const PRINCIPLES = (lang: 'es' | 'en'): Principle[] => [
+  {
+    number: '01',
+    eyebrow: 'Discovery',
+    title: lang === 'es' ? 'Investigar para entender' : 'Research to understand',
+    description: lang === 'es'
+      ? 'Investigo a las personas, el negocio y el contexto técnico para identificar necesidades, comprender problemas y descubrir oportunidades.'
+      : 'I research people, the business, and the technical context to identify needs, understand problems, and uncover opportunities.',
+    chips: lang === 'es'
+      ? ['Investigación', 'Discovery', 'Insights']
+      : ['Research', 'Discovery', 'Insights'],
+    icon: 'discovery',
+  },
+  {
+    number: '02',
+    eyebrow: 'Definition',
+    title: lang === 'es' ? 'Colaborar para definir' : 'Collaborate to define',
+    description: lang === 'es'
+      ? 'Colaboro con diferentes disciplinas para compartir hallazgos, explorar soluciones, establecer prioridades y tomar decisiones de producto.'
+      : 'I collaborate across disciplines to share findings, explore solutions, set priorities, and make product decisions.',
+    chips: lang === 'es'
+      ? ['Estrategia', 'Colaboración', 'Priorización']
+      : ['Strategy', 'Collaboration', 'Prioritization'],
+    icon: 'definition',
+  },
+  {
+    number: '03',
+    eyebrow: 'Validation',
+    title: lang === 'es' ? 'Prototipar para validar' : 'Prototype to validate',
+    description: lang === 'es'
+      ? 'Convierto ideas en experiencias interactivas y prototipos funcionales para probar hipótesis, evaluar soluciones y aprender antes de construir.'
+      : 'I turn ideas into interactive experiences and functional prototypes to test hypotheses, evaluate solutions, and learn before building.',
+    chips: lang === 'es'
+      ? ['UX/UI', 'Prototipos', 'Experimentación']
+      : ['UX/UI', 'Prototypes', 'Experimentation'],
+    icon: 'validation',
+  },
+  {
+    number: '04',
+    eyebrow: 'Evolution',
+    title: lang === 'es' ? 'Construir para evolucionar' : 'Build to evolve',
+    description: lang === 'es'
+      ? 'Implemento soluciones, evalúo su funcionamiento y evoluciono continuamente el producto mediante datos, retroalimentación e iteración.'
+      : 'I implement solutions, evaluate how they perform, and continuously evolve the product through data, feedback, and iteration.',
+    chips: lang === 'es'
+      ? ['Implementación', 'Medición', 'Iteración']
+      : ['Implementation', 'Measurement', 'Iteration'],
+    icon: 'evolution',
+  },
 ];
 
 export const DESIGN_BREAKPOINTS = (lang: 'es' | 'en') => [
